@@ -1,0 +1,156 @@
+<div class="modal-header popuphead">
+  <h4 class="modal-title popuptitle">Filter Type
+  </h4>
+  <button type="button" class="close pull-right" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <!-- <h4 class="subheader">DownTime</h4> -->
+  <div class="container">
+    <div class="top-main">
+
+      <div class="row">
+        <div class="form-group col-lg-3">
+          <label class="m-0 font-weight-normal">Filter Type</label>
+        </div>
+        <div class="form-group col-lg-9">
+          <p-radioButton name="filterType" value="Single" label="Single" [(ngModel)]="SelectedItem.filtertype">
+          </p-radioButton>
+          <p-radioButton name="filterType" value="Range" label="Range" [(ngModel)]="SelectedItem.filtertype">
+          </p-radioButton>
+          <p-radioButton name="filterType" value="Multi" label="Multi" [(ngModel)]="SelectedItem.filtertype">
+          </p-radioButton>
+
+        </div>
+      </div>
+
+
+
+      <div class="row" *ngIf="SelectedItem.filtertype=='Range'">
+        <div class="form-group col-lg-3">
+          <label class="m-0 font-weight-normal">Range Type</label>
+        </div>
+        <div class="form-group col-lg-9">
+          <select [(ngModel)]="SelectedItem.Rangetype">
+
+            <option value="Date">Date</option>
+            <option value="Time">Time</option>
+            <option value="Number">Number</option>
+          </select>
+        </div>
+      </div>
+
+
+
+
+    </div>
+
+  </div>
+
+  <div class="container">
+
+    <h5>Ref Table Conditions</h5>
+    <div class="row">
+      <div class="col-lg-9">
+        <p-multiSelect [options]="DBUpdated" [(ngModel)]="SelectedItem.selectedDB" [panelStyle]="{minWidth:'10em'}"
+          [filter]="true"></p-multiSelect>
+      </div>
+
+      <div class="col-lg-3">
+        <button class="btn commonbutton" (click)="getTablefromDB(SelectedItem.selectedDB)">Submit</button>
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group col-lg-3">
+        <label>Ref Table</label>
+        <select class="form-control" [(ngModel)]="SelectedItem.refTable"
+          (change)="getAllTablecolumnValues($event.target.value);">
+          <option *ngFor="let item of reftablelist" [value]="item.TableName">{{item.TableName}}</option>
+        </select>
+      </div>
+      <div class="form-group col-lg-3">
+        <label>Ref Label</label>
+        <select class="form-control" [(ngModel)]="SelectedItem.refLabel">
+          <option *ngFor="let item of refcollist" [value]="item.ColumnName">{{item.DisplayName}}</option>
+        </select>
+      </div>
+      <div class="form-group col-lg-3">
+        <label>Ref Value</label>
+        <select class="form-control" [(ngModel)]="SelectedItem.refValue">
+          <option *ngFor="let item of refcollist" [value]="item.ColumnName">{{item.DisplayName}}</option>
+        </select>
+      </div>
+
+    </div>
+
+
+    <h6>Where Conditions</h6>
+    <div class="row">
+      <div class="form-group col-lg-2">
+        <label>column name</label>
+      </div>
+      <div class="form-group col-lg-2">
+        <label>Operator</label>
+      </div>
+      <div class="form-group col-lg-2">
+        <label>Value</label>
+      </div>
+      <div class="form-group col-lg-2">
+        <label>Condition</label>
+      </div>
+      <div class="form-group col-lg-2">
+        <label>Action</label>
+      </div>
+    </div>
+    <div *ngFor="let v of SelectedItem.refCondition" class="inline-form-group">
+      <div class="row">
+
+        <div class="form-group col-lg-2">
+
+          <select class="form-control" [(ngModel)]="v.columnName" (change)="getAllColumnValues($event.target.value);">
+            <option *ngFor="let item of jointableTotallist" [value]="item.ColumnName">{{item.ColumnName}}</option>
+          </select>
+        </div>
+        <div class="form-group col-lg-2">
+
+          <select class="form-control" [(ngModel)]="v.colCondition">
+            <option *ngFor="let item of reftablecondtnlist" [value]="item.Code">{{item.CodeName}}</option>
+          </select>
+        </div>
+        <div class="form-group col-lg-2">
+
+          <select class="form-control" name="refValue" [(ngModel)]="v.columnValue">
+            <option *ngFor="let item of columnvaluelist" [value]="item.ColumnValues">{{item.ColumnValues}}
+            </option>
+          </select>
+        </div>
+        <div class="form-group col-lg-2">
+          <select class="form-control" [(ngModel)]="v.columnOperator">
+            <option *ngFor="let item of reftableOperatorList" [value]="item.Code">{{item.CodeName}}</option>
+          </select>
+        </div>
+        <div class="form-group col-lg-2">
+          <i class="fa fa-remove" (click)="SelectedItem.refCondition.splice(valueIndex,1)" aria-hidden="true"
+            style="font-size: 19px;"></i>
+
+        </div>
+      </div>
+
+    </div>
+    <div class="row">
+      <div class="form-group col-lg-8"></div>
+
+      <div class="form-group col-lg-2">
+        <i class="fa fa-plus-circle" (click)="addRefCondition(SelectedItem.refCondition)" aria-hidden="true"
+          style="font-size: 19px;"></i>
+
+      </div>
+
+    </div>
+  </div>
+</div>
+<footer class="modal-footer pop-btn">
+  <button class="btn commonbutton" (click)="saveClick()">Submit</button>
+  <button type="reset" class="btn commonbutton" (click)="activeModal.dismiss('Cross click')">Cancel</button>
+</footer>

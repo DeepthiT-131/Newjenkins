@@ -1,0 +1,183 @@
+<div class="col-sm-12 pOutside">
+  <div class="col-sm-12 pOutside">
+    <div class="headerbg">
+      <h3 class="headetstyle">{{modulename}}
+
+        <span *ngIf="this.IsCalendar"><i value="Calendar" title="Calender"
+            class="fa fa-calendar bigfont iconcolor iconOnHead" (click)="onChangeValue(7);"></i></span>
+        <span *ngIf="this.IsKanbana"><i value="Kanbana" title="Floz" class="fa fa-columns bigfont iconcolor iconOnHead"
+            (click)="onChangeValue(6);"></i></span>
+        <span *ngIf="(this.IsCalendar || this.IsKanbana)"><i value="Report" title="Report"
+            class="fa fa-file-text-o bigfont iconcolor iconOnHead" (click)="onChangeValue(5);"></i></span>
+      </h3>
+    </div>
+  </div>
+</div>
+<div class="whitebg">
+
+
+  <!-- Kanbana  -->
+
+  <div class="" *ngIf="this.IsKanbanaButton">
+    <app-view-kanban (addItem)="AddClick($event,content)" (editItem)="editClick($event,content)" *ngIf="kanbanaEnable">
+    </app-view-kanban>
+
+  </div>
+
+  <br>
+  <!-- Calendar  -->
+  <div class="" *ngIf="this.IsCalendarButton">
+    <app-view-calendar *ngIf="calendarEnable">
+    </app-view-calendar>
+
+  </div>
+  <!-- app-reportview -->
+
+  <div class="" *ngIf="this.IsReportButton">
+    <app-view-report [formvalue]="formvalue" (addItem)="AddClick($event,content)" (editItem)="editClick($event,content)"
+      (downloadItem)="downloadClick($event,download)" *ngIf="reportEnable"></app-view-report>
+  </div>
+
+  <br>
+
+  <ng-template #content let-modal>
+    <div class="modal-header popuphead">
+      <h4 class="modal-title popuptitle">{{modulename}}
+      </h4>
+      <button type="button" class="close pull-right" aria-label="Close"
+        (click)="modal.dismiss('Cross click'); form.reset()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div *ngIf="jsondata" class="container  marginB30">
+
+        <div class="row">
+
+          <div *ngIf="success" class="col-12">
+            <div class="form-group">
+              <label>Your form has been submitted.</label>
+            </div>
+          </div>
+          <form class="ftheme" [formGroup]="form" (ngSubmit)="SaveJson()">
+
+            <div *ngIf="!success" class="col-12">
+              <div *ngFor="let item of jsondata.Createjson">
+                <div *ngIf="item.fieldType=='divSection' && item.multiple==false" class="row">
+                  <div *ngFor="let child of item.children" [ngClass]="item.className">
+                    <app-view-page [child]="child" [form]="form" [submitted]="submitted"
+                      (cascadeCondn)="Onconditioncheck($event)"></app-view-page>
+
+                  </div>
+                  <div *ngFor="let child of item.children1" [ngClass]="item.className">
+                    <app-view-page [child]="child" [form]="form" [submitted]="submitted"
+                      (cascadeCondn)="Onconditioncheck($event)"></app-view-page>
+                  </div>
+                  <div *ngFor="let child of item.children2" [ngClass]="item.className">
+                    <app-view-page [child]="child" [form]="form" [submitted]="submitted"
+                      (cascadeCondn)="Onconditioncheck($event)"></app-view-page>
+                  </div>
+                  <div *ngFor="let child of item.children3" [ngClass]="item.className">
+                    <app-view-page [child]="child" [form]="form" [submitted]="submitted"
+                      (cascadeCondn)="Onconditioncheck($event)"></app-view-page>
+                  </div>
+                  <div *ngFor="let child of item.children4" [ngClass]="item.className">
+                    <app-view-page [child]="child" [form]="form" [submitted]="submitted"
+                      (cascadeCondn)="Onconditioncheck($event)"></app-view-page>
+                  </div>
+                  <div *ngFor="let child of item.children5" [ngClass]="item.className">
+                    <app-view-page [child]="child" [form]="form" [submitted]="submitted"
+                      (cascadeCondn)="Onconditioncheck($event)"></app-view-page>
+                  </div>
+                </div>
+
+                <div *ngIf="item.fieldType=='divSection' && item.multiple==true">
+                  <div class="col-lg-12" class="multirow">
+
+                    <!-- <button type="button"  class="btn commonbutton">Add new</button> -->
+                    <div [formArrayName]="item.columnID"
+                      *ngFor="let childForm of form.get(item.columnID).controls; let i = index;">
+
+
+                      <!-- let X of form['controls'].[item.columnID].['controls'] -->
+                      <div class="col-lg-12">
+                        <div [formGroupName]="i" class="row innermultirow">
+
+                          <div class="col-lg-1"> <i class="fa fa-times-circle-o" (click)="deleteValues(item,i)"
+                              aria-hidden="true" style="font-size: 30px;    padding-top: 10px;"></i></div>
+                          <div class="col-lg-11">
+                            <div #container class="row ">
+                              <div [ngClass]="item.className">
+                                <div *ngFor="let child of item.children">
+
+                                  <app-view-multichild [child]="child" [item]="item" [childForm]="childForm"
+                                    [submitted]="submitted" [frmGrpIndex]="i" (cascadeCondn)="Onconditioncheck($event)">
+                                  </app-view-multichild>
+                                </div>
+                              </div>
+                              <div [ngClass]="item.className">
+                                <div *ngFor="let child of item.children1">
+                                  <app-view-multichild [child]="child" [item]="item" [childForm]="childForm"
+                                    [submitted]="submitted" [frmGrpIndex]="i" (cascadeCondn)="Onconditioncheck($event)">
+                                  </app-view-multichild>
+                                </div>
+                              </div>
+                              <div [ngClass]="item.className">
+                                <div *ngFor="let child of item.children2">
+                                  <app-view-multichild [child]="child" [item]="item" [childForm]="childForm"
+                                    [submitted]="submitted" [frmGrpIndex]="i" (cascadeCondn)="Onconditioncheck($event)">
+                                  </app-view-multichild>
+                                </div>
+                              </div>
+                              <div [ngClass]="item.className">
+                                <div *ngFor="let child of item.children3">
+                                  <app-view-multichild [child]="child" [item]="item" [childForm]="childForm"
+                                    [submitted]="submitted" [frmGrpIndex]="i" (cascadeCondn)="Onconditioncheck($event)">
+                                  </app-view-multichild>
+                                </div>
+                              </div>
+                              <div [ngClass]="item.className">
+                                <div *ngFor="let child of item.children4">
+                                  <app-view-multichild [child]="child" [item]="item" [childForm]="childForm"
+                                    [submitted]="submitted" [frmGrpIndex]="i" (cascadeCondn)="Onconditioncheck($event)">
+                                  </app-view-multichild>
+                                </div>
+                              </div>
+                              <div [ngClass]="item.className">
+                                <div *ngFor="let child of item.children5" [ngClass]="item.className">
+                                  <app-view-page [child]="child" [form]="form" [submitted]="submitted"
+                                    (cascadeCondn)="Onconditioncheck($event)"></app-view-page>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-lg-12">
+                      <i class="fa fa-plus-circle" aria-hidden="true" (click)="addValues(item)"
+                        style="font-size: 30px;"></i>
+                    </div>
+                  </div>
+                </div>
+
+                <div *ngIf="item.fieldType!='divSection'">
+                  <app-view-page [child]="item" [form]="form" [submitted]="submitted"
+                    (cascadeCondn)="Onconditioncheck($event)"></app-view-page>
+
+
+                </div>
+
+
+              </div>
+
+            </div>
+
+          </form>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+
+
+</div>

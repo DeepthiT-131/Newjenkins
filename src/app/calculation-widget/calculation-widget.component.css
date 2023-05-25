@@ -1,0 +1,130 @@
+.label{
+    margin-top: .5rem;
+    }
+    .border{
+        border:1px solid gray !important;
+    }
+    .main{
+        padding-left: 1%;
+        padding-right: 1%;
+    }
+    .drop-container {
+        min-height:2em;
+        border: 2px dotted #1d1d85;
+        padding:1em;
+        margin-bottom: 2%;
+        padding-right: 20px;
+        padding-left: 20px;
+      }
+    
+      .align{
+          padding-left: 17px;
+      }
+    .horizontal
+    {
+        display: inline-flex;
+        padding-left: 16px;
+    }
+    .vertical
+    {
+        display: block;
+    }
+    .labelSide{
+        display: inline;
+        width:93%;
+        height: calc(1.5em + .75rem + 2px);
+        padding: .375rem .75rem;
+        font-size: 1rem;
+        font-weight: 400;
+        line-height: 1.5;
+        color: #495057;
+        background-color: #fff;
+        background-clip: padding-box;
+        border: 1px solid #ced4da;
+        border-radius: .25rem;
+        transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    }
+    .labelTop{
+        display: block;
+        width:100%;
+        height: calc(1.5em + .75rem + 2px);
+        padding: .375rem .75rem;
+        font-size: 1rem;
+        font-weight: 400;
+        line-height: 1.5;
+        color: #495057;
+        background-color: #fff;
+        background-clip: padding-box;
+        border: 1px solid #ced4da;
+        border-radius: .25rem;
+        transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    }   
+    
+    .fa.pull-left{
+        padding-right: 9px;    
+    }
+    .contentsection{
+        border:2px solid #1d1d85;
+        border-radius: 8px;
+      
+    }
+    
+    .contentwithscroll{
+        overflow-y: scroll;
+        height: 550px;
+    }
+    ::-webkit-scrollbar
+    {
+      width: 12px;  /* for vertical scrollbars */
+      border-radius: 10px;
+    }
+    
+    ::-webkit-scrollbar-track
+    {
+      background: rgba(0, 0, 0, 0.1);
+      border-radius: 10px;
+    }
+    
+    ::-webkit-scrollbar-thumb
+    {
+        border-radius: 10px;
+      background: rgba(0, 0, 0, 0.4);
+    }
+    .images{
+        margin-right: 40px;
+    }
+    .leftpanelmenu{
+        color:white;
+    }
+    @media (min-width: 992px){
+        .column3width {
+            flex: 1 0 28% !important;
+            max-width: 31% !important;
+        } 
+        
+    }
+    @media (min-width: 576px){
+        .column2width {
+            flex: 2 0 19.666667% !important;
+            max-width: 23.666667% !important;
+        }
+        .column6width {
+            flex: 1 0 20.666667%;
+            max-width: 17.666667%;
+            
+        }
+    }
+    @media (min-width: 992px){
+        .column5width {
+            flex: 1 0 31.666667%;
+            max-width: 47.666667%;
+        }
+    }
+    
+    
+    
+    
+    
+    
+    
+    

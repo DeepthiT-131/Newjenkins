@@ -1,0 +1,235 @@
+<div [formGroup]="childForm" >
+
+    <div class="form-group" [hidden]="child.visible" *ngIf="child.fieldType=='text'">
+      <label>{{child.fieldName}}</label> <label *ngIf="child.required"
+        class="text-danger">*</label>
+
+      <input [type]="child.fieldType" [formControlName]="child.columnID"
+        [name]="child.columnID"
+        (change)="child.inputType != 'Normal' ? OnchangeFn($event.target.value,child.columnID,0,child,item.columnID,frmGrpIndex) : false"
+        [pTooltip]="child.sop" tooltipPosition="top" placeholder="Right"
+        [appendTo]="container" class="form-control cshadow"
+        [placeholder]="child.placeholder"
+        [ngClass]="{ 'is-invalid': submitted && childForm.get(child.columnID).errors }"
+        [required]="child.required" [minlength]="child.minLength"
+        [maxlength]="child.maxLength">
+
+      <div class="error" *ngIf="submitted && childForm.get(child.columnID).errors">
+        <div *ngIf="childForm.get(child.columnID).errors.required">{{child.fieldName}} is
+          required</div>
+        <div *ngIf="childForm.get(child.columnID).errors.minlength">Minimum length is
+          {{child.minLength}}</div>
+        <div *ngIf="childForm.get(child.columnID).errors.maxLength">Maximum length is
+          {{child.minLength}}</div>
+      </div>
+    </div>
+    <div class="form-group" [hidden]="child.visible" *ngIf="child.fieldType=='email'">
+      <label>{{child.fieldName}}</label> <label *ngIf="child.required"
+        class="text-danger">*</label>
+
+      <input [type]="child.fieldType" [formControlName]="child.columnID"
+        [name]="child.columnID" [pTooltip]="child.sop" tooltipPosition="top"
+        placeholder="Right" [appendTo]="container" class="form-control cshadow"
+        [placeholder]="child.placeholder"
+        [ngClass]="{ 'is-invalid': submitted && childForm.get(child.columnID).errors }"
+        [required]="child.required" [minlength]="child.minLength"
+        [maxlength]="child.maxLength" [pattern]="child.regex">
+
+      <div class="error" *ngIf="submitted && childForm.get(child.columnID).errors">
+        <div *ngIf="childForm.get(child.columnID).errors.required">{{child.fieldName}} is
+          required</div>
+        <div *ngIf="childForm.get(child.columnID).errors.minlength">Minimum length is
+          {{child.minLength}}</div>
+        <div *ngIf="childForm.get(child.columnID).errors.maxLength">Maximum length is
+          {{child.minLength}}</div>
+        <div *ngIf="childForm.get(child.columnID).errors.pattern">{{child.fieldName}} is
+          not valid</div>
+      </div>
+    </div>
+    <div class="form-group" [hidden]="child.visible" *ngIf="child.fieldType=='phone'">
+      <label>{{child.fieldName}}</label> <label *ngIf="child.required"
+        class="text-danger">*</label>
+
+      <input [type]="text" [formControlName]="child.columnID" [name]="child.columnID"
+        class="form-control cshadow" [placeholder]="child.placeholder"
+        [ngClass]="{ 'is-invalid': submitted && childForm.get(child.columnID).errors }"
+        [required]="child.required" [minlength]="child.minLength"
+        [maxlength]="child.maxLength" [pattern]="child.regex">
+
+      <div class="error" *ngIf="submitted && childForm.get(child.columnID).errors">
+        <div *ngIf="childForm.get(child.columnID).errors.required">{{child.fieldName}} is
+          required</div>
+        <div *ngIf="childForm.get(child.columnID).errors.minlength">Minimum length is
+          {{child.minLength}}</div>
+        <div *ngIf="childForm.get(child.columnID).errors.maxLength">Maximum length is
+          {{child.minLength}}</div>
+        <div *ngIf="childForm.get(child.columnID).errors.pattern">{{child.fieldName}} is
+          not valid</div>
+      </div>
+    </div>
+    <div class="form-group" [hidden]="child.visible" *ngIf="child.fieldType=='number'">
+      <label>{{child.fieldName}}</label> <label *ngIf="child.required"
+        class="text-danger">*</label>
+
+      <input [type]="child.fieldType" [formControlName]="child.columnID"
+        [name]="child.columnID"
+        (change)="child.inputType != 'Normal' ? OnchangeFn($event.target.value,child.columnID,0,child,item.columnID,frmGrpIndex) : false"
+        class="form-control cshadow" [placeholder]="child.placeholder" min="0"
+        [ngClass]="{ 'is-invalid': submitted && childForm.get(child.columnID).errors }"
+        [required]="child.required" [minlength]="child.minLength"
+        [maxlength]="child.maxLength" [pattern]="child.regex">
+
+      <div class="error" *ngIf="submitted && childForm.get(child.columnID).errors">
+        <div *ngIf="childForm.get(child.columnID).errors.required">{{child.fieldName}} is
+          required</div>
+        <div *ngIf="childForm.get(child.columnID).errors.minlength">Minimum length is
+          {{child.minLength}}</div>
+        <div *ngIf="childForm.get(child.columnID).errors.maxLength">Maximum length is
+          {{child.minLength}}</div>
+        <div *ngIf="childForm.get(child.columnID).errors.pattern">{{child.fieldName}} is
+          not valid</div>
+      </div>
+    </div>
+    <div class="form-group" [hidden]="child.visible" *ngIf="child.fieldType=='textarea'">
+      <label>{{child.fieldName}}</label> <label *ngIf="child.required"
+        class="text-danger">*</label>
+
+
+      <textarea class="form-control cshadow" [formControlName]="child.columnID"
+        [name]="child.columnID" [placeholder]="child.placeholder"
+        [ngClass]="{ 'is-invalid': submitted && childForm.get(child.columnID).errors }"
+        [required]="child.required" [minlength]="child.minLength"
+        [maxlength]="child.maxLength">
+ </textarea>
+
+      <div class="error" *ngIf="submitted && childForm.get(child.columnID).errors">
+        <div *ngIf="childForm.get(child.columnID).errors.required">{{child.fieldName}} is
+          required</div>
+        <div *ngIf="childForm.get(child.columnID).errors.minlength">Minimum length is
+          {{child.minLength}}</div>
+        <div *ngIf="childForm.get(child.columnID).errors.maxLength">Maximum length is
+          {{child.minLength}}</div>
+      </div>
+    </div>
+    <div class="form-group" [hidden]="child.visible" *ngIf="child.fieldType=='paragraph'">
+
+      <p class="form-text wordwrap"
+        [ngClass]="{'center':child.Alignment=='center','justify':child.Alignment=='justify','right':child.Alignment=='right','end':child.Alignment=='end','left':item.Alignment=='left'}">
+        {{child.placeholder}}</p>
+    </div>
+
+    <div class="form-group" *ngIf="child.fieldType=='hrLine'">
+      <hr>
+    </div>
+
+    <div class="form-group" [hidden]="child.visible" *ngIf="child.fieldType=='date'">
+      <label>{{child.fieldName}}</label> <label *ngIf="child.required"
+        class="text-danger">*</label>
+
+
+      <p-calendar class="form-control cshadow" formControlName="{{child.columnID}}"
+        [monthNavigator]="true" [yearNavigator]="true" yearRange="2000:2030"
+        [minDate]="MinDate" [maxDate]="MaxDate" [touchUI]="false" dateFormat="yy-mm-dd"
+        (onSelect)="ondatechange($event,child.columnID,child)"
+        [required]="child.required">
+      </p-calendar>
+
+      <div class="error" *ngIf="submitted && childForm.get(child.columnID).errors">
+        <div *ngIf="childForm.get(child.columnID).errors.required">{{child.fieldName}} is
+          required</div>
+      </div>
+    </div>
+
+    <div class="form-group" [hidden]="child.visible" *ngIf="child.fieldType=='time'">
+      <label>{{child.fieldName}}</label> <label *ngIf="child.required"
+        class="text-danger">*</label>
+
+      <!-- <input class="form-control cshadow" formControlName="{{child.columnID}}" type="text"
+        atp-time-picker value="" changeToMinutes="true" /> -->
+
+        <timepicker formControlName="{{child.columnID}}"   [showMeridian]="isMeridian" [readonlyInput]="!readonly" [minuteStep]="1"></timepicker>
+    
+
+
+      <div class="error" *ngIf="submitted && childForm.get(child.columnID).errors">
+        <div *ngIf="childForm.get(child.columnID).errors.required">{{child.fieldName}} is
+          required</div>
+      </div>
+    </div>
+    <div class="form-group" [hidden]="child.visible" *ngIf="child.fieldType=='checkbox'">
+      <br>
+      <p-checkbox name="{{child.fieldName}}" formControlName="{{child.columnID}}"
+        label="{{child.fieldName}}" binary="true" [required]="child.required">
+      </p-checkbox>
+      <div class="error" *ngIf="submitted && childForm.get(child.columnID).errors">
+        <div *ngIf="childForm.get(child.columnID).errors.required">{{child.fieldName}} is
+          required</div>
+      </div>
+    </div>
+    <div class="form-group" [hidden]="child.visible" *ngIf="child.fieldType=='select'">
+      <label>{{child.fieldName}}</label> <label *ngIf="child.required"
+        class="text-danger">*</label>
+
+      <select class="form-control cshadow" [formControlName]="child.columnID"
+        [required]="child.required" [pTooltip]="child.sop" tooltipPosition="top"
+        placeholder="Right" [appendTo]="container"
+        (change)="child.inputType != 'Normal' ? OnchangeFn($event.target.value,child.columnID,0,child,item.columnID,frmGrpIndex) : false"
+        [ngClass]="{ 'is-invalid': submitted && childForm.get(child.columnID).errors}">
+        <option value="0" selected disabled>--Select--</option>
+        <option *ngFor="let v of child.values" [value]="v.Value">{{v.Label}}</option>
+      </select>
+
+      <div class="error" *ngIf="submitted && childForm.get(child.columnID).errors">
+        <div *ngIf="childForm.get(child.columnID).errors.defaultSelect">
+          {{child.fieldName}} is required</div>
+      </div>
+    </div>
+    <div class="form-group" [hidden]="child.visible" *ngIf="child.fieldType=='radio'">
+      <div> <label>{{child.fieldName}}</label> <label *ngIf="child.required"
+          class="text-danger">*</label></div>
+
+      <div
+        [ngClass]="{'horizontal':child.displaytype=='horizontal','vertical':child.displaytype=='vertical'}"
+        *ngFor="let v of child.values" class="inline-form-group">
+        <div class="ui-g-12">
+          <p-radioButton name="{{child.fieldName}}" value="{{v.Value}}"
+            label="{{v.Label}}" formControlName="{{child.columnID}}"
+            [required]="child.required"></p-radioButton>
+        </div>
+
+      </div>
+
+      <div class="error" *ngIf="submitted && childForm.get(child.columnID).errors">
+        <div *ngIf="childForm.get(child.columnID).errors.required">{{child.fieldName}} is
+          required</div>
+      </div>
+    </div>
+    <div *ngIf="child.fieldType=='button'" class="btn-cont">
+
+      <input type="button" value="{{child.fieldName}}" class="btn commonbutton"
+        id="{{child.fieldName}}" (click)="addValues(item)">
+    </div>
+
+    <div *ngIf="child.fieldType=='file'">
+      <label>{{child.fieldName}} </label> <label *ngIf="child.required"
+        class="text-danger">*</label>
+      <input type="file" class="displayblk"
+        (change)="onSelectFile($event,child.columnID,childForm)"
+        placeholder="{{child.placeholder}}">
+      <a style="cursor: pointer;color:blue"
+        (click)="DownLoadFiles(child.fieldName,childForm.get(child.columnID).value)">{{childForm.get(child.columnID).value  | splitValue}}</a>
+      <input type="hidden" [formControlName]="child.columnID" [name]="child.columnID">
+    </div>
+    <div *ngIf="child.fieldType=='sign'">
+      <label>{{child.fieldName}} </label> <label *ngIf="child.required"
+        class="text-danger">*</label><br>
+      <signature-pad [options]="signaturePadOptions" #signatureCanvas id="signatureCanvas"
+        (onBeginEvent)="drawStart()"
+        (onEndEvent)="drawchildComplete(signatureCanvas,child.columnID,childForm)">
+      </signature-pad><br>
+      <button type="button" class="btn commonbutton" data-action="clear"
+        (click)="clearPad(signatureCanvas)">Clear</button>
+      <img [src]="childForm.get(child.columnID).value" width="50%">
+    </div>
+</div>
+

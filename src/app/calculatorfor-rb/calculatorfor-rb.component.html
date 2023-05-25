@@ -1,0 +1,154 @@
+<div>
+  
+    <div class="modal-header popuphead">
+        <h4 class="modal-title popuptitle" id="modal-basic-title">Calculator</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+          <span aria-hidden="true" style="font-size: 30px;">&times;</span>
+        </button>
+    
+      </div>
+      <div class="modal-body">
+    
+        <div class="container">
+          <div class="top-main">
+            <div class="form-group">
+
+  <div class="row form-group">
+      <div class="col-lg-1">
+       
+      </div>
+      <div class="col-lg-11">
+         
+          <section ngxDroppable class="root-container" [model]="CalculationTools" [copy]="true" style="    display: inline-flex;">
+              <div class="row" *ngFor="let item of CalculationTools" ngxDraggable [model]="item" [moves]="true" (drag)="builderDrag($event)" [dropZones]="['builder-target']" style="color:white;font-size: 15px;">
+                  <!-- <button class="btn commonbutton images">{{item.fieldName}}</button> -->
+
+                  <button *ngIf="item.fieldstyle=='Secbgcolor'" class="btn Secbgcolorbutton images">{{item.fieldName}}</button>
+                  <button *ngIf="item.fieldstyle=='Primarybgcolor'" class="btn Primarybgcolorbutton images">{{item.fieldName}}</button>
+                  <button *ngIf="item.fieldstyle=='Commonbgcolor'" class="btn Customcolorbutton images">{{item.fieldName}}</button>
+              </div>
+          </section>
+      </div>
+  </div>
+
+  <div class="row main">
+      <div class="col-lg-2">
+          <div id="" >
+            <div class="layout-menu MenupTop">
+              <ul class="nobullet" style="display: initial;padding-left: 0;">
+
+                    <li *ngFor="let item of CascadeValues" class="customization" style="color:white;font-size: 15px;">
+                        <a class="leftpanelmenu" [id]="item.fieldName" #inputmenutitle [class.active-menuitem]="inputmenutitle.id == activeMenuId" tabindex="0" (keydown)="onKeydown($event, inputmenutitle.id)" (click)="toggle(inputmenutitle.id)">
+                           {{item.fieldName | titlecase}}</a>
+
+                        <div [@animation]="(inputmenutitle.id == activeMenuId) ? 'visible' : 'hidden'" (@animation.start)="onAnimationStart($event)" (@animation.done)="onAnimationDone($event)">
+                            <ul class="nobullet" style="padding-left: 0px;">
+                                <section ngxDroppable class="root-container menuwithscroll" [model]="item.children" [copy]="true">
+                                    <li *ngFor="let item1 of item.children" ngxDraggable [model]="item1" [moves]="true" (drag)="builderDrag($event)" [dropZones]="['builder-target']" class="customization" style="color:white;font-size: 15px;" [ngClass]="{'activemenu': selectedItem == child}">
+                                        <a class="insidemenu">{{item1.fieldName | titlecase}}</a></li>
+                                </section>
+                            </ul>
+                        </div>
+                    </li>
+               
+            </ul>
+
+         
+            </div>
+          </div>
+      </div>
+      <div class="col-lg-10 ">
+          <div class="contentsection contentwithscroll">
+              <div class="row" style="margin-top: 1%;">
+                  <div class="col-lg-8"></div>
+                  <div class="col-lg-2">
+                      <button class="btn commonbutton pull-right" (click)="activeModal.dismiss('Cross click')">Back</button>
+                      <br>
+                  </div>
+                  <div class="col-lg-2">
+                      <button class="btn commonbutton" (click)="SaveCalculation()">Save</button>
+                      <br>
+                  </div>
+              </div>
+
+              <div id="content" class="builder-target col-lg-12"  style="margin-top: 1%;">
+
+                  <section ngxDroppable dropZone="builder-target" class="drop-container" [model]="TabletargetBuilderTools" [removeOnSpill]="true">
+                      <div class="row" *ngFor="let titem of TabletargetBuilderTools;let i= index;" ngxDraggable [model]="titem">
+                        <div class=" col-lg-12">
+
+                            <div *ngIf="titem.fieldType=='Table'">
+                                <label>{{titem.fieldId}}</label>
+
+                            </div>
+                            <div *ngIf="titem.fieldType=='column'">
+                                <label>{{titem.fieldId}}</label>
+
+                            </div>
+
+                            <div *ngIf="titem.fieldType=='Calculate'">
+                                <!-- <label>{{titem1.fieldValue}}</label> -->
+                                <label>{{titem1.fieldId}}</label>
+
+                            </div>
+                            
+                           
+                        </div>
+                          <div *ngIf="titem.fieldType=='divSection'" class="col-lg-11">
+                              <label>{{titem.fieldName}}{{i}}</label>
+                              <section ngxDroppable dropZone="builder-target" class="drop-container row" [model]="titem.children1" [removeOnSpill]="true" (remove)="builderDrag($event)">
+                                  
+                                      <div *ngFor="let titem1 of titem.children1" ngxDraggable [model]="titem1">
+                                          <div class=" col-lg-12">
+
+                                              <div *ngIf="titem1.fieldType=='Table'">
+                                                  <label>{{titem1.fieldId}}</label>
+
+                                              </div>
+                                              <div *ngIf="titem1.fieldType=='column'">
+                                                  <label>{{titem1.fieldId}}</label>
+
+                                              </div>
+
+                                              <div *ngIf="titem1.fieldType=='Calculate'">
+                                                  <!-- <label>{{titem1.fieldValue}}</label> -->
+                                                  <label>{{titem1.fieldId}}</label>
+
+                                              </div>
+                                              <div *ngIf="titem1.fieldType=='TextBox'">
+                            
+                                                <input type="text" class="form-group" [(ngModel)]="titem1.fieldValue">
+                                            </div>
+                                          
+                                          </div>
+
+                                      </div>
+                                 
+                              </section>
+                          </div>
+
+                          <div *ngIf="titem.fieldType=='divSection'" class="col-lg-1 col-6">
+                            <i (click)="removeJson(TabletargetBuilderTools,i)" class="fa fa-trash deleteicon "></i>
+                          </div>
+
+                          <div *ngIf="titem.fieldType=='TextBox'">
+                            
+                              <input type="text" class="form-group" [(ngModel)]="titem.fieldValue">
+                          </div>
+                      </div>
+                  </section>
+
+              </div>
+              <br>
+          </div>
+      
+
+      </div>
+  </div>
+  <pre>{{TabletargetBuilderTools | json}}</pre>
+  </div>
+  </div>
+  </div>
+  </div>
+  
+  </div>

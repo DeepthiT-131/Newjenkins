@@ -1,0 +1,103 @@
+<div>
+    <div class="row">
+        <div class="card-body create">
+            <form class="ftheme" *ngIf="kanbanaform" [formGroup]="kanbanaform" (ngSubmit)="getKanbanaJsonValue()">
+                <div class="row">
+                    <div *ngFor="let item of TabletargetBuilderTools" class="col-sm-3">
+
+                        <div class="form-group" *ngIf="item.FilterType=='Single'">
+                            <label>{{item.FieldName}}</label>
+                            <select class="form-control headerfilter" formControlName="{{item.FilterColumn}}">
+                                <option value="">--All--</option>
+                                <option *ngFor="let v of item.values" [value]="v.Value">{{v.Label}}</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group" *ngIf="item.RangeType=='Date'">
+
+                            <label>{{item.FieldName}}</label>
+                            <p-calendar class="form-control headerfilter" formControlName="{{item.FilterColumn}}"
+                                [monthNavigator]="true" [yearNavigator]="true" yearRange="2000:2030" [minDate]="MinDate"
+                                [maxDate]="MaxDate" dateFormat="yy-mm-dd">
+                            </p-calendar>
+
+                        </div>
+
+                        <div class="form-group" *ngIf="item.RangeType=='Time'">
+
+                            <label>{{item.FieldName}}</label>
+                            <p-calendar class="form-control headerfilter" formControlName="{{item.FilterColumn}}"
+                                [timeOnly]="true"></p-calendar>
+                        </div>
+
+                    </div>
+
+                    <div class="btn-top">
+                        <label></label>
+                        <input type="submit" value="Submit" class="btn commonbutton">
+                        <button class="btn commonbutton addform" 
+                        (click)="AddClick()">Add<i _ngcontent-whs-c2="" class="fa fa-plus-circle"></i></button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div> 
+    <div class="row">
+   
+      <div class="col-lg-3" *ngFor="let titem of TabletargetBuilderTools1;let i= index;">
+        <div class="innercontainer">
+          <label>{{titem.fieldName}}</label>
+  
+        </div>
+        <div class="col-lg-12 containerbody kanbanascroll">
+          <section ngxDroppable dropZone="builder-target" class="drop-container col-lg-12" [model]="titem.children"
+            [removeOnSpill]="false" (drop)="dropped($event,titem.fieldValue)">
+            <div class="row listview" *ngFor="let titem1 of titem.children;let i= index;" ngxDraggable [model]="titem1"
+              [moves]="true">
+  
+              <table>
+  
+                <tbody style="text-align: left;">
+  
+                  <tr>
+  
+  
+                    <div style="float: right;">
+                      <span><i class="fa fa-pencil awesome" title="Edit" (click)="editClick(titem1,i)"></i> </span>
+                    
+                      <span><i (click)="confirm1(titem1)" class="fa fa-times-circle-o blue awesome"
+                          title="Delete"></i></span>
+                    </div>
+  
+                  </tr>
+                  <tr *ngFor="let titem2 of titem1.children1;let i= index;" ngxDraggable class="wraptext">
+                    <div *ngIf="titem2.fieldName != 'ID' ">
+                      
+                      <td class="leftcontent">{{titem2.fieldName}}&nbsp;</td>
+                
+                      <td class="rightcontent">:&nbsp;&nbsp;{{titem2.fieldValue}}</td>
+                    </div>
+                    <!-- #534a4a -->
+                  </tr>
+  
+                  <!-- <tr *ngFor="let titem2 of titem1.children1;let i= index;" ngxDraggable class="wraptext">
+                    <div *ngIf="titem2.fieldName != 'ID' " class="row">
+                      
+                      <td class="col-lg-6">{{titem2.fieldName}}</td>
+                   <td>:</td>
+                      <td class="col-lg-5">{{titem2.fieldValue}}</td>
+                    </div>
+  
+                  </tr> -->
+  
+  
+                </tbody>
+              </table>
+  
+            </div>
+          </section>
+  
+        </div>
+      </div>
+    </div>
+</div>

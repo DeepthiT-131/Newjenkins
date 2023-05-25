@@ -1,0 +1,113 @@
+<div class="row">
+  <div
+    [ngClass]="{'col-lg-10':item.fieldType!='divSection','col-lg-9':item.fieldName=='Div2','col-lg-8':item.fieldName=='Div3','col-lg-7':item.fieldName=='Div4','col-lg-6':item.fieldName=='Div5'}">
+
+    <div *ngIf="item1.fieldType=='text'">
+      <label>{{item1.fieldName}}</label> <label *ngIf="item1.required" class="text-danger">*</label>
+
+      <input type="text" class="form-control" id="{{item1.fieldName}}" placeholder="{{item1.placeholder}}">
+
+    </div>
+    <div *ngIf="item1.fieldType=='email'">
+      <label>{{item1.fieldName}}</label> <label *ngIf="item1.required" class="text-danger">*</label>
+      <input type="email" class="form-control" id="{{item1.fieldName}}" placeholder="{{item1.placeholder}}">
+    </div>
+    <div *ngIf="item1.fieldType=='phone'">
+      <label>{{item1.fieldName}}</label> <label *ngIf="item1.required" class="text-danger">*</label>
+      <input type="text" class="form-control" id="{{item1.fieldName}}" placeholder="{{item1.placeholder}}">
+    </div>
+    <div *ngIf="item1.fieldType=='number'">
+      <label>{{item1.fieldName}}</label> <label *ngIf="item1.required" class="text-danger">*</label>
+      <input type="number" class="form-control" id="{{item1.fieldName}}" min="{{item1.minLength}}"
+        max="{{item1.maxLength}}" placeholder="{{item1.placeholder}}">
+    </div>
+    <div *ngIf="item1.fieldType=='date'">
+      <label>{{item1.fieldName}}</label> <label *ngIf="item1.required" class="text-danger">*</label>
+      <p-calendar class="form-control" [view]="item1.View" [monthNavigator]="item1.monthNavigator"
+        [yearNavigator]="item1.monthNavigator" [yearRange]="item1.yearRange" id="{{item1.fieldName}}" [touchUI]="false"
+        dateFormat="yy-mm-dd"> </p-calendar>
+     
+    </div>
+    <div *ngIf="item1.fieldType=='time'">
+      <label>{{item1.fieldName}}</label> <label *ngIf="item1.required" class="text-danger">*</label>
+      <ngb-timepicker></ngb-timepicker>
+      <!-- <p-calendar [timeOnly]="true" class="form-control"></p-calendar> -->
+    </div>
+    <div *ngIf="item1.fieldType=='textarea'">
+      <label>{{item1.fieldName}}</label> <label *ngIf="item1.required" class="text-danger">*</label>
+      <textarea class="form-control" id="{{item1.fieldName}}" placeholder="{{item1.placeholder}}">
+            </textarea>
+    </div>
+    <div *ngIf="item1.fieldType=='file'">
+      <label>{{item1.fieldName}} </label> <label *ngIf="item1.required" class="text-danger">*</label>
+      <input type="file" class="displayblk" id="{{item1.fieldName}}" placeholder="{{item1.placeholder}}">
+
+    </div>
+    <div *ngIf="item1.fieldType=='paragraph'">
+      <p class="form-text wordwrap">{{item1.placeholder}}</p>
+    </div>
+
+    <div *ngIf="item1.fieldType=='Line'">
+     <hr [ngStyle]="{'border-top':'1px solid gray !important;'}">
+    </div>
+
+    <div *ngIf="item1.fieldType=='select'">
+      <label>{{item1.fieldName}}</label> <label *ngIf="item1.required" class="text-danger">*</label>
+      <select class="form-control" id="{{item1.fieldName}}">
+        <option *ngFor="let v of item1.values" [value]="v.Value">{{v.Label}}</option>
+      </select>
+
+    </div>
+    <div *ngIf="item1.fieldType=='checkbox'">
+      <div> <label>{{item1.fieldName}}</label> <label *ngIf="item1.required"
+          class="text-danger">*</label></div>
+      <p-checkbox name="{{item1.fieldName}}" value="{{item1.fieldId}}" [(ngModel)]="item1.defaultValue"
+        label="{{item1.fieldName}}" binary="true"></p-checkbox>
+  
+
+    </div>
+    <div *ngIf="item1.fieldType=='radio'">
+      <div> <label>{{item1.fieldName}}</label> <label *ngIf="item1.required" class="text-danger">*</label></div>
+      <div [ngClass]="{'horizontal':item1.displaytype=='horizontal','vertical':item1.displaytype=='vertical'}"
+        *ngFor="let v of item1.values" class="inline-form-group">
+        <div class="ui-g-12">
+          <p-radioButton name="group1" value="{{v.value}}" label="{{v.label}}" [(ngModel)]="val1"></p-radioButton>
+        </div>
+       
+      </div>
+
+    </div>
+
+    <div *ngIf="item1.fieldType=='sign'">
+      <div> <label>{{item1.fieldName}}</label> <label *ngIf="item1.required" class="text-danger">*</label></div>
+      <signature-pad [options]="signaturePadOptions" (onBeginEvent)="drawStart()" (onEndEvent)="drawComplete()"></signature-pad><br>
+      <button type="button" class="btn commonbutton" data-action="clear" (click)="onClearClick()">Clear</button>
+    </div>
+
+    <div *ngIf="item1.fieldType=='Editor'">
+
+      <div> <label>{{item1.fieldName}}</label> <label *ngIf="item1.required" class="text-danger">*</label></div>
+      <p-editor [(ngModel)]="item1.placeholder" [style]="{'height':'70px'}"></p-editor>
+      <button pButton type="button" label="Clear" icon="pi pi-times" (click)="item1.placeholder=null"></button>
+ 
+    </div>
+
+    <div *ngIf="item1.fieldType=='button'" class="btn-cont">
+      <input type="{{item1.fieldType}}" (click)="submit()" value="{{item1.fieldName}}" class="btn commonbutton btntopspace"
+        id="{{item1.fieldName}}">
+    </div>
+
+  </div>
+  <div [ngClass]="{'col-lg-1 col-6':item.fieldType!='divSection'}"></div>
+
+  <div
+    [ngClass]="{'col-lg-1 col-6':item.fieldType!='divSection','col-lg-3 col-6':item.fieldName=='Div2','col-lg-4 col-6':item.fieldName=='Div3','col-lg-5 col-6':item.fieldName=='Div4','col-lg-6 col-6':item.fieldName=='Div5'}">
+
+    <i (click)="deleteClick()" class="fa fa-trash deleteicon"></i>
+    <i (click)="editClick()" class="fa fa-pencil-square-o  align" aria-hidden="true"></i>
+    <i (click)="CalculationClick()" class="fa fa-calculator  align" aria-hidden="true"></i>
+    <i (click)="TriggerClick()" class="fa fa-share-alt  align" aria-hidden="true"></i>
+    <i (click)="RuleEngineClick()" class="fa fa-list-ul  align" aria-hidden="true"></i>
+  </div>
+
+</div>

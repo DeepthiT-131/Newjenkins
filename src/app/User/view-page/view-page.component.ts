@@ -1,0 +1,160 @@
+import { Component, OnInit, Input, Output, EventEmitter, ViewChild, Injectable } from '@angular/core';
+import { FormGroup } from '@angular/forms';
+import { formatDate } from '@angular/common';
+import { LoginconfigService } from 'src/app/services/loginconfig.service';
+import { SignaturePad } from 'angular2-signaturepad/signature-pad';
+import { BuildercreateServiceService } from 'src/app/services/buildercreate-service.service';
+import { NgbTimeAdapter, NgbTimeStruct } from '@ng-bootstrap/ng-bootstrap';
+import { saveAs } from 'file-saver';
+declare var jsPDF: any;
+const pad = (i: number): string => i < 10 ? `0${i}` : `${i}`;
+@Injectable()
+export class NgbTimeStringAdapter extends NgbTimeAdapter<string> {
+
+  fromModel(value: string| null): NgbTimeStruct | null {
+    if (!value) {
+      return null;
+    }
+    const split = value.split(':');
+    return {
+      hour: parseInt(split[0], 10),
+      minute: parseInt(split[1], 10),
+      second: parseInt(split[2], 10)
+    };
+  }
+
+  toModel(time: NgbTimeStruct | null): string | null {
+    return time != null ? `${pad(time.hour)}:${pad(time.minute)}:${pad(time.second)}` : null;
+  }
+}
+@Component({
+  selector: 'app-view-page',
+  templateUrl: './view-page.component.html',
+  styleUrls: ['./view-page.component.css'],
+  providers: [{provide: NgbTimeAdapter, useClass: NgbTimeStringAdapter}]
+})
+export class ViewPageComponent implements OnInit {
+  @Input() item: any;
+  @Input() child: any;
+  @Input() submitted: any;
+
+  @Input() form: FormGroup;
+  @Output() public cascadeCondn = new EventEmitter();
+  url: any;
+  fileExtension = ".jpg";
+  fileExtensionError = false;
+  photoName: any;
+  filesize: any;
+  Attachment: any;
+  splitValue: any;
+  File: any;
+  isDrawing = false;
+  ismeridian: boolean = false;
+  readonly = true;
+  Starttime = new Date();
+  Endtime = new Date();
+  public signaturePadOptions: Object = {
+
+    'minWidth': 2,
+    'canvasWidth': 0,
+    'canvasHeight': 0,
+    'penColor': "#1d1d85",
+  };
+  @ViewChild('signatureCanvas', { static: true }) signaturePad: SignaturePad;
+  constructor(private Builderservice: BuildercreateServiceService, private loginconfigservice: LoginconfigService) { }
+
+  ngOnInit() {
+  }
+  drawComplete(signatureCanvas, columnID) {
+    this.form.get(columnID).setValue(signatureCanvas.toDataURL())
+    this.isDrawing = false;
+
+  }
+
+  drawStart() {
+    this.isDrawing = true;
+
+  }
+  clearPad(signatureCanvas) {
+    signatureCanvas.clear();
+  }
+  ondatechange(val, columnid, itemvalue) {
+
+
+    val = formatDate(val.toLocaleDateString(), 'yyyy-MM-dd', 'en-US');
+    this.form.get(columnid).setValue(val);
+    this.OnchangeFn(val, columnid, 0, itemvalue);
+
+
+  }
+  ontimechange(val, fieldId, itemvalue) {
+
+   
+    if (itemvalue != undefined && itemvalue.calculateValue) {
+      this.OnchangeFn(val, fieldId, 0, itemvalue);
+    }
+  }
+  DownLoadFiles(fieldname, fieldvalue) {
+
+    fieldname = fieldname.replace(/[\s]/g, '');
+    let fileName = fieldvalue;
+    //file type extension
+    let checkFileType = fileName.split('.').pop();
+
+    let thefile: any;
+    let now = formatDate(new Date().toLocaleDateString(), 'yyyy-MM-dd', 'en-US');
+    let filecheck = fieldname + now + "." + checkFileType;
+    this.Builderservice.DownloadFile(fileName)
+      .subscribe(
+        (data) => {
+
+          thefile = new Blob([data], { type: "application/octet-stream" }),
+            saveAs(thefile, filecheck);
+
+        },
+        err => {
+
+          alert("Server error while downloading file.");
+        }
+      );
+
+
+  }
+  OnchangeFn(val: string, fieldvalue, settingflag, itemvalue?, childform?, index?) {
+
+    this.cascadeCondn.emit({ val, fieldvalue, settingflag, itemvalue, childform, index })
+
+  }
+  onSelectFile(event, fieldId, formname) {
+
+    this.url = null;
+
+    if (event.target.files && event.target.files[0]) {
+      let file = event.target.files[0];
+      this.photoName = file.name;
+
+      this.filesize = file.size;
+
+      let now = new Date();
+      this.Attachment = file.name;
+
+
+      this.loginconfigservice.postFiles(this.Attachment, file).subscribe(
+        (response) => {
+
+          this.splitValue = response;
+          let split = this.splitValue.split(',')
+          if (split) {
+            if (split.length > 0) {
+              this.File = split[0];
+
+              this.url = split[1];
+              formname.get(fieldId).setValue(this.File);
+
+            }
+          }
+        }
+      );
+    }
+  }
+}

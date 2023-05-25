@@ -1,0 +1,197 @@
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-12 mb-3 mt-3">
+            <button class="btn commonbutton" style="float:right;" (click)="showModal(content)">Add</button>
+        </div>
+    </div>
+    <!-- <div class="row">
+                 
+        <button class="btn pull-right login_btn buttoncolor"  type="text" pButton label="Basic" (click)="addButtonClick()" >ADD</button>  
+      
+    </div> -->
+    <div class="row">   
+        <div class="col-sm-12">
+            <p-treeTable [value]="files1">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th>Label</th>
+                        <th>Value</th>
+                        <th>Action</th>
+                        <th></th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-rowNode let-rowData="rowData">
+                    <tr [ttRow]="rowNode">
+                        <td>
+                            <p-treeTableToggler [rowNode]="rowNode"></p-treeTableToggler>
+                            {{rowData.name}}
+                        </td>
+                        <td>{{rowData.size}}</td>
+                        <!-- <td>{{rowData.type}}</td> -->
+                        <td align="center">
+                            <span (click)="onedit(Subcontent)">
+                            <span class="fa fa-pencil awesome" title="Edit"></span>
+                            </span>
+                            <span (click)="Deletedata(Deletecontent)">
+                            <i class="fa fa-times-circle-o blue awesome" title="Delete"></i>
+                            </span>   
+                        </td>
+                        <td>
+                            <div *ngIf="rowData.parent_id == 0" style="text-align: center;">
+                                <button class="btn addbtn" (click)="SubshowModal(Subcontent)">Add</button>
+                            </div>
+                             <!-- {{rowData.parent_id}} -->
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-treeTable>
+        </div>
+    </div>
+
+</div>
+<!----  Add Modal Pop-up Start  ---->    
+<ng-template #content let-modal>
+    <form [formGroup]="treetableForm" (ngSubmit)="onSubmit(treetableForm.value)" autocomplete="off">
+    
+      
+            <div class="modal-header popuphead">
+              <h4 class="modal-title popuptitle">Add Treetable
+              </h4>
+              <button type="button" class="close pull-right" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- <h4 class="subheader">DownTime</h4> -->
+              <div class="container">
+                <div class="top-main">
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-sm-12 col-12">
+                                <label class="m-0 font-weight-normal">Code ID</label>
+                                <input formControlName="CodeId" type="text" class="form-control cshadow" [ngClass]="{ 'is-invalid': submitted && treetable.CodeId.errors }">
+                                <div *ngIf="submitted && treetable.CodeId.errors" class="invalid-feedback">
+                                    <div *ngIf="treetable.CodeId.errors.required">Code ID is required</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+    
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-sm-12 col-12">
+                                <label class="m-0 font-weight-normal">Name</label>
+                                <input formControlName="name" type="text" class="form-control cshadow" [ngClass]="{ 'is-invalid': submitted && treetable.name.errors }">
+                                <div *ngIf="submitted && treetable.name.errors" class="invalid-feedback">
+                                    <div *ngIf="treetable.name.errors.required">Name is required</div>
+                                    <div *ngIf="treetable.name.errors.cannotContainSpace">
+                                        Name Cannot Contain Space</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                   
+                   
+                </div>
+      
+              </div>
+            </div>
+           <footer class="modal-footer pop-btn">
+                    <button class="btn commonbutton">Submit</button>
+                    <button type="reset" class="btn commonbutton" (click)="modal.close('Close click')">Cancel</button>
+            </footer>
+      </form>
+    </ng-template>
+
+    <!----  Sub Add Modal Pop-up Start  ---->    
+    <ng-template #Subcontent let-modal>
+        <form [formGroup]="treetableSubForm" (ngSubmit)="onSubSubmit(treetableSubForm.value)" autocomplete="off">
+    
+      
+            <div class="modal-header popuphead">
+              <h4 class="modal-title popuptitle">Add Treetable
+              </h4>
+              <button type="button" class="close pull-right" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- <h4 class="subheader">DownTime</h4> -->
+              <div class="container">
+                <div class="top-main">
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-sm-12 col-12">
+                                <label class="m-0 font-weight-normal">SubCode</label>
+                                <input formControlName="Subcode" type="text" class="form-control cshadow" [ngClass]="{ 'is-invalid': submitted && treetableSub.Subcode.errors }">
+                                <div *ngIf="submitted && treetableSub.Subcode.errors" class="invalid-feedback">
+                                    <div *ngIf="treetableSub.Subcode.errors.required">SubCode is required</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+    
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-sm-12 col-12">
+                                <label class="m-0 font-weight-normal">Name</label>
+                                <input formControlName="Subname" type="text" class="form-control cshadow" [ngClass]="{ 'is-invalid': submitted && treetableSub.Subname.errors }">
+                                <div *ngIf="submitted && treetableSub.Subname.errors" class="invalid-feedback">
+                                    <div *ngIf="treetableSub.Subname.errors.required">Name is required</div>
+                                    <div *ngIf="treetableSub.Subname.errors.cannotContainSpace">
+                                        Name Cannot Contain Space</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- <div class="form-group">
+                        <div class="row">
+                            <div class="col-sm-12 col-12">
+                                <label class="m-0 font-weight-normal">Parent</label>
+                                <input formControlName="parent" type="text" class="form-control cshadow" [ngClass]="{ 'is-invalid': submitted && treetableSub.parent.errors }"></input>
+                                <div *ngIf="submitted && treetableSub.parent.errors" class="invalid-feedback">
+                                    <div *ngIf="treetableSub.parent.errors.required">Parent is required</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div> -->
+                   
+                   
+                </div>
+      
+              </div>
+            </div>
+           <footer class="modal-footer pop-btn">
+                    <button class="btn commonbutton">Submit</button>
+                    <button type="reset" class="btn commonbutton" (click)="modal.close('Close click')">Cancel</button>
+            </footer>
+      </form>
+    </ng-template>
+    
+    <ng-template #Deletecontent let-modal>
+        <div class="modal-header popuphead">
+            <h4 class="modal-title popuptitle">Delete Record
+            </h4>
+            <button type="button" class="close pull-right" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                <span aria-hidden="true">&times;</span>
+              </button>
+          </div>
+              <div class="modal-body">                   
+                <div class="container form-group ">
+                  <div class="row">
+                    <div class="col">
+                      <span>Are you sure you want to Delete the record?</span>
+                    </div>
+        
+                  </div>
+                </div>
+                </div>
+    
+              <footer class="modal-footer pop-btn">
+                <button type="button"  class="btn commonbutton" (click)="DeleteTableDetails()">OK</button>
+                <button type="button" class="btn commonbutton" (click)="modal.close('Close click')">Cancel</button>
+              </footer>
+    </ng-template>
+

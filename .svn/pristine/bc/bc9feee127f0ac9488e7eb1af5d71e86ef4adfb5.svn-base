@@ -1,0 +1,348 @@
+<div class="col-sm-12">
+  <div class="row">
+      <div class="col-sm-4">
+          <h2  class="pageTitle" >User</h2>
+          <p class="breadcrumbs">Home - Admin - User</p>
+      </div>
+      <div class="col-sm-5"></div>
+      <div class="col-sm-3 btnarea">
+          <button class="btn addbutton" type="button" (click)="showModal()">+ Add User</button>
+      </div>
+  </div>
+  </div>
+  
+  <div class="whitebg">
+    <div class="receivingbody">
+  <div class="table-responsive">
+      <div id="no-more-tables">
+      
+
+     <p-table id="texport"  #dt [columns]="cols" [value]="userdetails"  [first]="first" [responsive]="true" [rows]="10" sortMode="multiple" [scrollable]="table.Scrollable" scrollHeight="400px" [resizableColumns]="table.Resizable" [reorderableColumns]="true" [globalFilterFields]="['User_FName','User_LName','EmailID','PhoneNumber','Rolename']" >
+        <ng-template pTemplate="caption">
+            <div class="row">
+
+                <div class="col-lg-6 col-sm-4">
+
+                    <div *ngIf="table.ExportButton" class="ui-helper-clearfix" style="text-align: left">
+                        <button type="button" class="exportbuttons" icon="pi pi-file-o" iconPos="left"  (click)="exportExcel()"><span aria-hidden="true" class="ui-button-icon-left ui-clickable fa fa-files-o" style="font-size: 16px; padding: 8px;"></span></button>
+
+                        <button type="button" class="exportbuttons" icon="pi pi-file-pdf" iconPos="left" label="PDF" (click)="exportPdf()"><span aria-hidden="true" class="ui-button-icon-left ui-clickable fa fa-file-pdf-o" style="font-size: 16px; padding: 8px;"></span></button>
+                    </div>
+                </div>
+                <!-- <div class="col-lg-3 col-sm-4">
+                    <div *ngIf="table.Multiselect" style="text-align:left">
+                        <p-multiSelect [options]="cols" [(ngModel)]="selectedColumns" optionLabel="header" selectedItemsLabel="{0} columns selected" [style]="{minWidth: '200px'}" defaultLabel="Choose Columns"></p-multiSelect>
+                    </div>
+                </div> -->
+                <div class="col-lg-6 col-sm-4">
+                    <div *ngIf="table.Filter" style="text-align: right">
+                        <span class="searchfilter">Search:</span>
+                        <input type="text" pInputText size="20" placeholder="" (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:auto;padding: 5px;">
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+
+        <ng-template pTemplate="header" class="tblheading" let-columns>
+            <tr>
+              <th pSortableColumn="Fname">F Name <p-sortIcon field="Fname"></p-sortIcon></th>
+              <th pSortableColumn="Lname">L Name <p-sortIcon field="Lname"></p-sortIcon></th>
+              <th pSortableColumn="email">Email ID <p-sortIcon field="email"></p-sortIcon></th>
+              <th pSortableColumn="contact">Contact Number <p-sortIcon field="contact"></p-sortIcon></th>
+              <th pSortableColumn="accessRole">Access Role <p-sortIcon field="accessRole"></p-sortIcon></th>
+              <th pSortableColumn="action">Action<p-sortIcon field="action"></p-sortIcon></th>
+                
+          
+            </tr>
+        </ng-template>
+
+        <!-- <ng-template pTemplate="colgroup" let-columns>
+            <colgroup>
+                <col *ngFor="let col of columns" style="width:100%">
+            </colgroup>
+        </ng-template> -->
+
+        <ng-template pTemplate="body" let-userdetails let-index="rowIndex" class="wordwrap tablebgcolor">
+            <tr [pReorderableRow]="index">
+
+              <td data-title="F Name">{{userdetails.User_FName}}</td>
+              <td data-title="L Name">{{userdetails.User_LName}}</td>
+              <td data-title="email"> {{userdetails.EmailID}}</td>
+              <td data-title="contact">{{userdetails.PhoneNumber}}</td>
+              <td data-title="accessRole">{{userdetails.Rolename}}</td>
+              <td data-title="action" align="center"><span>
+                <span class="fa fa-pencil awesome" title="Edit" (click)="onedit(userdetails.UserID)"></span></span>
+              <span><i class="fa fa-times-circle-o blue awesome" title="Delete" (click)="deleteuser(userdetails.UserID, userdetails.User_FName)"></i></span></td>
+            </tr>
+</ng-template>
+        <ng-template pTemplate="emptymessage" let-columns>
+            <tr>
+
+                <td [attr.colspan]="emptyrow">
+                    No records found
+                </td>
+
+            </tr>
+        </ng-template>
+        
+    </p-table>
+      </div>
+    </div>
+    </div>
+  </div>
+
+<form [formGroup]="UserForm" (ngSubmit)="onSubmit(UserForm.value)" autocomplete="off">
+  <div class="modal fade" bsModal #usermodal="bs-modal" [config]="{backdrop: 'static'}" tabindex="-1" role="dialog"
+aria-labelledby="mySmallModalLabel" aria-hidden="true">
+<div class="modal-dialog crider">
+  <div class="modal-content">
+    <div class="modal-header popuphead">
+      <h4 class="modal-title popuptitle">Add User Details 
+      </h4>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="usermodal.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <!-- <h4 class="subheader">DownTime</h4> -->
+      <div class="container">
+          <div class="form-group mt-4">
+              <div class="row">
+                <div class="col-lg-4 col-xs-12">
+                      <label>First Name</label>
+                      <input type="text" formControlName="Fname" class="form-control cshadow" [ngClass]="{ 'is-invalid': submitted && user.Fname.errors }">
+                      <div *ngIf="submitted && user.Fname.errors" class="invalid-feedback">
+                        <div *ngIf="user.Fname.errors.required">First Name is required</div>
+                        <div *ngIf="user.Fname.errors.cannotContainSpace">First Name Cannot Contain Space</div>
+                      </div>
+                </div>
+                <div class="col-lg-4 col-xs-12">
+                      <label>Last Name</label>
+                      <input type="text" formControlName="Lname" class="form-control cshadow" [ngClass]="{ 'is-invalid': submitted && user.Lname.errors }">
+                      <div *ngIf="submitted && user.Lname.errors" class="invalid-feedback">
+                        <div *ngIf="user.Lname.errors.required">Last Name is required</div>
+                        <div *ngIf="user.Lname.errors.cannotContainSpace">Last Name Cannot Contain Space</div>
+                      </div>
+                </div>
+                <div class="col-lg-4 col-xs-12">
+                  <label>Email ID</label>
+                  <input type="email" formControlName="Emailid" class="form-control cshadow" [ngClass]="{ 'is-invalid': submitted && user.Emailid.errors }">
+                  <div *ngIf="submitted && user.Emailid.errors" class="invalid-feedback">
+                    <div *ngIf="user.Emailid.errors.required">Email ID is required</div>
+                    <div *ngIf="user?.Emailid?.errors?.cannotContainSpace">Email ID cannot Contain Space</div>
+                    <div *ngIf="user?.Emailid?.errors?.pattern">Email ID must be a valid Email ID address</div>
+                    <div *ngIf="user?.Emailid?.errors?.EmailidExist">Email ID already exist</div>
+                  </div>
+            </div>
+                <!-- <div class="col-lg-4 col-xs-12">
+                      <label>User Id</label>
+                      <input type="text" formControlName="EmpId" class="form-control cshadow" [ngClass]="{ 'is-invalid': submitted && user.EmpId.errors }">
+                      <div *ngIf="submitted && user.EmpId.errors" class="invalid-feedback">
+                      <div *ngIf="user.EmpId.errors.required">Employee Id is required</div>
+                   
+                      </div>
+                </div> -->
+                </div>  
+            </div>
+            <div class="form-group mt-4">
+                  <div class="row">
+                    <div class="col-lg-4 col-xs-12">
+                          <label>Designation</label>
+                          <input type="text" formControlName="Designation" class="form-control cshadow" [ngClass]="{ 'is-invalid': submitted && user.Designation.errors }">
+                          <div *ngIf="submitted && user.Designation.errors" class="invalid-feedback">
+                            <div *ngIf="user.Designation.errors.required">Designation is required</div>
+                            <div *ngIf="user.Designation.errors.cannotContainSpace">Designation Cannot Contain Space</div>
+                          </div>
+                    </div>
+                    <div class="col-lg-4 col-xs-12">
+                      <label>Password</label>
+                      <input type="password" formControlName="Password" class="form-control cshadow" [ngClass]="{ 'is-invalid': submitted && user.Password.errors }">
+                      <div *ngIf="submitted && user.Password.errors" class="invalid-feedback">
+                        <div *ngIf="user.Password.errors.required">Password is required</div>
+                        <div *ngIf="user.Password.errors.minlength">Password must be at least 6 characters</div>
+                        <div *ngIf="user.Password.errors.cannotContainSpace">Password cannot Contain Space</div>
+                      </div>
+                </div>
+                <div class="col-lg-4 col-xs-12">
+                      <label>Confirm Password</label>
+                      <input type="tepasswordxt" formControlName="ConfirmPassword" class="form-control cshadow" [ngClass]="{ 'is-invalid': submitted && user.ConfirmPassword.errors }">
+                      <div *ngIf="submitted && user.ConfirmPassword.errors" class="invalid-feedback">
+                        <div *ngIf="user.ConfirmPassword.errors.required">Confirm Password is required</div>
+                        <div *ngIf="user.ConfirmPassword.errors.mustMatch">Passwords must match</div>
+                      </div>
+                </div>
+                    <!-- <div class="col-lg-4 col-xs-12">
+                          <label>User Type</label>
+                          <select class="form-control cshadow" formControlName="Skilltype" [ngClass]="{ 'is-invalid': submitted && user.Skilltype.errors }">
+                              <option [value]="0">Select User Type</option>
+                              <option value="1" ng-reflect-value="1">Vendor</option>
+                              <option value="2" ng-reflect-value="2">Customer</option>
+                           </select>
+                           <div *ngIf="submitted && user.Skilltype.errors" class="invalid-feedback">
+                              <div *ngIf="user.Skilltype.errors.required">User Type is required</div>
+                              </div>
+                            
+                          </div> -->
+                    
+                    </div>  
+                </div>
+              
+                    
+                        <div class="form-group mt-4">
+                              <div class="row">
+                                <div class="col-lg-4 col-xs-12">
+                                      <label>Access Role</label>
+                                      <select class="form-control cshadow" formControlName="role" [ngClass]="{ 'is-invalid': submitted && user.role.errors }">
+                                              <!-- <option [value]="0">Select Access Role</option>
+                                              <option value="1" ng-reflect-value="1">Admin</option>
+                                              <option value="2" ng-reflect-value="2">Supervisor</option> -->
+                                            <option *ngFor="let item of getRoleDetails" [value]="item.RoleID">{{item.RoleName}}</option>
+                                           </select>
+                                      <div *ngIf="submitted && user.role.errors" class="invalid-feedback">
+                                            <div *ngIf="user.role.errors.required">Access Role is required</div>
+                                            <!-- <div *ngIf="user.role.errors.defaultSelect">Access Role is required</div> -->
+                                      </div>
+                                </div>
+                                <div class="col-lg-4 col-xs-12">
+                                  <label>Status</label>
+                                  <select class="form-control cshadow" formControlName="status" [ngClass]="{ 'is-invalid': submitted && user.status.errors }">
+                                          <option>Select Status</option>
+                                          <option value=true>Active</option>
+                                          <option value=false>Inactive</option>
+                                          
+                                       </select>
+                                       <div *ngIf="submitted && user.status.errors" class="invalid-feedback">
+                                        <div *ngIf="user.status.errors.required">Status is required</div>
+                                        <!-- <div *ngIf="user.status.errors.defaultSelect">Status is required</div> -->
+                                  </div>
+                            </div>
+                            <div class="col-lg-4 col-xs-12">
+                                <label>Contact Number</label>
+                                <input type="text" class="form-control cshadow" formControlName="contact" [ngClass]="{ 'is-invalid': submitted && user.contact.errors }">
+                                <div *ngIf="submitted && user.contact.errors" class="invalid-feedback">
+                                  <div *ngIf="user.contact.errors.required">Contact Number is required</div>
+                                  <div *ngIf="user.contact.errors.minLength">Contact Number must be at least 5 characters</div>
+                                  <div *ngIf="user.contact.errors.maxLength">Contact Number must be at most 12 characters</div>
+                                  <div *ngIf="user.contact.errors.pattern">Contact Number must be number</div>
+                                  <div *ngIf="user.contact.errors.cannotContainSpace">Contact Number cannot Contain Space</div>
+                                </div>
+                              </div>
+                                <!-- <div class="col-lg-4 col-xs-12">
+                                      <label>City</label>
+                                      <input type="text" class="form-control cshadow" formControlName="city" [ngClass]="{ 'is-invalid': submitted && user.city.errors }">
+                                      <div *ngIf="submitted && user.city.errors" class="invalid-feedback">
+                                      <div *ngIf="user.city.errors.required">City is required</div>
+                                      <div *ngIf="user?.City?.errors?.cannotContainSpace">City cannot Contain Space</div>
+                                      </div>
+                                </div>
+                                <div class="col-lg-4 col-xs-12">
+                                      <label>State</label>
+                                      <select class="form-control cshadow" formControlName="state" [ngClass]="{ 'is-invalid': submitted && user.state.errors }">
+                                              <option [value]="0">Select State</option>
+                                              <option value="1" ng-reflect-value="1">Karnataka</option>
+                                              <option value="2" ng-reflect-value="2">Maharashtra</option>
+                                              
+                                           </select>
+                                           <div *ngIf="submitted && user.state.errors" class="invalid-feedback">
+                                            <div *ngIf="user.state.errors.required">state is required</div>
+                                            <div *ngIf="user.state.errors.defaultSelect">state is required</div>
+                                      </div>
+                                </div> -->
+                                </div>  
+                            </div>
+
+                            <div class="form-group mt-4">
+                              <div class="row">
+                                <div class="col-lg-4 col-xs-12">
+                                  <label>Preferred Language</label>
+                                              <select class="form-control cshadow" formControlName="Language" [ngClass]="{ 'is-invalid': submitted && user.Language.errors }">
+                                                      <option [value]="0">Select Language</option>
+                                                      <option *ngFor="let item of languagelist" [value]="item.LanguageID">{{item.LanguageName}}</option>
+                                                      <!-- <option value="2" ng-reflect-value="2">Language2</option> -->
+                                               </select>
+                                               <div *ngIf="submitted && user.Language.errors" class="invalid-feedback">
+                                                <div *ngIf="user.Language.errors.required">Language is required</div>
+                                                <div *ngIf="user.Language.errors.defaultSelect">Language is required</div>
+                                          </div>
+                            </div>
+                            <div class="col-lg-4 col-xs-12" *ngIf="SuperAdmin">
+                              <label>Tenant</label>
+                              <select class="form-control cshadow" formControlName="Tenant" [ngClass]="{ 'is-invalid': submitted && user.Tenant.errors }">
+                                      <option>Select Tenant</option>
+                                      <option value=1>1</option>
+                                      <option value=2>2</option>
+                                      
+                                   </select>
+                                   <div *ngIf="submitted && user.Tenant.errors" class="invalid-feedback">
+                                    <div *ngIf="user.Tenant.errors.required">Tenant is required</div>
+                                   </div>
+                        </div>
+                              </div>  
+                            </div>
+
+                            <div class="form-group mt-4">
+                              <div class="row">
+                                <div class="col-lg-12 col-xs-12">
+                                      <label>Address</label>
+                                      <textarea type="text" formControlName="Address" class="form-control cshadow"></textarea>
+                                </div>
+                              </div>  
+                            </div>
+                          
+      </div>
+    </div>
+    <footer class="modal-footer pop-btn">
+      <div class="row">
+        <div class="col-sm-4 col-1"></div>
+        <div class="col-sm-2 col-5">
+          <button class="btn btn-primary modal-confirm popupbtn fixedwidth" >Submit</button>
+        </div>
+          <div class="col-sm-2 col-5">
+            <button class="btn btn-primary modal-confirm popupbtn fixedwidth btncancel" (click)="usermodal.hide()">
+              Cancel
+            </button>
+        </div>
+        <div class="col-sm-4 col-1"></div>
+      </div>
+    </footer>
+  </div>
+</div>
+</div>
+</form>
+
+<div class="modal fade" bsModal #deletemodal="bs-modal" [config]="{backdrop: 'static'}"
+tabindex="-1" role="dialog" aria-labelledby="dialog-dailyproduct-name">
+<div class="modal-dialog  modal-l pTop" role="document">
+  <div class="modal-content">
+    <div class="modal-header text-center" style="background-color:#f5901f !important;color: #fff; ">
+      <h5 class="modal-title text-center" id="exampleModalLongTitle">Delete Record</h5>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="deletemodal.hide()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+     
+      <div class="container form-group ">
+        <div class="row">
+          <div class="col">
+            <span>Are you sure you want to Delete the record?</span>
+          </div>
+
+        </div>
+      </div>
+         <div class="row main">
+            <div class="col-sm-4 col-1"></div>
+            <div class="col-sm-2 col-5 text-center" style="padding: 9px;">
+               
+                <button type="button" class="btn pull-center btncandown fixedwidth" (click)="delUserData()" style="background: #f5901f;color:#fff;    border-radius: 9px; " >OK</button>
+            </div>
+            <div class="col-sm-2 col-5 text-center" style="padding: 9px;">
+                <button type="button" class="btn pull-center fixedwidth"  style="background: #f5901f;color:#fff;     border-radius: 9px;" (click)="deletemodal.hide()" >Cancel</button>
+            </div>
+            <div class="col-sm-4 col-1"></div>
+        </div>
+    </div>
+  </div>
+</div>
+</div>
+  

@@ -1,0 +1,4 @@
+<p-fullCalendar [events]="events" [options]="options">
+</p-fullCalendar>
+<pre>{{events | json}}</pre>
+<!-- (eventDrop)="updateEvent($event.detail)" (drop)="dropped($event)" -->

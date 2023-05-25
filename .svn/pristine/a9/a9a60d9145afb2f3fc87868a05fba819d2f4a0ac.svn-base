@@ -1,0 +1,276 @@
+<div class="row" style="    padding: 6px;">
+  <div class="col-lg-1"></div>
+  <div class="col-lg-11">
+    <button class="btn login_btn" type="text" label="Basic" (click)="op1.toggle($event)">Login Configuaration</button>
+  </div>
+  <p-overlayPanel #op1>
+    <div class="col-lg-12">
+      <div class="row">
+        <label class="col-8">Background Color</label>
+        <input class="colorpick col-4" type="color" [(ngModel)]="theme.BackgroundColor">
+      </div>
+      <div class="row">
+        <label class="col-4">Upload Background Image</label>
+        <input id="fileupload" type="file" name="bannerImage" (change)="onselectBanner($event)" accept="capture=camera">
+        <a style="cursor: pointer;color:blue" (click)="DownLoadFiles(bannerimage)">{{bannerimage}}</a>
+      </div>
+      <div class="row">
+        <label class="col-8">Login form Background Color</label>
+        <input class="colorpick col-4" type="color" [(ngModel)]="theme.LoginFormBackgroundcolor">
+      </div>
+      <div class="row">
+        <label class="col-8">Text Color</label>
+        <input class="colorpick col-4" type="color" [(ngModel)]="theme.TextColor">
+      </div>
+      <div class="row">
+        <label class="col-8">Login Form Alignment</label>
+        <div class="col-4">
+          <input type="radio" value="center" [(ngModel)]="theme.Alignment" checked><span>Center</span><br>
+          <input type="radio" value="right" [(ngModel)]="theme.Alignment">Right<br>
+          <input type="radio" value="left" [(ngModel)]="theme.Alignment">Left<br>
+        </div>
+      </div>
+
+      <div class="row">
+        <label class="col-8">Button Background Color</label>
+        <input class="colorpick col-4" type="color" name="ButtonColor" [(ngModel)]="theme.ButtonColor">
+      </div>
+      <div class="row">
+        <label class="col-8">Button Text Color</label>
+        <input class="colorpick col-4" type="color" [(ngModel)]="theme.ButtonTextColor">
+      </div>
+      <div class="row">
+        <label class="col-3">Upload Logo</label>
+        <input id="fileupload" type="file" name="logo" (change)="onSelectFile($event)" accept="capture=camera"
+          placeholder="{{uploadlogo}}">
+        <a style="cursor: pointer;color:blue" (click)="DownLoadFiles(uploadlogo)">{{uploadlogo}}</a>
+
+      </div><br>
+      <div class="row">
+        <button type="submit" class="btn commonbutton" (click)="onsubmit()">submit</button>
+      </div>
+    </div>
+  </p-overlayPanel>
+</div>
+
+
+
+
+<!-- <img [src]="url" *ngIf="imagevisible" class="img-thumbnail" style="width: 23%;"> -->
+
+
+<!-- <img [src]="url" *ngIf="imagevisible"> -->
+<div class="bg_image" [ngStyle]="{'background-image':'url('+theme?.BannerImage+')'}"
+  [style.backgroundColor]="theme?.BackgroundColor">
+
+  <div *ngIf="theme.Alignment=='center'">
+    <div class="body-sign  centeralign">
+      <div class="center-sign">
+
+        <div class="container">
+          <div class="user_card" [style.backgroundColor]="theme.LoginFormBackgroundcolor">
+
+            <div class="loginheader">
+              <div class="">
+                <img [src]="url" *ngIf="imagevisible" style="width:50%">
+
+              </div>
+            </div>
+            <div class="">
+
+
+              <label class="customlable" [style.color]="theme.TextColor">User Name</label>
+              <div class="input-group mb-3">
+
+                <input type="text" name="" class="form-control input_user" value="" placeholder="username"
+                  value="Username" />
+
+              </div>
+              <label class="customlable" [style.color]="theme.TextColor">Password</label>
+              <div class="input-group">
+                <input type="password" name="" class="form-control input_pass" value="" placeholder="password"
+                  value="Password" />
+              </div>
+
+              <div style="text-align: center;">
+                <button class="btn login_btn mt-4" [style.background]="theme.ButtonColor"
+                  [style.color]="theme.ButtonTextColor">Login</button>
+                <div *ngIf="error" class="alert alert-danger">The username or password is invalid</div>
+              </div>
+              <div class="mt-4">
+
+                <div class="d-flex justify-content-center links" style=" margin-bottom: 10%;">
+                  <a [style.color]="theme.TextColor" href="#">Forgot your password?</a>
+                </div>
+              </div>
+
+            </div>
+          </div><br><br><br>
+          <div style="text-align: center;">
+            <button class="btn commonbutton mt-4" (click)="onBackButton()"><i class="fa fa-long-arrow-left"
+                aria-hidden="true"></i>&nbsp;&nbsp;Back</button>
+            <div *ngIf="error" class="alert alert-danger">The username or password is invalid</div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="theme.Alignment=='right'">
+    <div class="body-sign rightalign">
+      <div class="center-sign">
+
+        <div class="container">
+          <div class="user_card" [style.backgroundColor]="theme.LoginFormBackgroundcolor">
+
+            <div class="loginheader">
+              <div class="">
+                <img [src]="url" *ngIf="imagevisible" style="width:50%">
+
+              </div>
+            </div>
+            <div class="">
+
+
+              <label class="customlable" [style.color]="theme.TextColor">User Name</label>
+              <div class="input-group mb-3">
+
+                <input type="text" name="" class="form-control input_user" value="" placeholder="username"
+                  value="Username" />
+
+              </div>
+              <label class="customlable" [style.color]="theme.TextColor">Password</label>
+              <div class="input-group">
+                <input type="password" name="" class="form-control input_pass" value="" placeholder="password"
+                  value="Password" />
+              </div>
+
+              <div style="text-align: center;">
+                <button class="btn login_btn mt-4" [style.background]="theme.ButtonColor"
+                  [style.color]="theme.ButtonTextColor">Login</button>
+                <div *ngIf="error" class="alert alert-danger">The username or password is invalid</div>
+              </div>
+              <div class="mt-4">
+
+                <div class="d-flex justify-content-center links" style=" margin-bottom: 10%;">
+                  <a [style.color]="theme.TextColor" href="#">Forgot your password?</a>
+                </div>
+              </div>
+
+            </div>
+          </div><br><br><br>
+          <div style="text-align: center;">
+            <button class="btn commonbutton mt-4" (click)="onBackButton()"><i class="fa fa-long-arrow-left"
+                aria-hidden="true"></i>&nbsp;&nbsp;Back</button>
+            <div *ngIf="error" class="alert alert-danger">The username or password is invalid</div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="theme.Alignment=='left'">
+    <div class="body-sign leftalign">
+      <div class="center-sign">
+
+        <div class="container">
+          <div class="user_card" [style.backgroundColor]="theme.LoginFormBackgroundcolor">
+
+            <div class="loginheader">
+              <div class="">
+                <img [src]="url" *ngIf="imagevisible" style="width:50%">
+
+              </div>
+            </div>
+            <div class="">
+
+
+              <label class="customlable" [style.color]="theme.TextColor">User Name</label>
+              <div class="input-group mb-3">
+
+                <input type="text" name="" class="form-control input_user" value="" placeholder="username"
+                  value="Username" />
+
+              </div>
+              <label class="customlable" [style.color]="theme.TextColor">Password</label>
+              <div class="input-group">
+                <input type="password" name="" class="form-control input_pass" value="" placeholder="password"
+                  value="Password" />
+              </div>
+
+              <div style="text-align: center;">
+                <button class="btn login_btn mt-4" [style.background]="theme.ButtonColor"
+                  [style.color]="theme.ButtonTextColor">Login</button>
+                <div *ngIf="error" class="alert alert-danger">The username or password is invalid</div>
+              </div>
+              <div class="mt-4">
+
+                <div class="d-flex justify-content-center links" style=" margin-bottom: 10%;">
+                  <a [style.color]="theme.TextColor" href="#">Forgot your password?</a>
+                </div>
+              </div>
+
+            </div>
+          </div><br><br><br>
+          <div style="text-align: center;">
+            <button class="btn commonbutton mt-4" (click)="onBackButton()"><i class="fa fa-long-arrow-left"
+                aria-hidden="true"></i>&nbsp;&nbsp;Back</button>
+            <div *ngIf="error" class="alert alert-danger">The username or password is invalid</div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+
+</div>
+
+
+
+
+
+
+
+<!-- <div class="modal fade" bsModal #DelModal="bs-modal" [config]="{backdrop: 'static'}"
+        tabindex="-1" role="dialog" aria-labelledby="dialog-dailyproduct-name">
+          <div class="modal-dialog  modal-xl" role="document">
+            <div class="modal-content">
+              <div class="modal-header text-center" style="background-color:#f5901f !important;color: #fff; ">
+                <h5 class="modal-title text-center" id="exampleModalLongTitle">Login Failed</h5>
+                <button type="button" class="close pull-right" aria-label="Close" (click)="DelModal.hide()">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+               
+                <div class="container form-group ">
+                  <div class="row">
+                    <div class="col">
+                      <span>Invalid EmailId and Password</span>
+                    </div>
+        
+                  </div>
+                </div>
+                   <div class="row main">
+                      <div class="col-lg-4"></div>
+                      <div class="col-lg-4 text-center" style="    padding: 9px;">
+                    
+                          <button type="button" class="btn pull-center btncandown"(click)="loadDetails()" style="background: #f5901f;color:#fff;    border-radius: 9px; " >OK</button>
+                          &nbsp;
+                          <button type="button" class="btn pull-center "  style="background: #f5901f;color:#fff;     border-radius: 9px;" (click)="DelModal.hide()" >Cancel</button>
+                          
+                      </div>
+                      <div class="col-lg-4"></div>
+                    </div>
+                   
+              </div>
+            </div>
+          </div>
+        </div> -->

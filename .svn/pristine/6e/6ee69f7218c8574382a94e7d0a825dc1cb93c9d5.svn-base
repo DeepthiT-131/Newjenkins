@@ -1,0 +1,32 @@
+ul.ng-tns-c1-0 {
+    color: white;
+}
+.nobullet{
+    list-style: none;;
+}
+.white{
+    color:white;
+}
+.themesetting{
+    margin-left: 250px;
+  
+}
+.tablelayout{
+    padding:  0 20px 0px 20px !important;
+}
+
+:host ::ng-deep .ui-table .ui-table-thead > tr > th {
+    position: -webkit-sticky;
+    position: sticky;
+    /* top: 69px; */
+    box-shadow: 1px 3px 6px 0 rgba(32,33,36,0.10);
+}
+
+
+
+
+@media screen and (max-width: 64em) {
+    :host ::ng-deep .ui-table .ui-table-thead > tr > th {
+        top: 99px;
+    }
+}

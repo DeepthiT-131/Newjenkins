@@ -1,0 +1,800 @@
+ [
+    {
+      "displayID": "0",
+      "fieldName": "Div2",
+      "children": [] ,
+      "children1": [],
+      "fieldType": "divSection",
+      "icon": "far fa-square",
+      "labeltype": false,
+      "className": "col-sm-6",
+      "dbview": false,
+      "tableView": false,
+      "formView": false,
+
+      "multiple": false,
+      "groupName": "",
+      "restrictedRoles": [],
+      "relationField": [],
+      "visible": false,
+      "commonField": false,
+      "columnID": "",
+      "fieldstyle": "Secbgcolor"
+
+
+    },
+    {
+      "displayID": "0",
+      "fieldName": "Div3",
+      "children": [] ,
+      "children1": [] ,
+      "children2": [] ,
+      "fieldType": "divSection",
+      "icon": "far fa-square",
+      "labeltype": false,
+      "className": "col-sm-4",
+      "dbview": false,
+      "tableView": false,
+      "formView": false,
+
+      "multiple": false,
+      "groupName": "",
+      "restrictedRoles": [],
+      "relationField": [],
+      "visible": false,
+      "commonField": false,
+      "columnID": "",
+      "fieldstyle": "Secbgcolor"
+    },
+
+    {
+      "displayID": "0",
+      "fieldName": "Div4",
+      "children": [] ,
+      "children1": [] ,
+      "children2": [] ,
+      "children3": [] ,
+      "fieldType": "divSection",
+      "icon": "far fa-square",
+      "labeltype": false,
+      "className": "col-sm-3",
+      "dbview": false,
+      "tableView": false,
+      "formView": false,
+
+      "multiple": false,
+      "groupName": "",
+      "restrictedRoles": [],
+      "relationField": [],
+      "visible": false,
+      "commonField": false,
+      "columnID": "",
+      "fieldstyle": "Secbgcolor"
+    },
+
+    {
+      "displayID": "0",
+      "fieldName": "Div5",
+      "children": [] ,
+      "children1": [] ,
+      "children2": [] ,
+      "children3": [] ,
+      "children4": [] ,
+      "fieldType": "divSection",
+      "icon": "far fa-square",
+      "labeltype": false,
+      "className": "col-sm-2",
+      "dbview": false,
+      "tableView": false,
+      "formView": false,
+      "multiple": false,
+      "groupName": "",
+      "restrictedRoles": [],
+      "visible": false,
+      "commonField": false,
+      "columnID": "",
+      "fieldstyle": "Secbgcolor"
+    },
+    {
+      "displayID": "0",
+      "fieldType": "hrLine",
+      "fieldId": "",
+      "icon": "fa fa-bars",
+      "fieldName": "Line",
+      "border-top": "1px solid gray !important;",
+      "className": "",
+      "required": false,
+      "tableView": false,
+      "dbview": false,
+      "formView": false,
+
+      "sop": "",
+      "restrictedRoles": [],
+      "relationField": [],
+      "labelTop": false,
+      "visible": true,
+      "columnID": "",
+      "fieldstyle": "Thirdbgcolor"
+    },
+  
+    {
+      "displayID": "0",
+      "fieldType": "Editor",
+      "fieldId": "",
+      "icon": "fa-pencil-square-o",
+      "fieldName": "Text Editor",
+      "description": "",
+      "placeholder": "",
+      "defaultValue": "",
+      "dataType": "nvarchar(MAX)",
+      "Language": [{
+        "LanguageID": "",
+        "LanguageText": "",
+        "Placeholder": ""
+      }],
+
+      "className": "",
+      "editable": false,
+      "required": false,
+      "tableView": false,
+
+      "formView": false,
+      "dbview": false,
+      "sop": "",
+      "restrictedRoles": [],
+      "relationField": [],
+      "labelTop": true,
+      "visible": false,
+      "commonField": false,
+      "columnID": "",
+      "fieldstyle": "Thirdbgcolor"
+    },
+    {
+
+      "fieldType": "button",
+      "fieldId": "",
+      "icon": "fa-paper-plane",
+      "fieldName": "Submit",
+      "description": "Submit",
+      "placeholder": "Submit",
+      "defaultValue": "",
+      "dataType": "nvarchar(50)",
+      "Language": [{
+        "LanguageID": "",
+        "LanguageText": "",
+        "Placeholder": ""
+      }],
+
+      "className": "",
+      "tableView": false,
+      "dbview": false,
+      "dbIndex": false,
+
+      "sop": "",
+      "restrictedRoles": [],
+      "relationField": [],
+      "Alignment": "",
+      "labelTop": true,
+      "disableOnInvalid": true,
+      "ActionType": "submit",
+      "visible": false,
+      "commonField": false,
+      "Email": false,
+      "SMS": false,
+      "Whatsapp": false,
+      "columnID": "",
+      "fieldstyle": "Thirdbgcolor"
+    },
+    {
+      "displayID": "0",
+      "fieldType": "text",
+      "fieldId": "",
+      "icon": "fa-font",
+      "fieldName": "Text",
+      "description": "",
+      "placeholder": "",
+      "defaultValue": "",
+      "inputType": "Normal",
+      "dataType": "nvarchar(50)",
+      "Language": [{
+        "LanguageID": "",
+        "LanguageText": "",
+        "Placeholder": ""
+      }],
+      "className": "",
+      "regex": "",
+      "minLength": "",
+      "maxLength": "",
+      "previous": false,
+      "required": true,
+      "tableView": true,
+      "dbview": true,
+      "dbIndex": false,
+
+      "autonumber": false,
+      "unique": false,
+      "editable": true,
+      "refTable": "",
+      "refLabel": "",
+      "refValue": "",
+      "selectedDB": [],
+      "refCondition": [
+        {
+          "columnName": "",
+          "columnOperator": "",
+          "columnValue": "",
+          "colCondition": ""
+        }],
+
+      "refJoin": [
+        {
+          "joinTable": "",
+          "firstValue": "",
+          "SecondValue": ""
+        }],
+      "formView": true,
+
+      "groupnamebox": "table",
+      "refCriteria": "",
+      "sop": "",
+      "restrictedRoles": [],
+      "relationField": [],
+      "CascadeValue": "",
+      "CascadedItem": [],
+      "labelTop": true,
+      "visible": false,
+      "commonField": false,
+      "columnID": "",
+      "fieldstyle": "Primarybgcolor"
+
+
+    },
+
+    {
+      "displayID": "0",
+      "fieldType": "number",
+      "fieldId": "",
+      "icon": "fa-html5",
+      "fieldName": "Number",
+      "description": "",
+      "placeholder": "",
+      "defaultValue": "",
+      "dataType": "int",
+      "inputType": "Normal",
+
+      "Language": [{
+        "LanguageID": "",
+        "LanguageText": "",
+        "Placeholder": ""
+
+      }],
+      "className": "",
+      "regex": "^-?[0-9]\\d*(\\.\\d{1,2})?$",
+      "minLength": "",
+      "maxLength": "",
+      "previous": false,
+      "required": true,
+      "tableView": true,
+      "autonumber": false,
+      "dbview": true,
+      "dbIndex": false,
+
+      "unique": false,
+      "editable": true,
+      "refTable": "",
+      "refLabel": "",
+      "refValue": "",
+      "selectedDB": [],
+      "refCondition": [
+        {
+          "columnName": "",
+          "columnOperator": "",
+          "columnValue": "",
+          "colCondition": ""
+        }],
+
+      "refJoin": [
+        {
+          "joinTable": "",
+          "firstValue": "",
+          "SecondValue": ""
+        }],
+      "formView": true,
+
+      "groupnamebox": "table",
+      "sop": "",
+      "restrictedRoles": [],
+      "relationField": [],
+      "CascadeValue": "",
+      "CascadedItem": [],
+      "labelTop": true,
+      "visible": false,
+      "commonField": false,
+      "columnID": "",
+      "fieldstyle": "Primarybgcolor"
+    },
+    {
+      "displayID": "0",
+      "fieldType": "select",
+      "fieldId": "",
+      "icon": "fa-bars",
+      "fieldName": "Dropdown",
+      "description": "",
+      "placeholder": "",
+      "defaultValue": "",
+      "inputType": "Normal",
+      "dataType": "int",
+      "Language": [{
+        "LanguageID": "",
+        "LanguageText": "",
+        "Placeholder": ""
+      }],
+
+      "values": [
+        {
+          "Label": "",
+          "Value": ""
+        }],
+      "className": "",
+      "regex": "",
+      "minLength": "",
+      "maxLength": "",
+
+      "previous": false,
+      "required": true,
+      "tableView": true,
+      "dbview": true,
+      "dbIndex": false,
+
+      "editable": true,
+      "refTable": "",
+      "refLabel": "",
+      "refValue": "",
+      "selectedDB": [],
+      "refCondition": [
+        {
+          "columnName": "",
+          "columnOperator": "",
+          "columnValue": "",
+          "colCondition": ""
+        }],
+      "refJoin": [
+        {
+          "joinTable": "",
+          "firstValue": "",
+          "SecondValue": ""
+        }],
+      "formView": true,
+
+      "groupnamebox": "table",
+      "refCriteria": "",
+      "sop": "",
+      "restrictedRoles": [],
+      "relationField": [],
+      "CascadeValue": "",
+      "CascadedItem": [],
+      "labelTop": true,
+      "visible": false,
+      "commonField": false,
+      "columnID": "",
+      "fieldstyle": "Primarybgcolor"
+    },
+    {
+      "displayID": "0",
+      "fieldType": "date",
+      "fieldId": "",
+      "icon": "fa-calendar",
+      "fieldName": "Date",
+      "description": "",
+      "placeholder": "",
+      "defaultValue": "",
+      "dataType": "Date",
+      "Language": [{
+        "LanguageID": "",
+        "LanguageText": "",
+        "Placeholder": ""
+      }],
+      "className": "",
+      "regex": "",
+      "previous": false,
+      "required": true,
+      "tableView": true,
+      "dbview": true,
+      "dbIndex": false,
+
+      "unique": false,
+      "editable": true,
+      "formView": true,
+
+      "condition": "",
+      "sop": "",
+      "restrictedRoles": [],
+      "relationField": [],
+      "CascadeValue": "",
+      "CascadedItem": [],
+      "labelTop": true,
+      "View": "date",
+      "monthNavigator": false,
+      "yearRange": "1950:2020",
+      "MinDate": "",
+      "MaxDate": "",
+      "visible": false,
+      "commonField": false,
+      "columnID": "",
+      "fieldstyle": "Primarybgcolor"
+    },
+    {
+      "displayID": "0",
+      "fieldType": "time",
+      "fieldId": "",
+      "icon": "fa-calendar",
+      "fieldName": "Time",
+      "description": "",
+      "placeholder": "",
+      "defaultValue": "",
+      "dataType": "Time",
+      "Language": [{
+        "LanguageID": "",
+        "LanguageText": "",
+        "Placeholder": ""
+
+      }],
+      "className": "",
+      "regex": "",
+      "minLength": "",
+      "maxLength": "",
+      "previous": false,
+      "required": true,
+      "tableView": true,
+      "dbview": true,
+      "dbIndex": false,
+
+      "unique": false,
+      "editable": true,
+      "formView": true,
+
+      "sop": "",
+      "restrictedRoles": [],
+      "relationField": [],
+      "CascadeValue": "",
+      "CascadedItem": [],
+      "labelTop": true,
+      "visible": false,
+      "commonField": false,
+      "columnID": "",
+      "fieldstyle": "Primarybgcolor"
+    },
+    {
+      "displayID": "0",
+      "fieldType": "textarea",
+      "fieldId": "",
+      "icon": "fa-text-width",
+      "fieldName": "MultiLine Text",
+      "description": "",
+      "placeholder": "",
+      "defaultValue": "",
+      "dataType": "nvarchar(MAX)",
+      "Language": [{
+        "LanguageID": "",
+        "LanguageText": "",
+        "Placeholder": ""
+
+      }],
+      "className": "",
+      "regex": "",
+      "minLength": "",
+      "maxLength": "",
+      "previous": false,
+      "required": true,
+      "tableView": true,
+      "dbview": true,
+      "dbIndex": false,
+
+      "unique": false,
+
+      "editable": true,
+      "formView": true,
+
+      "sop": "",
+      "restrictedRoles": [],
+      "relationField": [],
+      "CascadeValue": "",
+      "CascadedItem": [],
+      "labelTop": true,
+      "visible": false,
+      "commonField": false,
+      "columnID": "",
+      "fieldstyle": "Primarybgcolor"
+    },
+
+
+    {
+      "displayID": "0",
+      "fieldType": "checkbox",
+      "fieldId": "",
+      "icon": "fa-list",
+      "fieldName": "checkbox",
+      "description": "checkbox",
+      "placeholder": "checkbox",
+      "defaultValue": true,
+      "inputType": "Normal",
+      "dataType": "int",
+      "Language": [{
+        "LanguageID": "",
+        "LanguageText": "",
+        "Placeholder": ""
+      }],
+      "displaytype": "horizontal",
+
+      "values": [
+        {
+          "label": "Option 1",
+          "value": "1"
+        },
+        {
+          "label": "Option 2",
+          "value": "2"
+        },
+        {
+          "label": "Option 3",
+          "value": "3"
+        }],
+      "className": "",
+      "previous": false,
+      "required": true,
+      "tableView": true,
+      "dbview": true,
+      "dbIndex": false,
+
+      "editable": true,
+      "refTable": "",
+      "refLabel": "",
+      "refValue": "",
+      "selectedDB": [],
+      "refCondition": [
+        {
+          "columnName": "",
+          "columnOperator": "",
+          "columnValue": "",
+          "colCondition": ""
+        }],
+
+      "refJoin": [
+        {
+          "joinTable": "",
+          "firstValue": "",
+          "SecondValue": ""
+        }],
+      "formView": true,
+
+      "groupnamebox": "table",
+
+      "refCriteria": "",
+
+      "sop": "",
+      "restrictedRoles": [],
+      "relationField": [],
+      "CascadeValue": "",
+      "CascadedItem": [],
+      "labelTop": true,
+      "visible": false,
+      "commonField": false,
+      "columnID": "",
+      "fieldstyle": "Primarybgcolor"
+    },
+    {
+      "displayID": "0",
+      "fieldType": "radio",
+      "fieldId": "",
+      "icon": "fa-list-ul",
+      "fieldName": "Radio",
+      "description": "Radio",
+      "placeholder": "Radio",
+      "defaultValue": "",
+      "inputType": "Normal",
+      "dataType": "int",
+      "Language": [{
+        "LanguageID": "",
+        "LanguageText": "",
+        "Placeholder": ""
+      }],
+      "displaytype": "horizontal",
+      "values": [
+        {
+          "label": "Option 1",
+          "value": "1"
+        },
+        {
+          "label": "Option 2",
+          "value": "2"
+        },
+        {
+          "label": "Option 3",
+          "value": "3"
+        }],
+      "className": "",
+      "previous": false,
+      "required": true,
+      "tableView": true,
+      "dbview": true,
+      "dbIndex": false,
+
+      "editable": true,
+      "refTable": "",
+      "refLabel": "",
+      "refValue": "",
+      "selectedDB": [],
+      "refCondition": [
+        {
+          "columnName": "",
+          "columnOperator": "",
+          "columnValue": "",
+          "colCondition": ""
+        }],
+
+      "refJoin": [
+        {
+          "joinTable": "",
+          "firstValue": "",
+          "SecondValue": ""
+        }],
+      "formView": true,
+      "groupnamebox": "table",
+      "refCriteria": "",
+      "sop": "",
+      "restrictedRoles": [],
+      "relationField": [],
+      "CascadeValue": "",
+      "CascadedItem": [],
+      "labelTop": true,
+      "visible": false,
+      "commonField": false,
+      "columnID": "",
+      "fieldstyle": "Primarybgcolor"
+    },
+
+    {
+      "displayID": "0",
+      "fieldType": "email",
+      "fieldId": "",
+      "icon": "fa-envelope",
+      "fieldName": "Email",
+      "description": "Enter email",
+      "placeholder": "Enter email",
+      "defaultValue": "",
+      "dataType": "nvarchar(50)",
+      "Language": [{
+        "LanguageID": "",
+        "LanguageText": "",
+        "Placeholder": ""
+      }],
+      "className": "",
+      "regex": "^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$",
+      "minLength": "",
+      "maxLength": "",
+      "required": true,
+      "tableView": true,
+      "dbview": true,
+      "dbIndex": false,
+
+      "unique": false,
+      "editable": true,
+      "formView": true,
+      "relationField": [],
+      "restrictedRoles": [],
+      "sop": "",
+
+      "CascadeValue": "",
+      "CascadedItem": [],
+      "labelTop": true,
+      "visible": false,
+      "commonField": false,
+      "columnID": "",
+      "fieldstyle": "Primarybgcolor"
+    },
+    {
+      "displayID": "0",
+      "fieldType": "phone",
+      "fieldId": "",
+      "icon": "fa-phone",
+      "fieldName": "Phone",
+      "description": "Enter Phone No",
+      "placeholder": "Enter Phone No",
+      "defaultValue": "",
+      "dataType": "nvarchar(50)",
+      "Language": [{
+        "LanguageID": "",
+        "LanguageText": "",
+        "Placeholder": ""
+      }],
+      "className": "",
+      "regex": "^(\\+\\d{1,3}[- ]?)?\\d{10}$",
+      "minLength": "",
+      "maxLength": "",
+      "required": true,
+      "tableView": true,
+      "dbview": true,
+      "dbIndex": false,
+
+      "unique": false,
+      "editable": true,
+      "formView": true,
+
+      "labelTop": true,
+      "sop": "",
+      "restrictedRoles": [],
+      "relationField": [],
+      "CascadeValue": "",
+      "CascadedItem": [],
+      "visible": false,
+      "commonField": false,
+      "columnID": "",
+      "fieldstyle": "Primarybgcolor"
+
+    },
+    {
+      "displayID": "0",
+      "fieldType": "file",
+      "fieldId": "",
+      "icon": "fa-file",
+      "fieldName": "File Upload",
+      "description": "Select File",
+      "placeholder": "Select File",
+      "defaultValue": "",
+      "dataType": "nvarchar(500)",
+      "Language": [{
+        "LanguageID": "",
+        "LanguageText": "",
+        "Placeholder": ""
+      }],
+
+      "className": "",
+
+      "required": true,
+      "tableView": true,
+
+      "formView": true,
+
+      "dbview": true,
+      "sop": "",
+      "restrictedRoles": [],
+      "relationField": [],
+      "labelTop": true,
+      "visible": false,
+      "commonField": false,
+      "columnID": "",
+      "fieldstyle": "Primarybgcolor"
+    },
+    {
+      "displayID": "0",
+      "fieldType": "sign",
+      "fieldId": "",
+      "icon": "fa-pencil-square-o",
+      "fieldName": "Digital Signature",
+      "description": "",
+      "placeholder": "",
+      "defaultValue": "",
+      "dataType": "nvarchar(50)",
+      "Language": [{
+        "LanguageID": "",
+        "LanguageText": "",
+        "Placeholder": ""
+      }],
+
+      "className": "",
+      "editable": true,
+      "required": true,
+      "tableView": false,
+
+      "formView": true,
+      "dbview": true,
+      "sop": "",
+      "restrictedRoles": [],
+      "relationField": [],
+      "labelTop": true,
+      "visible": false,
+      "commonField": false,
+      "columnID": "",
+      "fieldstyle": "Primarybgcolor"
+    }
+  ]

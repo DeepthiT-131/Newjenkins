@@ -1,0 +1,447 @@
+<div class="layout-wrapper">
+  <div id="layout-topbar">
+    <a href="#" class="menu-button" (click)="onMenuButtonClick($event)">
+      <i class="fa fa-bars"></i>
+    </a>
+    <!-- <button type="button" (click)="onMenuButtonClick($event)">click</button> -->
+    <a class="logo" [routerLink]="['/']">
+      <img [src]="url" *ngIf="imagevisible">
+      <!-- <img alt="logo" src="assets/components/images/crider-logo.png" /> -->
+    </a>
+
+    <ul class="topbar-menu">
+
+      <li class="topbar-menu-versions">
+        <a [routerLink]="['/']"><i class="fa fa-power-off" aria-hidden="true" style="font-size: 24px;"></i>
+        </a>
+
+      </li>
+      <!-- <li><a href="#" (click)="changeTheme($event, 'blue-red', false)"><span class="ui-text">Blue-Red</span></a></li> -->
+    </ul>
+  </div>
+  <div class="outerdiv">
+    <div *ngIf="theme.NavBar=='topwithbuttons'">
+      <div id="layout-content" class=" topbuttons" style="margin-left: 0px !important;">
+        <div class="navbuttonsmbl row" style="    padding-bottom: 7px;">
+          <div class="spaceleft" *ngFor="let item of buttondata">
+
+            <a [routerLink]=item.ModuleURL> <button class="btn btn-primary modal-confirm popupbtn fixedwidth"
+                [routerLinkActive]="['active']">{{item.ModuleName}} </button></a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="layout-content" class="themesetting">
+      <div class="row buttonlayout">
+        <div class="card-body">
+          <div class="row">
+
+            <button class="btn pull-right login_btn buttoncolor" type="text" label="Basic"
+              (click)="op1.toggle($event)">Theme Settings</button>
+            <button class="btn pull-right login_btn buttoncolor" type="text" label="Basic" (click)="op2.toggle($event)"
+              style="margin-left: 1%;">Table Settings</button>
+            <button class="btn pull-right login_btn buttoncolor" (click)="onBackButton()" style="margin-left: 1%;"><i
+                class="fa fa-long-arrow-left" aria-hidden="true"></i>&nbsp;&nbsp;Back</button>
+
+
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <p-overlayPanel #op1 class="overlaypanel">
+      <div class="col-lg-12">
+        <h5 class="subhead">Theme Setting</h5>
+        <div class="row">
+          <label class="col-lg-4 col-3">Theme Color</label>
+          <select class="col-lg-7 col-8" [(ngModel)]="themecolor">
+            <option value="blue-orange">Blue-Orange</option>
+            <option value="blue-red">Blue-Red</option>
+            <option value="purple-green">Purple-Green</option>
+            <option value="darkgray-red">Darkgray-Red</option>
+            <option value="no-theme">No-Theme</option>
+          </select>
+        </div><br>
+        <div class="row">
+          <label class="col-lg-4 col-3">Header Logo</label>
+          <input id="fileupload" class="col-lg-7 col-8" type="file" name="logo" (change)="onSelectheaderlogo($event)"
+            accept="capture=camera"> <br>
+          <a style="cursor: pointer;color:blue" (click)="DownLoadFiles(headerlogo)">{{headerlogo}}</a>
+          <!-- <input type="radio"> <label>Same as Login Logo</label>   -->
+        </div>
+
+        <div class="row">
+          <label class="col-4">Navbar</label>
+          <div class="col-8">
+            <p-radioButton value="left" [(ngModel)]="theme.NavBar"></p-radioButton>
+            <label>Left</label>&nbsp;&nbsp;
+
+            <!-- <p-radioButton name="groupname" value="topwithmenu" [(ngModel)]="SelectedRef"></p-radioButton>
+                                <label>Top with Menubar</label>&nbsp;&nbsp;<br> -->
+
+            <p-radioButton value="topwithbuttons" [(ngModel)]="theme.NavBar"></p-radioButton>
+            <label>Top with Buttons</label>
+
+          </div>
+        </div>
+        <div class="row">
+          <label class="col-8">Primary Background Color</label>
+          <input class="colorpick col-4" type="color" [(ngModel)]="theme.PrimaryBgColor">
+        </div>
+        <div class="row">
+          <label class="col-8">Secondary Background Color</label>
+          <input class="colorpick col-4" type="color" name="SecondaryBgColor" [(ngModel)]="theme.SecondaryBgColor">
+        </div>
+        <div class="row">
+          <label class="col-8">Primary Text Color</label>
+          <input class="colorpick col-4" type="color" name="PrimaryTextColor" [(ngModel)]="theme.PrimaryTextColor">
+        </div>
+        <div class="row">
+          <label class="col-8">Secondaty Text Color</label>
+          <input class="colorpick col-4" type="color" name="SecondaryTextColor" [(ngModel)]="theme.SecondaryTextColor">
+        </div>
+        <div class="row">
+          <label class="col-8">On Hover Color</label>
+          <input class="colorpick col-4" type="color" [(ngModel)]="theme.ActiveColor">
+        </div>
+        <div class="row">
+          <label class="col-lg-4 col-3">Footer Text</label>
+          <input type="text" placeholder="Enter Text here" name="FooterText" [(ngModel)]="theme.FooterText"
+            class="col-lg-7 col-8">
+        </div><br>
+        <!-- <div class="row">
+                    <label class="col-lg-4 col-3">FavIcon</label>
+                    <input id="fileupload" class="col-lg-7 col-8" type="file"  name="logo" (change)="onSelectFavIcon($event)" accept="capture=camera">  
+               </div><br> -->
+        <div class="row main">
+          <div class="col-sm-12" style="text-align: center;">
+            <div *ngIf="error" class="alert alert-danger">Please upload the header logo</div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-lg-4 col-sm-4 col-2"></div>
+          <div class="col-lg-4 col-sm-4 col-4"> <button type="submit" class="btn commonbutton"
+              (click)="onsubmit()">submit</button></div>
+
+          <div class="col-lg-4"></div>
+
+        </div>
+      </div>
+
+    </p-overlayPanel>
+
+    <p-overlayPanel #op2 class="overlaypanel">
+      <div class="col-lg-12">
+        <h5 class="subhead">Table Setting</h5>
+        <div class="row">
+          <label class="col-4">Pagination</label>
+          <p-inputSwitch [(ngModel)]="table.Pagination" class="col-8"></p-inputSwitch>
+        </div>
+        <div class="row">
+          <label class="col-4">Scrollable</label>
+          <p-inputSwitch [(ngModel)]="table.Scrollable" class="col-8"></p-inputSwitch>
+        </div>
+
+        <div class="row">
+          <label class="col-4">Sorting</label>
+          <p-inputSwitch [(ngModel)]="table.Sorting" value="sorting" class="col-8"></p-inputSwitch>
+        </div>
+
+        <div class="row">
+          <label class="col-4">Filter</label>
+          <p-inputSwitch [(ngModel)]="table.Filter" value="filter" class="col-8"></p-inputSwitch>
+        </div>
+
+        <div class="row">
+          <label class="col-4">Export Buttons</label>
+          <p-inputSwitch [(ngModel)]="table.ExportButton" value="export" class="col-8"></p-inputSwitch>
+        </div>
+
+        <div class="row">
+          <label class="col-4">Multiselect</label>
+          <p-inputSwitch [(ngModel)]="table.MultiSelect" value="multiselect" class="col-8"></p-inputSwitch>
+        </div>
+
+        <div class="row">
+          <label class="col-4">Resizable</label>
+          <p-inputSwitch [(ngModel)]="table.Resizable" value="resize" class="col-8"></p-inputSwitch>
+        </div>
+        <div class="row">
+          <label class="col-4">Reorder</label>
+          <p-inputSwitch [(ngModel)]="table.Reorder" value="reorder" class="col-8"></p-inputSwitch>
+        </div>
+        <div class="row">
+          <div class="col-lg-4 col-sm-4 col-2"></div>
+          <div class="col-lg-4 col-sm-4 col-4"> <button type="submit" class="btn commonbutton"
+              (click)="onsubmittable()">submit</button></div>
+
+          <div class="col-lg-4"></div>
+
+        </div>
+      </div>
+
+    </p-overlayPanel>
+
+    <div *ngIf="theme.NavBar=='left'">
+      <div id="layout-sidebar" [ngClass]="{'active': menuActive}">
+        <div class="layout-menu">
+          <!-- <div class="layout-menu-search ui-fluid">
+             
+                        <i class="pi pi-search"></i> <i class="pi pi-search"></i>
+                </div> -->
+          <a id="menu_input" #inputmenutitle [class.active-menuitem]="inputmenutitle.id == activeMenuId" tabindex="0"
+            (keydown)="onKeydown($event, inputmenutitle.id)" (click)="toggle(inputmenutitle.id)">
+            <!-- <img src="assets/showcase/images/icons/input-active.svg" class="layout-menu-icon-active"/>
+                    <img src="assets/showcase/images/icons/input.svg" class="layout-menu-icon-inactive"/> -->
+            <span><i class="fa fa-user white"></i>&nbsp; Admin</span>
+          </a>
+          <div [@animation]="(inputmenutitle.id == activeMenuId) ? 'visible' : 'hidden'"
+            (@animation.start)="onAnimationStart($event)" (@animation.done)="onAnimationDone($event)">
+            <ul class="nobullet" style="display: block;">
+              <div>
+                <li> <span><i class="fa fa-user white"></i></span><a [routerLink]="['/theme/user']"
+                    (click)="menuActive = false">User</a></li><br>
+              </div>
+              <li> <span><i class="fa fa-user white"></i></span><a [routerLink]="['/theme/role']"
+                  (click)="menuActive = false">Role</a></li><br>
+              <li> <span><i class="fa fa-list white"></i></span><a [routerLink]="['/theme/category']"
+                  (click)="menuActive = false">Category</a></li><br>
+              <li> <span><i class="fa fa-list white"></i></span><a [routerLink]="['/theme/subcategory']"
+                  (click)="menuActive = false">SubCategory</a></li><br>
+              <li> <span><i class="fa fa-file white"></i></span><a [routerLink]="['/theme/form']"
+                  (click)="menuActive = false">Forms</a></li><br>
+              <li> <span><i class="fa fa-file white"></i></span><a [routerLink]="['/loginconfig']"
+                  (click)="menuActive = false">Login Configuration</a></li><br>
+              <li> <span><i class="fa fa-file white"></i></span><a [routerLink]="['/themeconfig']"
+                  (click)="menuActive = false">Theme Configuration</a></li><br>
+
+            </ul>
+          </div>
+
+
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="theme.NavBar=='topwithbuttons'">
+      <div id="layout-sidebar" [ngClass]="{'active': menuActive}" style="display: none;">
+
+      </div>
+
+    </div>
+
+    <div *ngIf="theme.NavBar=='left'">
+      <div id="layout-content" class="tablelayout">
+        <div class="">
+
+          <p-table #dt [columns]="selectedColumns" [value]="cars" [paginator]="table.Pagination" [rows]="10"
+            [first]="first" sortMode="multiple" [scrollable]="table.Scrollable" scrollHeight="200px"
+            [(selection)]="selectedCars" [resizableColumns]="table.Resizable" [reorderableColumns]="table.Reorder">
+            <ng-template pTemplate="caption">
+              <div class="row">
+                <div class="col-lg-3 col-sm-4">
+                  <div *ngIf="table.MultiSelect">
+                    <div style="text-align:left">
+                      <p-multiSelect [options]="cols" [(ngModel)]="selectedColumns" optionLabel="header"
+                        selectedItemsLabel="{0} columns selected" [style]="{minWidth: '200px'}"
+                        defaultLabel="Choose Columns"></p-multiSelect>
+                    </div>
+                  </div>
+                </div>
+
+
+                <div class="col-lg-3 col-sm-4">
+                  <div *ngIf="table.ExportButton">
+
+                    <div class="ui-helper-clearfix" style="text-align: left">
+                      <button type="button" class="exportbuttons" icon="pi pi-file-o" iconPos="left"
+                        (click)="dt.exportCSV()" style="margin-right: 0.5em;padding: 5px;"><span aria-hidden="true"
+                          class="ui-button-icon-left ui-clickable pi pi-file-o"></span>CSV</button>
+
+                      <button type="button" class="exportbuttons" icon="pi pi-file-excel" iconPos="left" label="EXCEL"
+                        (click)="exportExcel()" style="margin-right: 0.5em;padding: 5px;"><span aria-hidden="true"
+                          class="ui-button-icon-left ui-clickable pi pi-file-excel"></span>EXCEL</button>
+
+                      <button type="button" class="exportbuttons" icon="pi pi-file-pdf" iconPos="left" label="PDF"
+                        (click)="exportPdf()" style="padding: 5px;"><span aria-hidden="true"
+                          class="ui-button-icon-left ui-clickable pi pi-file-pdf"></span>PDF</button>
+
+                      <!-- <button type="button" class="csv" icon="pi pi-file" iconPos="left" label="CSV - Selection Only" (click)="dt.exportCSV({selectionOnly:true})" ><span aria-hidden="true" class="ui-button-icon-left ui-clickable pi pi-file"></span>CSV-Selection Only</button> -->
+                    </div>
+                  </div>
+                </div>
+                <div *ngIf="table.Filter" class="col-lg-6 col-sm-4">
+                  <div class="" style="text-align: right">
+                    <i class="fa fa-search" style="margin:4px 4px 0 0"></i>
+                    <input type="text" pInputText size="20" placeholder="Global Filter"
+                      (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:auto;padding: 5px;">
+                  </div>
+                </div>
+              </div>
+            </ng-template>
+            <ng-template pTemplate="colgroup" let-columns>
+              <colgroup>
+                <col *ngFor="let col of columns" style="width:250px">
+              </colgroup>
+            </ng-template>
+            <ng-template pTemplate="header" class="tblheading" let-columns>
+              <tr>
+                <th *ngFor="let col of columns" [pSortableColumn]="col.field" pResizableColumn pReorderableColumn>
+                  {{col.header}}
+                  <p-sortIcon [field]="col.field" ariaLabel="Activate to sort"
+                    ariaLabelDesc="Activate to sort in descending order"
+                    ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
+                </th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-rowData let-columns="columns" let-index="rowIndex">
+              <tr [pSelectableRow]="rowData" [pReorderableRow]="index">
+                <td *ngFor="let col of columns" class="ui-resizable-column">
+                  {{rowData[col.field]}}
+                </td>
+              </tr>
+            </ng-template>
+          </p-table>
+
+        </div>
+
+      </div>
+    </div>
+
+    <div *ngIf="theme.NavBar=='topwithbuttons'">
+      <div id="layout-content" class="tablelayoutTop" style="margin-left: 0px !important;">
+
+
+        <div class="">
+          <p-table #dt [columns]="selectedColumns" [value]="cars" [paginator]="table.Pagination" [rows]="10"
+            [first]="first" sortMode="multiple" [scrollable]="table.Scrollable" scrollHeight="200px"
+            [(selection)]="selectedCars" [resizableColumns]="table.Resizable" [reorderableColumns]="table.Reorder">
+            <ng-template pTemplate="caption">
+              <div class="row">
+                <div *ngIf="table.Multiselect" class="col-lg-3 col-sm-4">
+                  <div style="text-align:left">
+                    <p-multiSelect [options]="cols" [(ngModel)]="selectedColumns" optionLabel="header"
+                      selectedItemsLabel="{0} columns selected" [style]="{minWidth: '200px'}"
+                      defaultLabel="Choose Columns"></p-multiSelect>
+                  </div>
+                </div>
+
+
+                <div *ngIf="table.ExportButton" class="col-lg-3 col-sm-4">
+
+                  <div class="ui-helper-clearfix" style="text-align: left">
+                    <button type="button" class="exportbuttons" icon="pi pi-file-o" iconPos="left"
+                      (click)="dt.exportCSV()" style="margin-right: 0.5em;padding: 5px;"><span aria-hidden="true"
+                        class="ui-button-icon-left ui-clickable pi pi-file-o"></span>CSV</button>
+
+                    <button type="button" class="exportbuttons" icon="pi pi-file-excel" iconPos="left" label="EXCEL"
+                      (click)="exportExcel()" style="margin-right: 0.5em;padding: 5px;"><span aria-hidden="true"
+                        class="ui-button-icon-left ui-clickable pi pi-file-excel"></span>EXCEL</button>
+
+                    <button type="button" class="exportbuttons" icon="pi pi-file-pdf" iconPos="left" label="PDF"
+                      (click)="exportPdf()" style="padding: 5px;"><span aria-hidden="true"
+                        class="ui-button-icon-left ui-clickable pi pi-file-pdf"></span>PDF</button>
+
+                    <!-- <button type="button" class="csv" icon="pi pi-file" iconPos="left" label="CSV - Selection Only" (click)="dt.exportCSV({selectionOnly:true})" ><span aria-hidden="true" class="ui-button-icon-left ui-clickable pi pi-file"></span>CSV-Selection Only</button> -->
+                  </div>
+                </div>
+                <div *ngIf="table.Filter" class="col-lg-6 col-sm-4">
+                  <div style="text-align: right">
+                    <i class="fa fa-search" style="margin:4px 4px 0 0"></i>
+                    <input type="text" pInputText size="20" placeholder="Global Filter"
+                      (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:auto;padding: 5px;">
+                  </div>
+                </div>
+              </div>
+            </ng-template>
+
+            <ng-template pTemplate="header" class="tblheading" let-columns>
+              <tr>
+                <th *ngFor="let col of columns" [pSortableColumn]="col.field" pResizableColumn pReorderableColumn>
+                  {{col.header}}
+                  <p-sortIcon [field]="col.field" ariaLabel="Activate to sort"
+                    ariaLabelDesc="Activate to sort in descending order"
+                    ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
+                </th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-rowData let-columns="columns" let-index="rowIndex">
+              <tr [pSelectableRow]="rowData" [pReorderableRow]="index">
+                <td *ngFor="let col of columns" class="ui-resizable-column">
+                  {{rowData[col.field]}}
+                </td>
+              </tr>
+            </ng-template>
+          </p-table>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- <div *ngIf="SelectedRef=='topwithmenu'">
+        <div id="layout-content" class="tablelayout" style="margin-left: 0px !important;">
+        <p-menubar [model]="items"> </p-menubar><br>
+        </div>
+    </div> -->
+
+    <!-- <div *ngIf="SelectedRef=='topwithmenu'">
+        <div id="layout-content" class="tablelayout" style="margin-left: 0px !important;">
+             <p-menubar [model]="items"> </p-menubar><br> 
+           
+              <div class="">
+                  <table datatable  [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"
+                class="row-border hover table table-bordered table-striped table-condensed mb-none datatablembl">
+              
+                <thead class="tblheading">
+                  <tr class="tablehead">
+                
+                    <th>F Name</th>
+                    <th>L Name</th>
+                    <th>E-Mail</th>
+                    <th>Phone</th>
+                    <th>City</th>
+                    <th>State</th>
+                    <th>Access Role</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                   
+                    <td data-title="F Name">dres</td>
+                    <td data-title="L Name"></td>
+                    <td data-title="Email"></td>
+                    <td data-title="Phone"></td>
+                    <td data-title="City"></td>
+                    <td data-title="State"></td>
+                    <td data-title="State"></td>
+                    <td data-title="Action" align="center"><span>
+                        <span class="fa fa-pencil awesome" title="Edit" (click)="onedit(item.UserID)"></span></span>
+                      <span><i class="fa fa-times-circle-o blue awesome" title="Delete" (click)="deleteuser(item.UserID, item.User_FName)"></i></span></td>
+                       
+                  </tr>
+                </tbody>
+            
+              </table> 
+            </div>
+    
+          </div>
+     
+     </div> -->
+  </div>
+</div>
+
+
+
+
+
+
+
+
+<div class="layout-mask" *ngIf="menuActive">
+</div>

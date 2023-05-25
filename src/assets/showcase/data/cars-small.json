@@ -1,0 +1,10 @@
+{
+    "data": [
+        {"brand": "VW", "year": 2012, "color": "Orange", "vin": "dsad231ff","type":"body"},
+        {"brand": "Audi", "year": 2011, "color": "Black", "vin": "gwregre345","type":"body"},
+        {"brand": "VW", "year": 2013, "color": "Orange", "vin": "dsad231ff","type":"body"},
+        {"brand": "VW", "year": 2014, "color": "Orange", "vin": "dsad231ff","type":"body"},
+        {"brand": "Audi", "year": 2015, "color": "Black", "vin": "gwregre345","type":"body"},
+        {"brand": "VW", "year": 2016, "color": "Orange", "vin": "dsad231ff","type":"footer"}
+    ]
+}

@@ -1,0 +1,182 @@
+<div class="col-sm-12">
+    <div class="row">
+        <div class="col-sm-4">
+            <h2  class="pageTitle" >Role</h2>
+            <p class="breadcrumbs">Home - Admin - Role</p>
+        </div>
+        <div class="col-sm-5"></div>
+        <div class="col-sm-3 btnarea">
+            <button class="btn addbutton" type="button" (click)="showModal(content)">+ Add Role</button>
+        </div>
+    </div>
+    </div>
+    
+    <div class="whitebg">
+      <div class="receivingbody">
+    <div class="table-responsive">
+        <div id="no-more-tables">
+      
+
+        <p-table id="texport"  #dt [columns]="cols" [value]="roledetails"  [first]="first" [responsive]="true" [rows]="10" sortMode="multiple" [scrollable]="table.Scrollable" scrollHeight="400px" [resizableColumns]="table.Resizable" [reorderableColumns]="true" [globalFilterFields]="['RoleName','RoleDesc']" >
+                                 
+          <ng-template pTemplate="caption">
+              <div class="row">
+  
+                  <div class="col-lg-6 col-sm-4">
+  
+                      <div *ngIf="table.ExportButton" class="ui-helper-clearfix" style="text-align: left">
+                          <button type="button" class="exportbuttons" icon="pi pi-file-o" iconPos="left" (click)="exportExcel()"><span aria-hidden="true" class="ui-button-icon-left ui-clickable fa fa-files-o" style="font-size: 16px; padding: 8px;"></span></button>
+  
+                          <button type="button" class="exportbuttons" icon="pi pi-file-pdf" iconPos="left" label="PDF" (click)="exportPdf()"><span aria-hidden="true" class="ui-button-icon-left ui-clickable fa fa-file-pdf-o" style="font-size: 16px; padding: 8px;"></span></button>
+                      </div>
+                  </div>
+                  <!-- <div class="col-lg-3 col-sm-4">
+                      <div *ngIf="table.Multiselect" style="text-align:left">
+                          <p-multiSelect [options]="cols" [(ngModel)]="selectedColumns" optionLabel="header" selectedItemsLabel="{0} columns selected" [style]="{minWidth: '200px'}" defaultLabel="Choose Columns" (onChange)="dt.filter($event.value, col.field, 'in')"></p-multiSelect>
+                      </div>
+                  </div> -->
+                  <div class="col-lg-6 col-sm-4">
+                      <div *ngIf="table.Filter" style="text-align: right">
+                          <span class="searchfilter">Search:</span>
+                          <input type="text" pInputText size="20" placeholder="" (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:auto;padding: 5px;">
+                      </div>
+                  </div>
+              </div>
+          </ng-template>
+  
+          <ng-template pTemplate="header" class="tblheading" let-columns>
+              <tr >
+               
+                <th pSortableColumn="RoleID">Role ID<p-sortIcon field="RoleID"></p-sortIcon></th>
+                <th pSortableColumn="RoleName">Role Name <p-sortIcon field="RoleName"></p-sortIcon></th>
+                <th pSortableColumn="RoleDescription">Role Description <p-sortIcon field="RoleDescription"></p-sortIcon></th>
+                <th pSortableColumn="RolePermission">Role Permission <p-sortIcon field="RolePermission"></p-sortIcon></th>
+                <th pSortableColumn="Action">Action<p-sortIcon field="action"></p-sortIcon></th>
+                  
+            
+              </tr>
+              
+          </ng-template>
+  
+          <!-- <ng-template pTemplate="colgroup" let-columns>
+              <colgroup>
+                  <col *ngFor="let col of columns" style="width:100%">
+              </colgroup>
+          </ng-template> -->
+  
+          <ng-template pTemplate="body" let-roledetails let-index="rowIndex" class="wordwrap tablebgcolor">
+              <tr [pReorderableRow]="index">
+               
+                <td data-title="Role ID">{{roledetails.RoleID}}</td>
+                <td data-title="Role Name">{{roledetails.RoleName}}</td>
+                <td data-title="Role Description">{{roledetails.RoleDesc}}</td>
+           
+                <td data-title="Role Permission">
+                  <button class="btn-primary role-permission" type="submit" (click)="AddPermission(roledetails.RoleID,roledetails.RoleName )">Add Permission <i class="fa fa-plus"></i></button> 
+                 </td>
+               <td align="center" data-title="Action">
+                   <span (click)="onedit(roledetails.RoleID,content)">
+                       <span class="fa fa-pencil awesome" title="Edit"></span>
+                   </span>
+                   <span (click)="deleteroletable(roledetails.RoleID,content1)">
+                       <i class="fa fa-times-circle-o awesome" title="Delete"></i>
+                   </span>
+               </td>
+              </tr>
+  
+            
+  
+          </ng-template>
+          <ng-template pTemplate="emptymessage" let-columns>
+              <tr>
+  
+                  <td [attr.colspan]="emptyrow">
+                      No records found
+                  </td>
+  
+              </tr>
+          </ng-template>
+      </p-table>
+        </div>
+      </div>
+      </div>
+    </div>
+
+
+
+
+     <!----  Add Role Modal Pop-up Start  ----> 
+     <ng-template #content let-modal>   
+  <form [formGroup]="roleForm" (ngSubmit)="onSubmit(roleForm.value)" autocomplete="off">
+       
+            <div class="modal-header popuphead">
+              <h4 class="modal-title popuptitle">Role
+              </h4>
+              <button type="button" class="close pull-right" aria-label="Close"  (click)="modal.dismiss('Cross click')">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                
+                <div class="container">
+                    <div class="top-main">
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-sm-6 col-xs-12">
+                                    <label class="m-0 font-weight-normal">Role Name</label>
+                                    <input formControlName="rolename" type="text" class="form-control cshadow" [ngClass]="{ 'is-invalid': submitted && role.rolename.errors }">
+                                    <div *ngIf="submitted && role.rolename.errors" class="invalid-feedback">
+                                        <div *ngIf="role.rolename?.errors?.required">Role Name is required</div>
+                                        <div *ngIf="role.rolename?.errors?.exist">Role Name already exist</div>
+                                        <div *ngIf="role.rolename?.errors?.cannotContainSpace">Role Name Cannot Contain Space</div> 
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 col-xs-12">
+                                    <label class="m-0 font-weight-normal">Role Description</label>
+                                    <textarea formControlName="roledesc" type="text" class="form-control cshadow" rows="2" [ngClass]="{ 'is-invalid': submitted && role.roledesc.errors }"></textarea>
+                                    <div *ngIf="submitted && role.roledesc.errors" class="invalid-feedback">
+                                        <div *ngIf="role.roledesc.errors.required">Role Description is required</div>
+                                        <div *ngIf="role.roledesc.errors?.cannotContainSpace">Role Description Cannot Contain Space</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                     </div>
+          </div>
+
+              <footer class="modal-footer pop-btn">
+                <button class="btn commonbutton" >Submit</button>
+                <button type="reset" class="btn commonbutton" (click)="modal.close('Close click')">Cancel</button>
+                 </footer>
+          
+      </form>
+    </ng-template> 
+      <!----- Modal Pop up End  ----->
+        <ng-template #content1 let-modal>
+        <div class="modal-header popuphead">
+            <h4 class="modal-title popuptitle">Delete Record
+            </h4>
+            <button type="button" class="close pull-right" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                <span aria-hidden="true">&times;</span>
+              </button>
+          </div>
+              <div class="modal-body">                   
+                <div class="container form-group ">
+                  <div class="row">
+                    <div class="col">
+                      <span>Are you sure you want to Delete the record?</span>
+                    </div>
+        
+                  </div>
+                </div>
+                   
+              </div>
+              <footer class="modal-footer pop-btn">
+                <button class="btn commonbutton" (click)="DeleteTableDetails()">OK</button>
+                <button type="reset" class="btn commonbutton" (click)="modal.close('Close click')">Cancel</button>
+                 </footer>
+              
+    </ng-template>
+    
+    

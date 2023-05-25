@@ -1,0 +1,35 @@
+<div class="row">
+        <div Class="col-lg-7">
+    
+            <div *ngIf="item1.fieldType=='text'">
+              <label>{{item1.fieldName}}</label> 
+             
+              <input type="text" class="form-control" id="{{item1.fieldName}}">
+            
+            </div>
+            <div *ngIf="item1.fieldType=='date'">
+              <label>{{item1.fieldName}}</label> 
+              <input type="date" class="form-control" id="{{item1.fieldName}}" >
+            </div>
+            <div *ngIf="item1.fieldType=='select'">
+              <label>{{item1.fieldName}}</label> 
+              <select class="form-control" id="{{item1.fieldName}}" >
+                <option value="1">Option1</option>  
+                <option value="2">Option2</option>  
+              </select>
+        
+            </div>
+            <div *ngIf="item1.fieldType=='button'" class="btn-cont">
+              <input type="{{item1.fieldType}}" (click)="submit()" value="{{item1.fieldName}}" class="btn commonbutton" id="{{item1.fieldName}}" >
+            </div> 
+    
+          </div>
+      
+    
+    <div class="col-lg-5 col-6">
+    
+        <i (click)="deleteFilterClick()" class="fa fa-trash deleteicon"></i>
+        <i (click)="editFilterClick()" class="fa fa-pencil-square-o align" aria-hidden="true"></i>
+    </div>
+    </div>
+    

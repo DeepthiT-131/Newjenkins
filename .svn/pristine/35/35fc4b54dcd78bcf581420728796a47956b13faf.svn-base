@@ -1,0 +1,627 @@
+<div>
+  <div class="modal-header popuphead">
+    <h4 class="modal-title popuptitle" id="modal-basic-title">Simple modal</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="saveClick()">
+      <span aria-hidden="true" style="font-size: 30px;">&times;</span>
+    </button>
+
+  </div>
+  <div class="modal-body">
+
+    <div class="container">
+      <div class="top-main">
+        <div class="form-group">
+
+          <div class="row">
+
+            <div class="form-group col-lg-3">
+              <label>Field Name </label>
+              <input class="form-control" type="text" [(ngModel)]="SelectedItem.fieldName" />
+
+            </div>
+
+            <div class="form-group col-lg-3"
+              *ngIf="!(SelectedItem.fieldType=='paragraph' || SelectedItem.fieldType=='button' || SelectedItem.fieldType=='divSection')">
+              <label>Required</label>
+              <p-inputSwitch [(ngModel)]="SelectedItem.required"></p-inputSwitch>
+            </div>
+            <!-- <div class="form-group col-lg-3">
+              <label>Field Id</label>
+              <input class="form-control" type="text" [(ngModel)]="SelectedItem.fieldId" />
+
+            </div> -->
+            <!-- <div class="form-group col-lg-3">
+              <label>Description</label>
+              <input class="form-control" type="text" [(ngModel)]="SelectedItem.description" />
+            </div> -->
+            <div *ngIf="!(SelectedItem.fieldType=='select' || SelectedItem.fieldType=='radio')"
+              class="form-group col-lg-3">
+              <label>Placeholder</label>
+              <input class="form-control" type="text" [(ngModel)]="SelectedItem.placeholder" />
+            </div>
+            <div *ngIf="SelectedItem.fieldType=='select' || SelectedItem.fieldType=='radio'"
+              class="form-group col-lg-3">
+              <label>Input Type</label>
+              <select class="form-control" [(ngModel)]="SelectedItem.inputType">
+                <option>Normal</option>
+                <option>Cascade</option>
+              </select>
+            </div>
+
+          </div>
+
+          <div class="row"
+            *ngIf="!(SelectedItem.fieldType=='paragraph' || SelectedItem.fieldType=='button' || SelectedItem.fieldType=='divSection')">
+            <div class="form-group col-lg-3">
+              <label>Default Value</label>
+
+              <input class="form-control" type="text" [(ngModel)]="SelectedItem.defaultValue" list="default" />
+              <datalist id="default">
+                <option *ngFor="let dtype of defaultvaluelist" [value]="dtype.Code">{{dtype.CodeName}}</option>
+
+              </datalist>
+            </div>
+            <div class="form-group col-lg-3">
+              <label>Datatype</label>
+
+
+              <input class="form-control" type="text" [(ngModel)]="SelectedItem.dataType" list="dataType" />
+              <datalist id="dataType">
+                <option *ngFor="let dtype of defaulttypelist" [value]="dtype.Code">{{dtype.CodeName}}</option>
+
+              </datalist>
+
+            </div>
+            <div class="form-group col-lg-3">
+              <label>Class Name</label>
+              <input class="form-control" type="text" [(ngModel)]="SelectedItem.className" />
+            </div>
+
+            <div class="form-group col-lg-3"
+              *ngIf="(SelectedItem.fieldType=='number' || SelectedItem.fieldType=='phone' || SelectedItem.fieldType=='email' || SelectedItem.fieldType=='text')">
+              <label>Pattern</label>
+              <input class="form-control" type="text" [(ngModel)]="SelectedItem.regex" />
+            </div>
+
+          </div>
+
+          <div class="row"
+            *ngIf="!(SelectedItem.fieldType=='paragraph' || SelectedItem.fieldType=='button' || SelectedItem.fieldType=='divSection')">
+            <div class="form-group col-lg-3">
+              <label>Restricted Roles</label><br>
+              <p-multiSelect [options]="cars" [(ngModel)]="SelectedItem.restrictedRoles"></p-multiSelect>
+            </div>
+            <div class="form-group col-lg-3">
+              <label>SOP</label>
+              <textarea class="form-control" [(ngModel)]="SelectedItem.sop">
+                                      </textarea>
+
+            </div>
+            <div class="form-group col-lg-3">
+              <label>Min Length</label>
+              <input class="form-control" type="text" [(ngModel)]="SelectedItem.minLength" />
+            </div>
+            <div class="form-group col-lg-3">
+              <label>Max Length</label>
+              <input class="form-control" type="text" [(ngModel)]="SelectedItem.maxLength" />
+            </div>
+
+          </div>
+          <div class="row"
+            *ngIf="!(SelectedItem.fieldType=='paragraph' || SelectedItem.fieldType=='button' || SelectedItem.fieldType=='divSection')">
+
+
+            <div *ngIf=" SelectedItem.fieldType=='date'" class="form-group col-lg-3">
+              <label>Min Date</label>
+              <input class="form-control" type="text" [(ngModel)]="SelectedItem.MinDate" />
+
+            </div>
+            <div *ngIf=" SelectedItem.fieldType=='date'" class="form-group col-lg-3">
+              <label>Max Date</label>
+              <input class="form-control" type="text" [(ngModel)]="SelectedItem.MaxDate" />
+
+            </div>
+
+          </div>
+
+          <div class="row"
+            *ngIf="SelectedItem.fieldType=='paragraph' || SelectedItem.fieldType=='divSection' || SelectedItem.fieldType=='button'">
+
+            <div class="form-group col-lg-3" *ngIf="SelectedItem.fieldType=='button' ">
+              <label>Action</label>
+              <select class="form-control" [(ngModel)]="SelectedItem.ActionType">
+                <option>button</option>
+                <option>menu</option>
+                <option>reset</option>
+                <option>submit</option>
+              </select>
+
+            </div>
+            <div class="form-group col-lg-3">
+              <label>Class Name</label>
+              <input class="form-control" type="text" [(ngModel)]="SelectedItem.className" />
+            </div>
+
+            <div class="form-group col-lg-3">
+              <label>Alignment</label>
+              <select class="form-control" [(ngModel)]="SelectedItem.Alignment">
+                <option value="center">center</option>
+                <option value="end">end</option>
+                <option value="left">left</option>
+                <option value="right">right</option>
+                <option value="justify">justify</option>
+              </select>
+            </div>
+
+            <div class="form-group col-lg-3" *ngIf="SelectedItem.fieldType=='divSection'">
+              <label>Multiple</label>
+              <p-inputSwitch [(ngModel)]="SelectedItem.multiple"></p-inputSwitch>
+            </div>
+            <div *ngIf="SelectedItem.multiple" class="form-group col-lg-3">
+              <label>Group Name</label>
+              <input class="form-control" type="text" [(ngModel)]="SelectedItem.groupName" />
+            </div>
+          </div>
+          <div class="row"
+            *ngIf="SelectedItem.fieldType=='paragraph' || SelectedItem.fieldType=='divSection' || SelectedItem.fieldType=='button'">
+
+            <div class="form-group col-lg-3" *ngIf="SelectedItem.fieldType=='button' ">
+              <label>Email</label>
+              <p-inputSwitch [(ngModel)]="SelectedItem.Email"></p-inputSwitch>
+            </div>
+            <div class="form-group col-lg-3">
+              <label>SMS</label>
+              <p-inputSwitch [(ngModel)]="SelectedItem.SMS"></p-inputSwitch>
+            </div>
+
+            <div class="form-group col-lg-3">
+              <label>Whatsapp</label>
+              <p-inputSwitch [(ngModel)]="SelectedItem.Whatsapp"></p-inputSwitch>
+            </div>
+
+          </div>
+
+
+          <div class="row"
+            *ngIf="!(SelectedItem.fieldType=='paragraph' || SelectedItem.fieldType=='button' || SelectedItem.fieldType=='divSection')">
+            <div class="form-group col-lg-2">
+              <label>Table View</label>
+              <p-inputSwitch [(ngModel)]="SelectedItem.tableView"></p-inputSwitch>
+            </div>
+
+            <!-- <div class="form-group col-lg-2">
+              <label>Form View</label>
+              <p-inputSwitch [(ngModel)]="SelectedItem.formView"></p-inputSwitch>
+            </div> -->
+
+            <div class="form-group col-lg-2">
+              <label>DB View</label>
+              <p-inputSwitch [(ngModel)]="SelectedItem.dbview"></p-inputSwitch>
+            </div>
+            <div class="form-group col-lg-2">
+              <label>DB Index</label>
+              <p-inputSwitch [(ngModel)]="SelectedItem.dbIndex"></p-inputSwitch>
+            </div>
+            <div class="form-group col-lg-2">
+              <label>Unique</label>
+              <p-inputSwitch [(ngModel)]="SelectedItem.unique"></p-inputSwitch>
+            </div>
+            <div *ngIf=" SelectedItem.fieldType=='text'|| SelectedItem.fieldType=='number'|| SelectedItem.fieldType=='select'
+            || SelectedItem.fieldType=='date'|| SelectedItem.fieldType=='time'|| SelectedItem.fieldType=='textarea'  
+            || SelectedItem.fieldType=='checkbox'|| SelectedItem.fieldType=='radio'" class="form-group col-lg-2">
+              <label>Previous Entry</label>
+              <p-inputSwitch [(ngModel)]="SelectedItem.previous"></p-inputSwitch>
+            </div>
+          </div>
+          <div class="row"
+            *ngIf="!(SelectedItem.fieldType=='paragraph' || SelectedItem.fieldType=='button' || SelectedItem.fieldType=='divSection')">
+
+            <div class="form-group col-lg-2">
+              <label>Editable</label>
+              <p-inputSwitch [(ngModel)]="SelectedItem.editable"></p-inputSwitch>
+            </div>
+            <!-- <div class="form-group col-lg-2">
+              <label>Label Top</label>
+              <p-inputSwitch [(ngModel)]="SelectedItem.labelTop"></p-inputSwitch>
+            </div> -->
+            <div class="form-group col-lg-2">
+              <label>Hide</label>
+              <p-inputSwitch [(ngModel)]="SelectedItem.visible"></p-inputSwitch>
+            </div>
+            <div class="form-group col-lg-2">
+              <label>Common Field</label>
+              <p-inputSwitch [(ngModel)]="SelectedItem.commonField"></p-inputSwitch>
+            </div>
+            <div class="form-group col-lg-2">
+              <label>Auto Number</label>
+              <p-inputSwitch [(ngModel)]="SelectedItem.autonumber"></p-inputSwitch>
+            </div>
+            <div class="form-group col-lg-2">
+              <label>Relation Field</label>
+              <p-multiSelect [options]="relationfieldList" [(ngModel)]="SelectedItem.relationField">
+              </p-multiSelect>
+              <!-- <select multiple class="form-control" [(ngModel)]="SelectedItem.relationField">
+                <option value="">Select Option</option>
+                <option *ngFor="let item of CascadeValues" [value]="item.value">{{item.Label}}</option>
+              </select> -->
+
+            </div>
+          </div>
+          <div class="row"
+            *ngIf="!(SelectedItem.fieldType=='paragraph' || SelectedItem.fieldType=='button' || SelectedItem.fieldType=='divSection')">
+            <div *ngIf=" SelectedItem.fieldType=='radio'" class="form-group col-lg-3">
+              <label>Display Type</label>
+              <select class="form-control" [(ngModel)]="SelectedItem.displaytype">
+                <option value="horizontal">Horizontal</option>
+                <option value="vertical">Vertical</option>
+              </select>
+            </div>
+            <!-- <div class="form-group col-lg-3">
+              <label>Cascade Value</label>
+              <select class="form-control" [(ngModel)]="SelectedItem.CascadeValue">
+                <option value="">Select Option</option>
+                <option *ngFor="let item of CascadeValues" [value]="item.value">{{item.Label}}</option>
+              </select>
+
+            </div> -->
+
+
+          </div>
+          <div>
+
+            <div class="row" *ngIf="!(SelectedItem.fieldType=='divSection')">
+              <div class="form-group col-lg-3">
+                <label>Language</label>
+              </div>
+              <div class="form-group col-lg-3">
+                <label>Name</label>
+              </div>
+              <div class="form-group col-lg-3">
+                <label>Placeholder</label>
+              </div>
+              <div class="form-group col-lg-3">
+                <label>Action</label>
+              </div>
+            </div>
+            <div *ngFor="let v of SelectedItem.Language" class="inline-form-group">
+              <div class="row">
+                <div class="form-group col-lg-3">
+                  <select class="form-control" [(ngModel)]="v.LanguageID">
+                    <option *ngFor="let item of languagelist" [value]="item.LanguageID">{{item.LanguageName}}</option>
+                  </select>
+
+                </div>
+                <div class="form-group col-lg-3">
+                  <input type="text" class="form-control" [(ngModel)]="v.LanguageText">
+
+                </div>
+                <div class="form-group col-lg-3">
+                  <input type="text" class="form-control" [(ngModel)]="v.Placeholder">
+
+                </div>
+                <div class="form-group col-lg-3">
+                  <i class="fa fa-remove" (click)="SelectedItem.Language.splice(valueIndex,1)" aria-hidden="true"
+                    style="font-size: 19px;"></i>
+
+                </div>
+              </div>
+
+            </div>
+            <div class="row" *ngIf="!(SelectedItem.fieldType=='divSection')">
+              <div class="form-group col-lg-3"></div>
+              <div class="form-group col-lg-3"></div>
+              <div class="form-group col-lg-3"></div>
+              <div class="form-group col-lg-3">
+                <i class="fa fa-plus-circle" (click)="addLanguage(SelectedItem.Language)" aria-hidden="true"
+                  style="font-size: 19px;"></i>
+
+              </div>
+            </div>
+
+          </div>
+          <div>
+            <div *ngIf=" SelectedItem.fieldType=='radio'|| SelectedItem.fieldType=='select'" class="row">
+
+              <div class="form-group col-lg-3">
+                <label class="cust-check-bx">
+                  <input type="radio" value="table" [(ngModel)]="SelectedItem.groupnamebox"> Table
+                  <input type="radio" value="manual" [(ngModel)]="SelectedItem.groupnamebox"> Manual
+                  <span class="checkmark"></span>
+                </label>
+              </div>
+            </div>
+            <div
+              *ngIf="SelectedItem.groupnamebox=='table' 
+            && (SelectedItem.fieldType=='radio'|| SelectedItem.fieldType=='select' || SelectedItem.fieldType=='text'|| SelectedItem.fieldType=='number') ">
+              <h5>Ref Table Conditions{{SelectedItem.checkTable}} </h5>
+              <div class="row" *ngIf="!SelectedItem?.checkTable">
+                <div class="col-lg-9">
+                  <p-multiSelect [options]="DBUpdated" [(ngModel)]="SelectedItem.selectedDB"
+                    [panelStyle]="{minWidth:'10em'}" [filter]="true"></p-multiSelect>
+                </div>
+
+                <div class="col-lg-3">
+                  <button class="btn commonbutton" (click)="getTablefromDB(SelectedItem.selectedDB)">Submit</button>
+                </div>
+              </div>
+              <div class="row">
+                <div class="form-group col-lg-4" *ngIf="!SelectedItem?.checkTable">
+                  <label>Ref Table </label>
+                  <!-- <select class="form-control" [(ngModel)]="SelectedItem.refTable"
+                    (change)="getAllTablecolumnValues($event.target.value);">
+                   
+                    <option *ngFor="let item of reftablelist" [value]="item.value">{{item.value}}</option>
+                  </select> -->
+
+                  <p-dropdown [options]="reftablelist" [(ngModel)]="SelectedItem.refTable" [filter]="true"
+                    (onChange)="getAllTablecolumnValues($event.value);"></p-dropdown>
+
+                </div>
+                <div class="form-group col-lg-4" *ngIf="SelectedItem?.checkTable">
+                  <label>Ref Table</label>
+                  <input type="text" class="form-control" [(ngModel)]="SelectedItem.refTable" readonly>
+
+                </div>
+                <div class="form-group col-lg-4">
+                  <label>Ref Label</label>
+                  <!-- <select class="form-control" [(ngModel)]="SelectedItem.refLabel">
+                    <option *ngFor="let item of reftablevalue" [value]="item.ColumnName">{{item.DisplayName}}</option>
+                  </select> -->
+
+                  <p-dropdown [options]="reftablevalue" [(ngModel)]="SelectedItem.refLabel" [filter]="true">
+                  </p-dropdown>
+
+                </div>
+                <div class="form-group col-lg-4">
+                  <label>Ref Value</label>
+                  <!-- <select class="form-control" [(ngModel)]="SelectedItem.refValue">
+                    <option *ngFor="let item of reftablevalue" [value]="item.ColumnName">{{item.DisplayName}}</option>
+                  </select> -->
+
+                  <p-dropdown [options]="reftablevalue" [(ngModel)]="SelectedItem.refValue" [filter]="true">
+                  </p-dropdown>
+
+                </div>
+                <!-- <div class="form-group col-lg-4" *ngIf="SelectedItem?.checkTable">
+                  <label>Ref Value</label>
+                  <input type="text" class="form-control" [(ngModel)]="SelectedItem.refValue" readonly>
+                 
+                </div> -->
+
+              </div>
+              <b>
+                <h6>Join Conditions</h6>
+              </b>
+              <div class="row">
+                <div class="form-group col-lg-3">
+                  <label>Join Table</label>
+                </div>
+                <div class="form-group col-lg-3">
+                  <label>Fisrt Column</label>
+                </div>
+                <div class="form-group col-lg-3">
+                  <label>Second Column</label>
+                </div>
+
+                <div class="form-group col-lg-3">
+                  <label>Action</label>
+                </div>
+              </div>
+
+              <div *ngFor="let j of SelectedItem.refJoin" class="inline-form-group">
+                <div class="row">
+
+                  <div class="form-group col-lg-3">
+
+                    <!-- <select class="form-control" [(ngModel)]="j.joinTable"
+                      (change)="getJoinTable($event.target.value);">
+                   
+                      <option *ngFor="let item of reftablelist" [value]="item.value">{{item.value}}</option>
+                    </select> -->
+
+                    <p-dropdown [options]="reftablelist" [(ngModel)]="j.joinTable" [filter]="true"
+                      (onChange)="getJoinTable($event.value);"></p-dropdown>
+
+                  </div>
+                  <div class="form-group col-lg-3">
+
+                    <!-- <select class="form-control" [(ngModel)]="j.firstValue">
+                      <option *ngFor="let item of jointableTotallist" [value]="item.ColumnName">{{item.DisplayName}}
+                      </option>
+                    </select> -->
+
+                    <p-dropdown [options]="Columns" [(ngModel)]="j.firstValue" [filter]="true"></p-dropdown>
+
+                  </div>
+                  <div class="form-group col-lg-3">
+
+                    <!-- <select class="form-control" name="refValue" [(ngModel)]="j.SecondValue">
+                      <option *ngFor="let item of jointableTotallist" [value]="item.ColumnName">{{item.DisplayName}}
+                      </option>
+                    </select> -->
+
+                    <p-dropdown [options]="Columns" [(ngModel)]="j.SecondValue" [filter]="true"></p-dropdown>
+                  </div>
+
+                  <div class="form-group col-lg-3">
+                    <i class="fa fa-remove" (click)="SelectedItem.refJoin.splice(valueIndex,1)" aria-hidden="true"
+                      style="font-size: 19px;"></i>
+
+                  </div>
+                </div>
+
+              </div>
+              <div class="row">
+                <div class="form-group col-lg-9"></div>
+                <div class="form-group col-lg-3">
+
+                  <i class="fa fa-plus-circle" (click)="addRefJoin(SelectedItem.refJoin)" aria-hidden="true"
+                    style="font-size: 19px;"></i>
+
+
+                </div>
+              </div>
+              <b>
+                <h6>Where Conditions</h6>
+              </b>
+              <div class="row">
+                <div class="form-group col-lg-2">
+                  <label>column name</label>
+                </div>
+                <div class="form-group col-lg-2">
+                  <label>Operator</label>
+                </div>
+                <div class="form-group col-lg-2">
+                  <label>Value</label>
+                </div>
+                <div class="form-group col-lg-2">
+                  <label>Cascade Value</label>
+                </div>
+                <div class="form-group col-lg-2">
+                  <label>Condition</label>
+                </div>
+                <div class="form-group col-lg-2">
+                  <label>Action</label>
+                </div>
+              </div>
+              <div *ngFor="let v of SelectedItem.refCondition" class="inline-form-group">
+                <div class="row">
+
+                  <div class="form-group col-lg-2">
+
+                    <p-dropdown [options]="Columns" [(ngModel)]="v.columnName" [filter]="true"
+                      (onChange)="getAllColumnValues($event.value);"></p-dropdown>
+                    <!-- 
+                    <select class="form-control" [(ngModel)]="v.columnName"
+                      (change)="getAllColumnValues($event.target.value);">
+                      <option *ngFor="let item of jointableTotallist" [value]="item.ColumnName">{{item.DisplayName}}
+                      </option>
+                    </select> -->
+                  </div>
+                  <div class="form-group col-lg-2">
+
+                    <select class="form-control" [(ngModel)]="v.colCondition">
+                      <option *ngFor="let item of reftablecondtnlist" [value]="item.Code">{{item.CodeName}}</option>
+                    </select>
+                  </div>
+                  <div class="form-group col-lg-2">
+
+                    <input class="form-control" name="refValue" type="text" [(ngModel)]="v.columnValue"
+                      list="colvalue" />
+                    <datalist id="colvalue">
+                      <option *ngFor="let item of columnvaluelist" [value]="item.ColumnValues">{{item.ColumnValues}}
+                      </option>
+                    </datalist>
+
+                    <!-- <select class="form-control" name="refValue" [(ngModel)]="v.columnValue">
+                      <option *ngFor="let item of columnvaluelist" [value]="item.ColumnValues">{{item.ColumnValues}}
+                      </option>
+                    </select> -->
+                  </div>
+                  <div class="form-group col-lg-2">
+
+                    <input class="form-control" type="text" [(ngModel)]="v.CascadeValue" list="cascade" />
+                    <datalist id="cascade">
+                      <option *ngFor="let item of CascadeValues" [value]="item.value">{{item.Label}}</option>
+                    </datalist>
+
+                    <!-- <select class="form-control" [(ngModel)]="v.CascadeValue">
+                      <option value="">Select Option</option>
+                      <option *ngFor="let item of CascadeValues" [value]="item.value">{{item.Label}}</option>
+                    </select> -->
+                  </div>
+                  <!-- <div class="form-group col-lg-2">
+                    <input type="text" readonly name="CascadeValueName" [value]="v.CascadeValue">
+                  </div> -->
+                  <div class="form-group col-lg-2">
+                    <select class="form-control" [(ngModel)]="v.columnOperator">
+                      <option *ngFor="let item of reftableOperatorList" [value]="item.Code">{{item.CodeName}}</option>
+                    </select>
+                  </div>
+                  <div class="form-group col-lg-2">
+                    <i class="fa fa-remove" (click)="SelectedItem.refCondition.splice(valueIndex,1)" aria-hidden="true"
+                      style="font-size: 19px;"></i>
+
+                  </div>
+                </div>
+
+              </div>
+              <div class="row">
+                <div class="form-group col-lg-10"></div>
+
+                <div class="form-group col-lg-2">
+                  <i class="fa fa-plus-circle" (click)="addRefCondition(SelectedItem.refCondition)" aria-hidden="true"
+                    style="font-size: 19px;"></i>
+
+                </div>
+
+              </div>
+            </div>
+
+            <div *ngIf="SelectedItem.groupnamebox=='manual'">
+
+              <div class="row">
+                <div class="form-group col-lg-4">
+                  <label>Label</label>
+                </div>
+                <div class="form-group col-lg-4">
+                  <label>Value</label>
+                </div>
+                <div class="form-group col-lg-4">
+                  <label>Action</label>
+                </div>
+              </div>
+              <div *ngFor="let v of SelectedItem.values" class="inline-form-group">
+                <div class="row">
+                  <div class="form-group col-lg-4">
+                    <input type="text" class="form-control" [(ngModel)]="v.label">
+                  </div>
+                  <div class="form-group col-lg-4">
+                    <input type="text" class="form-control" [(ngModel)]="v.value">
+
+                  </div>
+                  <div class="form-group col-lg-4">
+                    <i class="fa fa-remove" (click)="SelectedItem.values.splice(valueIndex,1)" aria-hidden="true"></i>
+
+                  </div>
+                </div>
+
+              </div>
+              <div class="row">
+                <div class="form-group col-lg-8"></div>
+                <div class="form-group col-lg-4">
+                  <div class="form-group col-lg-1">
+
+                    <i class="fa fa-plus-circle" (click)="addValue(SelectedItem.values)" aria-hidden="true"></i>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+          </div>
+
+
+        </div>
+      </div>
+
+    </div>
+    <div class="row main">
+      <div class="col-sm-12" style="text-align: center;">
+        <div *ngIf="error" class="alert alert-danger">Please give correct FieldName</div>
+      </div>
+    </div>
+    <div class="row main">
+
+      <div class="col-sm-5 col-5"></div>
+      <div class="col-sm-2 col-3 text-center" style="padding: 9px;">
+
+        <button class="btn pull-center" style="border-radius: 9px; " (click)="saveClick()">Save</button>
+      </div>
+
+      <div class="col-sm-4 col-4"></div>
+    </div>
+
+  </div>
+</div>

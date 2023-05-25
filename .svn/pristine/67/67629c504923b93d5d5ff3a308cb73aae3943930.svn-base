@@ -1,0 +1,296 @@
+<div class="whitebg pdz">
+    <div class="col-sm-12 pdz">
+        <div class="category-header">
+            <div class="row">
+                <div class="col-sm-10 col-6">
+                    <h5 class="cateogory-title">SubForm Details</h5>
+                </div>
+                <div class="col-sm-2 col-6 text-left pdt">
+                    <button class="btn commonbutton" type="button" (click)="showModal(content)">
+                        Create SubForm <i class="fa fa-plus-circle"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="box-shadow" *ngIf="subformdetails?.length != 0">
+    <div class="whitebground">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-3 col-12 mt-3 posi" *ngFor="let item of subformdetails">
+                    <div class="cat-padding">
+                        <span
+                            (click)="onredirect(item.FormCode,item.FormDisplayName,item.ParentFormCode,item.ColumnName,item.ParentTableName)">
+                            <i class="fa fa-pencil awesome-color">{{item.FormDisplayName}}</i>
+                        </span>
+                    </div>
+
+                    <div class="actions">
+                        <span (click)="onlanguage(item.FormCode,content2)">
+                            <i class="fa fa-language awesome-color" title="Language"></i>
+                        </span>
+                        <span (click)="onedit(item.FormCode,content)">
+                            <i class="fa fa-pencil awesome-color" title="Edit"></i>
+                        </span>
+                        <span (click)="Deleteformdetails(item.FormID,content1)">
+                            <i class="fa fa-times-circle-o blue awesome-color" title="Delete"></i>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<ng-template #content let-modal>
+    <form [formGroup]="FormDetailsForm" (ngSubmit)="onSubmit(FormDetailsForm.value)" autocomplete="off">
+        <div class="modal-header popuphead">
+            <h4 class="modal-title popuptitle">SubForm Details
+            </h4>
+            <button type="button" class="close pull-right" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+
+            <div class="container">
+                <div class="top-main">
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-sm-6 col-12">
+                                <label class="m-0 font-weight-normal">SubForm Name</label>
+                                <input formControlName="FormName" type="text" class="form-control cshadow"
+                                    [ngClass]="{ 'is-invalid': submitted && FormDetailsData.FormName.errors }">
+                                <div *ngIf="submitted && FormDetailsData.FormName.errors" class="invalid-feedback">
+                                    <div *ngIf="FormDetailsData.FormName.errors.required">SubForm Name is required</div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-12">
+                                <label class="m-0 font-weight-normal">SubForm Display Name</label>
+                                <input formControlName="FormDisplay" type="text" class="form-control cshadow"
+                                    [ngClass]="{ 'is-invalid': submitted && FormDetailsData.FormDisplay.errors }">
+                                <div *ngIf="submitted && FormDetailsData.FormDisplay.errors" class="invalid-feedback">
+                                    <div *ngIf="FormDetailsData.FormDisplay.errors.required">SubForm Display Name is
+                                        required</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-sm-6 col-12">
+                                <label class="m-0 font-weight-normal">SubForm Description</label>
+                                <input formControlName="FormDescription" type="text" class="form-control cshadow"
+                                    [ngClass]="{ 'is-invalid': submitted && FormDetailsData.FormDescription.errors }">
+                                <div *ngIf="submitted && FormDetailsData.FormDescription.errors"
+                                    class="invalid-feedback">
+                                    <div *ngIf="FormDetailsData.FormDescription.errors.required">SubForm Description is
+                                        required</div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-12">
+                                <label class="m-0 font-weight-normal">SOF Number</label>
+                                <input formControlName="SOFNumber" type="text" class="form-control cshadow"
+                                    [ngClass]="{ 'is-invalid': submitted && FormDetailsData.SOFNumber.errors }">
+                                <div *ngIf="submitted && FormDetailsData.SOFNumber.errors" class="invalid-feedback">
+                                    <div *ngIf="FormDetailsData.SOFNumber.errors.required">SOF Number is required</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-sm-6 col-12">
+                                <label class="m-0 font-weight-normal">Designed By</label>
+                                <input formControlName="DesignedBy" type="text" class="form-control cshadow"
+                                    [ngClass]="{ 'is-invalid': submitted && FormDetailsData.DesignedBy.errors }">
+                                <div *ngIf="submitted && FormDetailsData.DesignedBy.errors" class="invalid-feedback">
+                                    <div *ngIf="FormDetailsData.DesignedBy.errors.required">Designed By is required
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-12">
+
+                                <label class="m-0 font-weight-normal">Designed On</label>
+                                <p-calendar class="form-control cshadow" formControlName="DesignedOn"
+                                    [monthNavigator]="true" [yearNavigator]="true" yearRange="2000:2030"
+                                    [minDate]="MinDate" [maxDate]="MaxDate" [touchUI]="false" dateFormat="yy-mm-dd">
+                                </p-calendar>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-sm-6 col-12">
+                                <label class="m-0 font-weight-normal">Sub Category</label>
+                                <select class="form-control cshadow" formControlName="SubCategory"
+                                    [ngClass]="{ 'is-invalid': submitted && FormDetailsData.SubCategory.errors }">
+                                    <option *ngFor="let item of subcategorydetails" [value]="item.SubCode">
+                                        {{item.SubCategoryName}}</option>
+                                </select>
+                                <div *ngIf="submitted && FormDetailsData.SubCategory.errors" class="invalid-feedback">
+                                    <div *ngIf="FormDetailsData.SubCategory.errors.required">Sub Category is required
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-12">
+                                <label class="m-0 font-weight-normal">Display Order</label>
+                                <input class="form-control cshadow" formControlName="displayorder" type="number">
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-sm-6 col-12">
+                                <label class="m-0 font-weight-normal">Parent Form</label>
+                                <select class="form-control cshadow" formControlName="ParentForm"
+                                    [ngClass]="{ 'is-invalid': submitted && FormDetailsData.ParentForm.errors }"
+                                    (change)="getAllChildForm($event.target.value);">
+                                    <option *ngFor="let item of getFormDetails" [value]="item.FormCode">
+                                        {{item.FormDisplayName}}</option>
+                                </select>
+                                <div *ngIf="submitted && FormDetailsData.ParentForm.errors" class="invalid-feedback">
+                                    <div *ngIf="FormDetailsData.ParentForm.errors.required">Parent Form is required
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-12">
+                                <label class="m-0 font-weight-normal">Group Name</label>
+                             
+                                <select class="form-control cshadow" formControlName="GroupName" >
+                                    <option value="">Select</option>
+                                    <option *ngFor="let item of getChildFormDetails" [value]="item.TableName">
+                                        {{item.groupName}}</option>
+                                </select>
+                              
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+
+            </div>
+        </div>
+        <footer class="modal-footer pop-btn">
+            <button class="btn commonbutton">Submit</button>
+            <button type="reset" class="btn commonbutton" (click)="modal.close('Close click')">Cancel</button>
+        </footer>
+    </form>
+</ng-template>
+<ng-template #content1 let-modal>
+    <div class="modal-header popuphead">
+        <h4 class="modal-title popuptitle">Delete Record
+        </h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="container form-group ">
+            <div class="row">
+                <div class="col">
+                    <span>Are you sure you want to Delete the record?</span>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <footer class="modal-footer pop-btn">
+        <button type="button" class="btn commonbutton " (click)="DeleteTableDetails()">OK</button>
+        <button type="button" class="btn commonbutton" (click)="modal.close('Close click')">Cancel</button>
+    </footer>
+</ng-template>
+<ng-template #content2 let-modal>
+    <form [formGroup]="FormDetailsForm">
+        <div class="modal-header popuphead">
+            <h4 class="modal-title popuptitle">Add Languages
+            </h4>
+            <button type="button" class="close pull-right" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div class="container">
+                <div class="top-main">
+
+                    <div class="row">
+                        <div class="form-group col-lg-4">
+                            <label>Language</label>
+                        </div>
+                        <div class="form-group col-lg-4">
+                            <label>Form Name</label>
+                        </div>
+                        <div class="form-group col-lg-4">
+                            <label>Action</label>
+                        </div>
+                    </div>
+
+                    <div formArrayName="users"
+                        *ngFor="let user of FormDetailsForm.get('users')['controls']; let i = index">
+                        <div [formGroupName]="i">
+                            <div class="row">
+
+                                <div class="form-group col-lg-4">
+                                    <select class="form-control" formControlName="language_name"
+                                        [ngClass]="{ 'is-invalid': submitted && user.controls?.language_name?.errors }">
+                                        <option *ngFor="let item of languagelist" [value]="item.LanguageID">
+                                            {{item.LanguageName}}</option>
+                                    </select>
+                                    <div *ngIf="submitted && user.controls?.language_name?.errors"
+                                        class="invalid-feedback">
+                                        <div *ngIf="user.controls?.language_name?.errors.required">Language is required
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="form-group col-lg-4">
+                                    <input type="text" class="form-control" formControlName="form_Name"
+                                        [ngClass]="{ 'is-invalid': submitted && user.controls?.form_Name?.errors }">
+                                    <div *ngIf="submitted && user.controls?.form_Name?.errors" class="invalid-feedback">
+                                        <div *ngIf="user.controls?.form_Name?.errors.required">Form Name is required
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group col-lg-4">
+                                    <i class="fa fa-remove" (click)="removeGroup(i)" aria-hidden="true"
+                                        style="font-size: 19px;"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group col-lg-4"></div>
+                        <div class="form-group col-lg-4"></div>
+                        <div class="form-group col-lg-4">
+                            <i class="fa fa-plus-circle" (click)="addGroup()" aria-hidden="true"
+                                style="font-size: 19px;"></i>
+
+                        </div>
+                    </div>
+
+
+
+                </div>
+            </div>
+
+        </div>
+
+        <footer class="modal-footer pop-btn">
+            <button type="button" class="btn commonbutton " (click)="LangaugeDetails()">OK</button>
+            <button type="button" class="btn commonbutton" (click)="modal.close('Close click')">Cancel</button>
+        </footer>
+    </form>
+</ng-template>

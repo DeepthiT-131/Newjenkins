@@ -1,0 +1,117 @@
+<div class="layout-wrapper" >
+        <div id="layout-topbar">
+            <a href="#" class="menu-button" (click)="onMenuButtonClick($event)">
+                <i class="fa fa-bars"></i>
+            </a>
+    <!-- <button type="button" (click)="onMenuButtonClick($event)">click</button> -->
+            <a class="logo" [routerLink]="['/']">
+              <img [src]="theme.HeaderLogo">
+                <!-- <img alt="logo" src="assets/components/images/crider-logo.png" /> -->
+            </a>
+    
+            <ul class="topbar-menu">
+                
+                <li class="topbar-menu-versions">
+                    <a [routerLink]="['/']"><i class="fa fa-power-off" aria-hidden="true" style="font-size: 24px;"></i>
+                    </a>
+                    
+                </li>
+                <!-- <li><a href="#" (click)="changeTheme($event, 'blue-red', false)"><span class="ui-text">Blue-Red</span></a></li> -->
+            </ul>
+        </div>
+        <div class="outerdiv">
+        <div *ngIf="theme.NavBar=='topwithbuttons'">
+                <div id="layout-content" class=" topbuttons" style="margin-left: 0px !important;">
+                        <div class="navbuttonsmbl row" style="    padding-bottom: 7px;">
+                            <div class="spaceleft"  *ngFor="let item of buttondata">
+                
+                                    <a>  <button (click)="changeURL(item.FCode,item.ModuleName)" class="btn btn-primary modal-confirm popupbtn fixedwidth" [routerLinkActive]="['active']" >{{item.ModuleName}} </button></a> 
+                             </div> 
+
+                             
+                                      
+                            </div>
+                        </div>
+            </div>
+            <div *ngIf="theme.NavBar=='left'">
+                    <div id="layout-sidebar" [ngClass]="{'active': menuActive}">
+                        <div class="layout-menu MenupTop" >
+                           <ul class="nobullet" style="display: initial;padding-left: 0;">
+                                        <li class="menuverticle">  <a id="menu_input" #inputmenutitle [class.active-menuitem]="inputmenutitle.id == activeMenuId" tabindex="0" (keydown)="onKeydown($event, inputmenutitle.id)" (click)="toggle(inputmenutitle.id)"><span><i class="fa fa-user white"></i>&nbsp; Admin</span></a>
+                                            <div [@animation]="(inputmenutitle.id == activeMenuId) ? 'visible' : 'hidden'" (@animation.start)="onAnimationStart($event)" (@animation.done)="onAnimationDone($event)">
+                                <ul class="nobullet" style="display: block;padding-left: 0px;">
+                                 
+                               <li routerLinkActive="activemenu"><a class="insidemenu" [routerLink]="['/theme/user']"> <span><i class="fa fa-user white icon"></i></span>User</a></li>
+                               <li routerLinkActive="activemenu"> <a class="insidemenu" [routerLink]="['/theme/role']" (click)="menuActive = false"><span><i class="fa fa-user white icon"></i></span>Role</a></li>
+                               <li routerLinkActive="activemenu"> <a class="insidemenu" [routerLink]="['/theme/category']" (click)="menuActive = false"><span><i class="fa fa-list white icon"></i></span>Category</a></li>
+                               <li routerLinkActive="activemenu"> <a class="insidemenu" [routerLink]="['/theme/subcategory']" (click)="menuActive = false"><span><i class="fa fa-list white icon"></i></span>SubCategory</a></li>
+                               <li routerLinkActive="activemenu"> <a class="insidemenu" [routerLink]="['/theme/form']" (click)="menuActive = false"><span><i class="fa fa-file white icon"></i></span>Forms</a></li>
+                               <li routerLinkActive="activemenu"> <a class="insidemenu" [routerLink]="['/loginconfig']" (click)="menuActive = false"><span><i class="fa fa-file white icon"></i></span>Login Configuration</a></li>
+                               <li routerLinkActive="activemenu"> <a class="insidemenu" [routerLink]="['/themeconfig']" (click)="menuActive = false"><span><i class="fa fa-file white icon"></i></span>Theme Configuration</a></li>
+                                </ul>
+                                </div>
+                                   </li>
+                                   
+                                    <li *ngFor="let item of menudetails" style="color:white;font-size: 15px;"> <a [id]="item.ModuleName" #inputmenutitle [class.active-menuitem]="inputmenutitle.id == activeMenuId" tabindex="0" (keydown)="onKeydown($event, inputmenutitle.id)" (click)="toggle(inputmenutitle.id)"><span><i class="fa fa-user white icon"></i></span>{{item.ModuleName | titlecase}}</a>
+
+                                            <div [@animation]="(inputmenutitle.id == activeMenuId) ? 'visible' : 'hidden'" (@animation.start)="onAnimationStart($event)" (@animation.done)="onAnimationDone($event)">
+                                <ul class="nobullet" style="padding-left: 0px;">
+                                           
+                                            <li *ngFor="let child of item.children" (click)="changeURL($event, child)" 
+                                            [ngClass]="{'activemenu': selectedItem == child}"  ><a class="insidemenu" ><span><i class="fa fa-user white icon"></i></span>{{child.ModuleName | titlecase}}</a></li>
+                                        </ul>
+                                        </div>
+                                    </li>
+                                </ul>
+                              </div>
+                         </div>
+                    </div>
+                </div>
+            
+                <div *ngIf="theme.NavBar=='topwithbuttons'">
+                    <div id="layout-sidebar" [ngClass]="{'active': menuActive}" style="display: none;">
+                        
+                    </div>
+                 
+                 </div>
+</div>
+ <div class="layout-mask" *ngIf="menuActive">
+    </div>
+
+    <div *ngIf="theme.NavBar=='left'">
+
+
+
+    <div id="layout-content" >
+           
+        <div>
+            <router-outlet></router-outlet>
+        </div>
+<!-- <footer class="page-footer font-small blue" style="border-top: 1px solid black; position: absolute; bottom: 0; right: 0;
+left: 250px;">
+    
+  <div class="footer-copyright text-center py-3">© 2019 Copyright:
+         Powered By <a href="">Empulse Global</a>
+      </div>
+      
+</footer> -->
+       
+
+      </div>
+    </div>
+
+      <div *ngIf="theme.NavBar=='topwithbuttons'">
+      <div id="layout-content" style="margin-left: 0px !important;">
+            <div>
+                <router-outlet></router-outlet>
+            </div>
+            <!-- <footer class="page-footer font-small blue" style="border-top: 1px solid black; position: absolute; bottom: 0; right: 0;
+            left: 0;">
+                
+              <div class="footer-copyright text-center py-3">© 2019 Copyright:
+                     Powered By <a href="">Empulse Global</a>
+                  </div>
+                
+            </footer> -->
+          </div>
+      </div>

@@ -1,0 +1,3 @@
+<p-fullCalendar [events]="events" [options]="options">
+</p-fullCalendar>
+<!-- <pre>{{events | json}}</pre> -->

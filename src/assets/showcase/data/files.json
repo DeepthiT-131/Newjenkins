@@ -1,0 +1,102 @@
+{
+    "data": 
+    [
+        {
+            "label": "Operations",
+            "data": 1,
+         
+            "children": [
+                {
+                    "label": "Form-1",
+                    "data": 5,
+                  
+                    "children": [
+                        {"label": "barcelona.jpg", "icon": "fa fa-file-image-o", "data": "Barcelona Photo"},
+                        {
+                            "label": "Can Downtime",
+                            "data": 1
+                            
+                        },
+                        {
+                            "label": "Seamer Vaccum Check",
+                            "data": 1
+                            
+                        },
+                        {
+                            "label": "Brine Temperature Check",
+                            "data": 1
+                            
+                        },
+                        {
+                            "label": "Check Weigher Log",
+                            "data": 1
+                            
+                        }
+                    ]
+                },
+                {
+                    "label": "Form-2",
+                    "data": 6,
+                   
+                    "children": [
+                        {
+                            "label": "Filler Weight and Speed",
+                            "data": 1
+                            
+                        },
+                        {
+                            "label": "Canning Conveyor Belt",
+                            "data": 1
+                            
+                        }
+                    ]
+                }
+            
+            ]
+
+        },
+        {
+            "label": "QA",
+            "data": 2,
+           
+            "children": [
+                {
+                    "label": "Can Filler",
+                    "data": 1,
+                   
+                    "children": []
+                },
+                {
+                    "label": "Can Deepal",
+                    "data": 2,
+                    
+                    "children": []
+                },
+                {
+                    "label": "Can QA",
+                    "data": 3,
+                   
+                    "children": []
+                },
+                {
+                    "label": "Report QA",
+                    "data": 4,
+                    
+                    "children": []
+                }
+            ]
+        },
+        {
+            "label": "Testing",
+            "data": 3,
+           
+            "children": []
+        },
+        {
+            "label": "testNameUpdate",
+            "data": 5,
+         
+            "children": []
+        }
+    ]
+}

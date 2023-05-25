@@ -1,0 +1,211 @@
+<div class="col-sm-12">
+    <div class="row">
+        <div class="col-sm-4">
+            <h2  class="pageTitle" >User</h2>
+            <p class="breadcrumbs">Home - Admin - User</p>
+        </div>
+        <div class="col-sm-5"></div>
+        <div class="col-sm-3 btnarea">
+            <button class="btn addbutton" type="button" (click)="showModal()">+ Add User</button>
+        </div>
+    </div>
+    </div>
+    
+    <div class="whitebg">
+      <div class="receivingbody">
+    <div class="table-responsive">
+        <div id="no-more-tables">
+        
+  
+       <p-table id="texport"  #dt [columns]="cols" [value]="companydetails"  [first]="first" [responsive]="true" [rows]="10" sortMode="multiple" [scrollable]="table.Scrollable" scrollHeight="400px" [resizableColumns]="table.Resizable" [reorderableColumns]="true" [globalFilterFields]="['CompanyName','ContactName','emailid','PhoneNumber','Address']" >
+          <ng-template pTemplate="caption">
+              <div class="row">
+  
+                  <div class="col-lg-6 col-sm-4">
+  
+                      <div *ngIf="table.ExportButton" class="ui-helper-clearfix" style="text-align: left">
+                          <button type="button" class="exportbuttons" icon="pi pi-file-o" iconPos="left"  (click)="exportExcel()"><span aria-hidden="true" class="ui-button-icon-left ui-clickable fa fa-files-o" style="font-size: 16px; padding: 8px;"></span></button>
+  
+                          <button type="button" class="exportbuttons" icon="pi pi-file-pdf" iconPos="left" label="PDF" (click)="exportPdf()"><span aria-hidden="true" class="ui-button-icon-left ui-clickable fa fa-file-pdf-o" style="font-size: 16px; padding: 8px;"></span></button>
+                      </div>
+                  </div>
+                  <!-- <div class="col-lg-3 col-sm-4">
+                      <div *ngIf="table.Multiselect" style="text-align:left">
+                          <p-multiSelect [options]="cols" [(ngModel)]="selectedColumns" optionLabel="header" selectedItemsLabel="{0} columns selected" [style]="{minWidth: '200px'}" defaultLabel="Choose Columns"></p-multiSelect>
+                      </div>
+                  </div> -->
+                  <div class="col-lg-6 col-sm-4">
+                      <div *ngIf="table.Filter" style="text-align: right">
+                          <span class="searchfilter">Search:</span>
+                          <input type="text" pInputText size="20" placeholder="" (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:auto;padding: 5px;">
+                      </div>
+                  </div>
+              </div>
+          </ng-template>
+  
+          <ng-template pTemplate="header" class="tblheading" let-columns>
+              <tr>
+                <th pSortableColumn="Companyname">Company Name <p-sortIcon field="Companyname"></p-sortIcon></th>
+                <th pSortableColumn="ContactName">Contact Name <p-sortIcon field="ContactName"></p-sortIcon></th>
+                <th pSortableColumn="emailid">Email ID <p-sortIcon field="emailid"></p-sortIcon></th>
+                <th pSortableColumn="PhoneNumber">Contact Number <p-sortIcon field="PhoneNumber"></p-sortIcon></th>
+                <th pSortableColumn="Address">Address<p-sortIcon field="Address"></p-sortIcon></th>
+                <th pSortableColumn="action">Action<p-sortIcon field="action"></p-sortIcon></th>
+                  
+            
+              </tr>
+          </ng-template>
+  
+          <ng-template pTemplate="body" let-companydetails let-index="rowIndex" class="wordwrap tablebgcolor">
+              <tr [pReorderableRow]="index">
+  
+                <td data-title="CompanyName">{{companydetails.CompanyName}}</td>
+                <td data-title="ContactName">{{companydetails.ContactName}}</td>
+                <td data-title="EmailID"> {{companydetails.EmailID}}</td>
+                <td data-title="PhoneNumber">{{companydetails.PhoneNumber}}</td>
+                <td data-title="Address">{{companydetails.Address1}}</td>
+                <td data-title="action" align="center"><span>
+                  <span class="fa fa-pencil awesome" title="Edit" (click)="onedit(companydetails.CompanyID)"></span></span>
+                <span><i class="fa fa-times-circle-o blue awesome" title="Delete" (click)="deletecompany(companydetails.CompanyID, companydetails.CompanyName)"></i></span></td>
+              </tr>
+        </ng-template>
+          <ng-template pTemplate="emptymessage" let-columns>
+              <tr>
+  
+                  <td [attr.colspan]="emptyrow">
+                      No records found
+                  </td>
+  
+              </tr>
+          </ng-template>
+          
+      </p-table>
+        </div>
+      </div>
+      </div>
+    </div>
+  
+  <form [formGroup]="TenantForm" (ngSubmit)="onSubmit(TenantForm.value)" autocomplete="off">
+    <div class="modal fade" bsModal #usermodal="bs-modal" [config]="{backdrop: 'static'}" tabindex="-1" role="dialog"
+  aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog crider">
+    <div class="modal-content">
+      <div class="modal-header popuphead">
+        <h4 class="modal-title popuptitle">Add User Details 
+        </h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="usermodal.hide()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+      </div>
+      <div class="modal-body">
+          <!-- <h4 class="subheader">DownTime</h4> -->
+        <div class="container">
+            <div class="form-group mt-4">
+                <div class="row">
+                  <div class="col-lg-4 col-xs-12">
+                        <label>Company Name</label>
+                        <input type="text" formControlName="Companyname" class="form-control cshadow" [ngClass]="{ 'is-invalid': submitted && user.Companyname.errors }">
+                        <div *ngIf="submitted && user.Companyname.errors" class="invalid-feedback">
+                          <div *ngIf="user.Companyname.errors.required">First Name is required</div>
+                          <div *ngIf="user.Companyname.errors.cannotContainSpace">First Name Cannot Contain Space</div>
+                        </div>
+                  </div>
+                  <div class="col-lg-4 col-xs-12">
+                        <label>Contact Name</label>
+                        <input type="text" formControlName="Contactname" class="form-control cshadow" [ngClass]="{ 'is-invalid': submitted && user.Contactname.errors }">
+                        <div *ngIf="submitted && user.Contactname.errors" class="invalid-feedback">
+                          <div *ngIf="user.Contactname.errors.required">Last Name is required</div>
+                          <div *ngIf="user.Contactname.errors.cannotContainSpace">Last Name Cannot Contain Space</div>
+                        </div>
+                  </div>
+                  <div class="col-lg-4 col-xs-12">
+                    <label>Email ID</label>
+                    <input type="email" formControlName="Emailid" class="form-control cshadow" [ngClass]="{ 'is-invalid': submitted && user.Emailid.errors }">
+                    <div *ngIf="submitted && user.Emailid.errors" class="invalid-feedback">
+                      <div *ngIf="user.Emailid.errors.required">Email ID is required</div>
+                      <div *ngIf="user?.Emailid?.errors?.cannotContainSpace">Email ID cannot Contain Space</div>
+                      <div *ngIf="user?.Emailid?.errors?.pattern">Email ID must be a valid Email ID address</div>
+                      <div *ngIf="user?.Emailid?.errors?.EmailidExist">Email ID already exist</div>
+                    </div>
+              </div>
+                
+                  </div>  
+              </div>
+                             <div class="form-group mt-4">
+                                <div class="row">
+                               <div class="col-lg-4 col-xs-12">
+                                  <label>Contact Number</label>
+                                  <input type="text" class="form-control cshadow" formControlName="contact" [ngClass]="{ 'is-invalid': submitted && user.contact.errors }">
+                                  <div *ngIf="submitted && user.contact.errors" class="invalid-feedback">
+                                    <div *ngIf="user.contact.errors.required">Contact Number is required</div>
+                                    <div *ngIf="user.contact.errors.minLength">Contact Number must be at least 5 characters</div>
+                                    <div *ngIf="user.contact.errors.maxLength">Contact Number must be at most 12 characters</div>
+                                    <div *ngIf="user.contact.errors.pattern">Contact Number must be number</div>
+                                    <div *ngIf="user.contact.errors.cannotContainSpace">Contact Number cannot Contain Space</div>
+                                  </div>
+                                </div> 
+                                <div class="col-lg-4 col-xs-12">
+                                    <label>Address</label>
+                                    <textarea type="text" formControlName="Address" class="form-control cshadow"></textarea>
+                              </div>
+                                  </div>  
+                              </div>
+  
+        </div>
+      </div>
+      <footer class="modal-footer pop-btn">
+        <div class="row">
+          <div class="col-sm-4 col-1"></div>
+          <div class="col-sm-2 col-5">
+            <button class="btn btn-primary modal-confirm popupbtn fixedwidth" >Submit</button>
+          </div>
+            <div class="col-sm-2 col-5">
+              <button class="btn btn-primary modal-confirm popupbtn fixedwidth btncancel" (click)="usermodal.hide()">
+                Cancel
+              </button>
+          </div>
+          <div class="col-sm-4 col-1"></div>
+        </div>
+      </footer>
+    </div>
+  </div>
+  </div>
+  </form>
+  
+  <div class="modal fade" bsModal #deletemodal="bs-modal" [config]="{backdrop: 'static'}"
+  tabindex="-1" role="dialog" aria-labelledby="dialog-dailyproduct-name">
+  <div class="modal-dialog  modal-l pTop" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center" style="background-color:#f5901f !important;color: #fff; ">
+        <h5 class="modal-title text-center" id="exampleModalLongTitle">Delete Record</h5>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="deletemodal.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+       
+        <div class="container form-group ">
+          <div class="row">
+            <div class="col">
+              <span>Are you sure you want to Delete the record?</span>
+            </div>
+  
+          </div>
+        </div>
+           <div class="row main">
+              <div class="col-sm-4 col-1"></div>
+              <div class="col-sm-2 col-5 text-center" style="padding: 9px;">
+                 
+                  <button type="button" class="btn pull-center btncandown fixedwidth" (click)="delCompanyData()" style="background: #f5901f;color:#fff;    border-radius: 9px; " >OK</button>
+              </div>
+              <div class="col-sm-2 col-5 text-center" style="padding: 9px;">
+                  <button type="button" class="btn pull-center fixedwidth"  style="background: #f5901f;color:#fff;     border-radius: 9px;" (click)="deletemodal.hide()" >Cancel</button>
+              </div>
+              <div class="col-sm-4 col-1"></div>
+          </div>
+      </div>
+    </div>
+  </div>
+  </div>
+    
+  

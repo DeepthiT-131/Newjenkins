@@ -1,0 +1,129 @@
+<div class="col-sm-12 pOutside">
+  <div class="col-sm-12 pOutside">
+      <div class="headerbg">
+          <h3 class="headetstyle">{{modulename}}
+            </h3>
+
+      </div>
+  </div>
+</div>
+<div class="whitebg">
+  <div class="row">
+      <div class="card-body create">
+          <form class="ftheme" *ngIf="reportform" [formGroup]="reportform" (ngSubmit)="CheckFilter()">
+              <div class="row">
+                  <div *ngFor="let item of TabletargetBuilderTools" class="col-sm-3">
+
+                      <div class="form-group" *ngIf="item.FilterType=='Single'">
+                          <label>{{item.FieldName}}</label>
+                          <select class="form-control headerfilter" formControlName="{{item.FilterColumn}}">
+                              <option value="0" disabled>--Select--</option>
+                              <option *ngFor="let v of item.values" [value]="v.Value">{{v.Label}}</option>
+                          </select>
+                      </div>
+
+                      <div class="form-group" *ngIf="item.RangeType=='Date'">
+
+                          <label>{{item.FieldName}}</label>
+                          <p-calendar class="form-control headerfilter" formControlName="{{item.FilterColumn}}" [monthNavigator]="true" [yearNavigator]="true" yearRange="2000:2030" [minDate]="MinDate" [maxDate]="MaxDate" dateFormat="yy-mm-dd">
+                          </p-calendar>
+
+                      </div>
+
+                      <div class="form-group" *ngIf="item.RangeType=='Time'">
+
+                          <label>{{item.FieldName}}</label>
+                          <p-calendar class="form-control headerfilter" formControlName="{{item.FilterColumn}}" [timeOnly]="true"></p-calendar>
+                      </div>
+
+                  </div>
+
+                  <div class="btn-top">
+                      <label></label>
+                      <input type="submit" value="Search" class="btn commonbutton">
+                  </div>
+              </div>
+          </form>
+      </div>
+  </div>
+
+  <div class="row">
+
+      <p-confirmDialog></p-confirmDialog>
+      <div id="layout-content" class="tablelayout">
+
+          <p-table #dt [columns]="selectedColumns" [value]="cars" [paginator]="table.Pagination" [first]="first" [responsive]="true" [rows]="10" sortMode="multiple" [scrollable]="table.Scrollable" scrollHeight="400px" [resizableColumns]="table.Resizable" [reorderableColumns]="table.Reorder">
+              <ng-template pTemplate="caption">
+                  <div class="row">
+
+                      <div class="col-lg-3 col-sm-4">
+
+                          <div *ngIf="table.ExportButton" class="ui-helper-clearfix" style="text-align: left">
+                              <button type="button" class="exportbuttons" icon="pi pi-file-o" iconPos="left" (click)="dt.exportCSV()"><span aria-hidden="true" class="ui-button-icon-left ui-clickable fa fa-files-o" style="font-size: 16px; padding: 8px;"></span></button>
+
+                              <button type="button" class="exportbuttons" icon="pi pi-file-pdf" iconPos="left" label="PDF" (click)="exportPdf()"><span aria-hidden="true" class="ui-button-icon-left ui-clickable fa fa-file-pdf-o" style="font-size: 16px; padding: 8px;"></span></button>
+                          </div>
+                      </div>
+                      <div class="col-lg-3 col-sm-4">
+                          <div *ngIf="table.Multiselect" style="text-align:left">
+                              <p-multiSelect [options]="cols" [(ngModel)]="selectedColumns" optionLabel="header" selectedItemsLabel="{0} columns selected" [style]="{minWidth: '200px'}" defaultLabel="Choose Columns"></p-multiSelect>
+                          </div>
+                      </div>
+                      <div class="col-lg-6 col-sm-4">
+                          <div *ngIf="table.Filter" style="text-align: right">
+                              <span class="searchfilter">Search:</span>
+                              <input type="text" pInputText size="20" placeholder="" (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:auto;padding: 5px;">
+                          </div>
+                      </div>
+                  </div>
+              </ng-template>
+
+              <ng-template pTemplate="header" class="tblheading" let-columns>
+                  <tr>
+
+                      <th *ngFor="let col of columns" [pSortableColumn]="col.field" pResizableColumn pReorderableColumn>
+                          {{col.header}}
+                          <p-sortIcon [field]="col.field"></p-sortIcon>
+                      </th>
+                
+                  </tr>
+              </ng-template>
+
+              <ng-template pTemplate="colgroup" let-columns>
+                  <colgroup>
+                      <col *ngFor="let col of columns" style="width:100%">
+                  </colgroup>
+              </ng-template>
+
+              <ng-template pTemplate="body" let-car let-columns="columns" let-index="rowIndex" class="wordwrap tablebgcolor">
+                  <tr [pReorderableRow]="index" *ngIf="car.IsRow == '0'" class="footerstyle">
+
+                      <td *ngFor="let col of columns" class="ui-resizable-column" style="word-break: break-all;">
+                          <span class="ui-column-title">{{col.header}}</span> {{car[col.field]}}
+                      </td>
+                  </tr>
+
+                  <tr [pReorderableRow]="index" *ngIf="car.IsRow == '1'">
+
+                    <td *ngFor="let col of columns" class="ui-resizable-column" style="word-break: break-all;">
+                        <span class="ui-column-title">{{col.header}}</span> {{car[col.field]}}
+                    </td>
+                 
+                </tr>
+
+              </ng-template>
+              <ng-template pTemplate="emptymessage" let-columns>
+                  <tr>
+
+                      <td [attr.colspan]="emptyrow">
+                          No records found
+                      </td>
+
+                  </tr>
+              </ng-template>
+          </p-table>
+
+      </div>
+
+  </div>
+</div>

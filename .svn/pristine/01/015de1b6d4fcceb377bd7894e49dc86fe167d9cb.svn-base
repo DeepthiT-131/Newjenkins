@@ -1,0 +1,48 @@
+.row-border.hover table.table-bordered.table-striped.table-condensed.mb-none{
+    overflow: scroll;
+    display: block;
+    width: 100%
+}
+.horizontal
+{
+    display: inline-flex;
+    padding-left: 16px;
+}
+.tablelayout{
+    width: 100%;
+}
+.vertical
+{
+    display: block;
+}
+#layout-content{
+    margin-left: 0px !important;
+}
+.wordwrap{
+    word-break: break-word;
+}
+.btntopspace{
+    margin-top: 1%;
+}
+.addform{
+    margin-left: 12px;
+}
+
+.tablelayout{
+    background: #e0e0e0 !important;
+}
+.headerfilter{
+    background: #fff !important;
+}
+tr.ng-star-inserted:nth-of-type(odd) {
+    background-color: #f1efef;
+}
+.btn-top {
+    /* padding-top: 31px; */
+    margin-left: 17px;
+}
+.row-border.hover table.table-bordered.table-striped.table-condensed.mb-none{
+    overflow: scroll;
+    display: block;
+    width: 100%
+}

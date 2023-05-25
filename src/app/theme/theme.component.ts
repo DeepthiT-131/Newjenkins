@@ -1,0 +1,336 @@
+import { Component, OnInit } from '@angular/core';
+import { trigger, state, style, transition, animate } from '@angular/animations';
+import { RolepermissionService } from '../services/rolepermission.service';
+import { HelperService } from '../helper/helper.service';
+import { BuildercreateServiceService } from '../services/buildercreate-service.service';
+import { LoginconfigService } from '../services/loginconfig.service';
+import { ToasterService } from '../helper/toaster.service';
+import { Router } from '@angular/router';
+import { ImoduleTransferSubject } from '../interfaces/ibuilder-creation';
+import { IgetallMenu, IgetModuleonLoad } from '../interfaces/irolepermission';
+import { Iconfig } from '../interfaces/iloginconfig';
+import { languageValue } from '../global.model';
+import { NgxSpinnerService } from 'ngx-spinner';
+
+
+
+@Component({
+  selector: 'app-theme',
+  templateUrl: './theme.component.html',
+  styleUrls: ['./theme.component.css'],
+  animations: [
+    trigger('animation', [
+      state('hidden', style({
+        height: '0',
+        overflow: 'hidden',
+        maxHeight: '0',
+        paddingTop: '0',
+        paddingBottom: '0',
+        marginTop: '0',
+        marginBottom: '0',
+        opacity: '0',
+      })),
+      state('void', style({
+        height: '0',
+        overflow: 'hidden',
+        maxHeight: '0',
+        paddingTop: '0',
+        paddingBottom: '0',
+        marginTop: '0',
+        marginBottom: '0',
+      })),
+      state('visible', style({
+        height: '*'
+      })),
+      transition('visible <=> hidden', animate('400ms cubic-bezier(0.86, 0, 0.07, 1)')),
+      transition('void => hidden', animate('400ms cubic-bezier(0.86, 0, 0.07, 1)')),
+      transition('void => visible', animate('400ms cubic-bezier(0.86, 0, 0.07, 1)'))
+    ])
+  ]
+})
+export class ThemeComponent implements OnInit {
+  darkDemoStyle: HTMLStyleElement;
+  menuActive: boolean;
+  activeMenuId: string;
+  activeMenuIdchild:string
+  activeMenuIdchild1:string;
+ 
+  selectedItem: any;
+  routes: Array<string> = [];
+  filteredRoutes: Array<string> = [];
+  searchText: string;
+  getthemeconfigdetails: any;
+  themecolor: any;
+  defaultService: any;
+  buttondata: any;
+  loginInfo: any;
+  menudetails: any;
+  defaultvaluelist: any;
+  LanguageId: any;
+  url: any;
+  modulename: any;
+  isfile: boolean;
+  acessData: any;
+  moduleTransferData: ImoduleTransferSubject;
+  theme: any = {
+    PrimaryBgColor: " #1d1d85",
+    SecondaryBgColor: "#f5901f",
+    PrimaryTextColor: "#FFF",
+    SecondaryTextColor: "#FFF",
+    FooterText: "Enter Footer Text",
+    ActiveColor: "#f5901f",
+    NavBar: "topwithbuttons"
+  };
+  languagelist = [];
+  languageValue: languageValue = {
+    LanguageID: "",
+    LanguageText: "",
+    Placeholder: ""
+  };
+  LanguageCheck: any;
+  constructor(private builderService: BuildercreateServiceService, private router: Router,
+    private loginconfigservice: LoginconfigService, private toaster: ToasterService,
+    private rolepermissionservice: RolepermissionService, private helper: HelperService,
+    private builderservice: BuildercreateServiceService, private spinner: NgxSpinnerService) { }
+
+  ngOnInit() {
+
+    this.getLanguage();
+    this.defaultService = this.helper.getValue('DefaultLink')
+    this.loginInfo = this.helper.getValue('LoginInfo')
+
+    this.LanguageCheck = this.helper.getValue('LanguageID')
+    if (this.LanguageCheck) {
+      this.LanguageId = this.LanguageCheck;
+
+    }
+
+    if (this.defaultService) {
+      this.theme = this.helper.getValue('Theme');
+
+      if (this.theme) {
+
+        this.setTheme(this.theme)
+      }
+      else {
+
+        this.getthemeconfigsetting();
+      }
+
+    }
+    this.ChangeDefaultURL();
+  }
+  onAnimationStart(event) {
+    switch (event.toState) {
+      case 'visible':
+        event.element.style.display = 'block';
+        break;
+    }
+  }
+  onAnimationDone(event) {
+    switch (event.toState) {
+      case 'hidden':
+        event.element.style.display = 'none';
+        break;
+
+      case 'void':
+        event.element.style.display = 'none';
+        break;
+    }
+  }
+  toggle(id: string) {
+    this.activeMenuId = (this.activeMenuId === id ? null : id);
+  }
+  togglechild(id: string) {
+    this.activeMenuIdchild = (this.activeMenuIdchild === id ? null : id);
+  }
+  togglechild1(id: string) {
+    this.activeMenuIdchild1 = (this.activeMenuIdchild1 === id ? null : id);
+  }
+  ChangeDefaultURL() {
+
+    if (this.defaultService.ModuleURL != null && this.defaultService.ModuleURL != undefined && this.defaultService.ModuleURL != "") {
+      this.router.navigate([this.defaultService.ModuleURL]);
+    }
+    else {
+      if (this.loginInfo.FormCode != null && this.loginInfo.FormCode != undefined && this.loginInfo.FormCode != "") {
+        this.router.navigate(['/theme/Preview/' + this.loginInfo.FormCode]);
+      }
+
+    }
+   
+  }
+  onMenuButtonClick(event: Event) {
+    this.menuActive = !this.menuActive;
+    event.preventDefault();
+  }
+  getLinkdetails() {
+    const common: IgetModuleonLoad = {
+      RoleId: this.defaultService.RoleID,
+      ParentMenu: this.defaultService.ParentMenu,
+
+    };
+
+    // getall dispatch summary
+    this.rolepermissionservice.GetModuleonLoad(common).subscribe(
+      (response) => {
+      
+        this.buttondata = response;
+        if (response.length > 0) {
+          if (this.defaultService.ModuleURL != null && this.defaultService.ModuleURL != undefined && this.defaultService.ModuleURL != "") {
+            this.defaultvaluelist = response.filter(x => x.DefaultURL === this.defaultService.ModuleURL);
+          }
+          else {
+            this.defaultvaluelist = response;
+          }
+
+
+          this.selectedItem = this.defaultvaluelist[0];
+
+          if (this.defaultvaluelist[0].ModuleURL != null && this.defaultvaluelist[0].ModuleURL != undefined && this.defaultvaluelist[0].ModuleURL != "") {
+            this.router.navigate([this.defaultvaluelist[0].ModuleURL]);
+          }
+          else {
+
+            let moduleTransferValue: ImoduleTransferSubject = {
+              ModuleURL: this.defaultvaluelist[0].ModuleId,
+              ModuleName: this.defaultvaluelist[0].ModuleName,
+              IsFile: this.defaultvaluelist[0].IsFile,
+              Access: this.defaultvaluelist[0]
+            }
+
+            this.builderservice.checkmoduledata(moduleTransferValue);
+            if (this.defaultvaluelist[0].IsForm) {
+              this.router.navigate(['/theme/Preview/' + this.defaultvaluelist[0].ModuleId]);
+            }
+            else {
+              
+              this.router.navigate(['/theme/Preview/' + this.defaultvaluelist[0].ModuleId]);
+            }
+
+          }
+        }
+      });
+
+  }
+  SelectLanguage(Language) {
+    this.helper.setValue('LanguageID', Language);
+    this.LanguageId = Language;
+
+
+    this.router.navigate(['/preview/']);
+
+  }
+  changeURL(newValue) {
+
+    this.selectedItem = newValue;
+    this.helper.setValue('ItemSelected', this.selectedItem);
+
+    if (newValue.ModuleURL != null && newValue.ModuleURL != undefined && newValue.ModuleURL != "") {
+      this.router.navigate([newValue.ModuleURL]);
+    }
+    else {
+
+      let moduleTransferValue: ImoduleTransferSubject = {
+        ModuleURL: newValue.ModuleId,
+        ModuleName: newValue.ModuleName,
+        IsFile: newValue.IsFile,
+        Access: newValue
+      }
+
+      this.builderservice.checkmoduledata(moduleTransferValue);
+      if (newValue.IsForm) {
+        this.router.navigate(['/theme/Preview/' + newValue.ModuleId]);
+      }
+      else {
+        this.router.navigate(['/theme/Preview/' + newValue.ModuleId]);
+        // this.router.navigate(['/theme/Preview/' + newValue.ModuleId]);
+      }
+    }
+  }
+  getthemeconfigsetting() {
+    const themeconfigdata: Iconfig = {
+      TenantId: this.loginInfo.TenantId,
+      LanguageId: this.LanguageId > 0 ? this.LanguageId : this.loginInfo.LanguageId
+    };
+
+    this.loginconfigservice.GetThemeConfigdetails(themeconfigdata).subscribe(
+      (response) => {
+      
+        this.getthemeconfigdetails = response[0];
+        this.theme = response[0];
+        this.themecolor = response[0].Theme;
+        this.setTheme(this.theme);
+        this.theme.NavBar = response[0].NavBar;
+
+
+
+      },
+      error => {
+        this.toaster.error("Some error occurred.Please try again", "Error");
+
+      });
+
+
+  }
+  private setTheme(theme) {
+
+    Object.keys(theme).forEach(k =>
+      document.documentElement.style.setProperty(`--${k}`, theme[k])
+    );
+    if (theme.NavBar == "left") {
+      //  this.getLinkdetails();
+      this.getMenudetails();
+    }
+    else {
+      this.getLinkdetails();
+
+    }
+  }
+  getMenudetails() {
+    const common: IgetallMenu = {
+      RoleId: this.defaultService.RoleID,
+      LanguageID: this.LanguageId > 0 ? this.LanguageId : this.loginInfo.LanguageId,
+      TenantId: this.loginInfo.TenantId,
+
+    };
+
+    // getall dispatch summary
+    this.rolepermissionservice.GetLeftMenuDetails(common).subscribe(
+      (response) => {
+      
+        this.menudetails = response;
+
+
+      });
+  }
+  isActive(url): boolean {
+    return this.router.url.includes(url);
+  }
+  listClick(event, newValue) {
+
+    this.selectedItem = newValue;  // don't forget to update the model here
+    // ... do other stuff here ...
+  }
+  getLanguage() {
+
+    let fieldInfo = this.helper.getValue('languagelist');
+    if (fieldInfo == '') {
+      this.builderService.getAllLanguage().subscribe(
+        (response) => {
+
+          this.languagelist = response;
+          this.helper.setValue('languagelist', this.languagelist);
+
+        },
+        error => {
+        });
+    }
+    else {
+
+      this.languagelist = fieldInfo;
+    }
+
+
+  }
+}

@@ -1,0 +1,210 @@
+<div class="whitebg pdz">
+    <div class="col-sm-12 pdz">
+        <div class="category-header">
+            <div class="row">
+                <div class="col-sm-10 col-6">
+                    <h5 class="cateogory-title">Sub Category</h5>
+                </div>
+                <div class="col-sm-2 col-6 text-left pdt">
+                    <button class="btn pull-center"  type="button" (click)="showModal(content)">
+                        Add Sub Category <i class="fa fa-plus-circle"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="box-shadow" *ngIf="subcategorydetails?.length != 0">
+    <div class="whitebground"> 
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-3 col-12 mt-3 posi" *ngFor="let item of subcategorydetails">
+                    <div class="cat-padding">
+                        <a (click)="FormDetails()"> {{item.SubCategoryName}} </a>
+                    </div>
+                    <div class="actions">
+                        <span (click)="onlanguage(item.SubCode,content2)">
+                            <i class="fa fa-language awesome-color" title="Language"></i>
+                        </span>
+                        <span (click)="onedit(item.SubCode,content)">
+                            <i class="fa fa-pencil awesome-color" title="Edit"></i>
+                        </span>
+                          <span (click)="Deletesubcategory(item.SubCa_ID,content1)">
+                            <i class="fa fa-times-circle-o blue awesome-color" title="Delete"></i>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+ </div>
+     <ng-template #content let-modal>
+      <form [formGroup]="SubCategoryForm" (ngSubmit)="onSubmit(SubCategoryForm.value)" autocomplete="off">
+       <div class="modal-header popuphead">
+                <h4 class="modal-title popuptitle">Add SubCategory
+                </h4>
+                <button type="button" class="close pull-right" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+              </div>
+              <div class="modal-body">
+             <div class="container">
+                <div class="top-main">
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-sm-12 col-12">
+                                <label class="m-0 font-weight-normal">Sub Category Name</label>
+                                <input formControlName="SubCategoryName" type="text" class="form-control cshadow" [ngClass]="{ 'is-invalid': submitted && subform.SubCategoryName.errors }">
+                                <div *ngIf="submitted && subform.SubCategoryName.errors" class="invalid-feedback">
+                                    <div *ngIf="subform.SubCategoryName.errors.required">Sub Category Name is required</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                        <div class="form-group">
+                        <div class="row">
+                            <div class="col-sm-12 col-12">
+                                <label class="m-0 font-weight-normal">Sub Category Description</label>
+                                <input formControlName="SubCategoryDescription" type="text" class="form-control cshadow" [ngClass]="{ 'is-invalid': submitted && subform.SubCategoryDescription.errors }">
+                                <div *ngIf="submitted && subform.SubCategoryDescription.errors" class="invalid-feedback">
+                                    <div *ngIf="subform.SubCategoryDescription.errors.required">Sub Category Description is required</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+    
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-sm-12 col-12">
+                                <label class="m-0 font-weight-normal">Sub Category Division</label>
+                                <select formControlName="SubCategoryDivision" class="form-control cshadow" [ngClass]="{ 'is-invalid': submitted && subform.SubCategoryDivision.errors }">
+                                  <option *ngFor="let item of divisionList" [ngValue]="item.DivisionValue">{{item.DivisionText}}</option>
+                                </select> 
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                      <div class="row">
+                          <div class="col-sm-12 col-12">
+                              <label class="m-0 font-weight-normal">Category Code</label>
+                              <select formControlName="CategoryCode" class="form-control cshadow" [ngClass]="{ 'is-invalid': submitted && subform.CategoryCode.errors }">
+                                <option *ngFor="let item of categorydetails" [ngValue]="item.CategoryCode">{{item.CategoryName}}</option>
+                              </select> 
+                          </div>
+                      </div>
+                  </div>
+                  </div>
+             </div>
+            </div>
+             
+            <footer class="modal-footer pop-btn">
+              <button class="btn commonbutton" >Submit</button>
+              <button type="reset" class="btn commonbutton" (click)="modal.close('Close click')">Cancel</button>
+               </footer>
+      </form>
+      </ng-template> 
+
+      <ng-template #content1 let-modal>
+        <div class="modal-header popuphead">
+            <h4 class="modal-title popuptitle">Delete Record
+            </h4>
+            <button type="button" class="close pull-right" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                <span aria-hidden="true">&times;</span>
+              </button>
+          </div>
+              <div class="modal-body">                   
+                <div class="container form-group ">
+                  <div class="row">
+                    <div class="col">
+                      <span>Are you sure you want to Delete the record?</span>
+                    </div>
+        
+                  </div>
+                </div>
+               </div>
+
+              <footer class="modal-footer pop-btn">
+                <button type="button" class="btn commonbutton "(click)="DeleteTableDetails()" >OK</button>
+                <button type="button" class="btn commonbutton"  (click)="modal.close('Close click')">Cancel</button>
+                 </footer>
+    </ng-template>
+
+    <ng-template #content2 let-modal>
+        <form [formGroup]="SubCategoryForm">
+            <div class="modal-header popuphead">
+                <h4 class="modal-title popuptitle">Add Languages
+                </h4>
+                <button type="button" class="close pull-right" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">  
+                <div class="container">
+                    <div class="top-main">
+                        
+                            <div class="row">
+                                <div class="form-group col-lg-4">
+                                    <label>Language</label>
+                                </div>
+                                <div class="form-group col-lg-6">
+                                    <label>SubCatagory Name</label>
+                                </div>
+                                <div class="form-group col-lg-2">
+                                    <label>Action</label>
+                                </div>
+                            </div>
+                        
+                            <div formArrayName="users" *ngFor="let user of SubCategoryForm.get('users')['controls']; let i = index">
+                                <div [formGroupName]="i">
+                                    <div class="row">
+        
+                                        <div class="form-group col-lg-4">
+                                            <select class="form-control" formControlName="language_name" [ngClass]="{ 'is-invalid': submitted && user.controls?.language_name?.errors }">
+                                            <option *ngFor="let item of languagelist" [value]="item.LanguageID">{{item.LanguageName}}</option>
+                                            </select>
+                                            <div *ngIf="submitted && user.controls?.language_name?.errors" class="invalid-feedback">
+                                                <div *ngIf="user.controls?.language_name?.errors.required">Language is required</div>
+                                            </div>
+                        
+                                        </div>
+        
+                                        <div class="form-group col-lg-6">
+                                            <input type="text" class="form-control" formControlName="subcatagory_Name" [ngClass]="{ 'is-invalid': submitted && user.controls?.subcatagory_Name?.errors }">
+                                            <div *ngIf="submitted && user.controls?.subcatagory_Name?.errors" class="invalid-feedback">
+                                                <div *ngIf="user.controls?.subcatagory_Name?.errors.required">SubCatagory Name is required</div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="form-group col-lg-4">
+                                            <i class="fa fa-remove" (click)="removeGroup(i)" aria-hidden="true"
+                                            style="font-size: 19px;"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+    
+                            <div class="row">
+                                <div class="form-group col-lg-4"></div>
+                                <div class="form-group col-lg-4"></div>
+                                <div class="form-group col-lg-4">
+                                <i class="fa fa-plus-circle" (click)="addGroup()" aria-hidden="true"
+                                    style="font-size: 19px;"></i>
+                
+                                </div>
+                            </div>
+                            
+                    
+    
+                    </div>
+                </div>              
+            
+            </div>
+    
+            <footer class="modal-footer pop-btn">
+                <button type="button" class="btn commonbutton "(click)="LangaugeDetails(SubCategoryForm.get('users').value)" >OK</button>
+                <button type="button" class="btn commonbutton"  (click)="modal.close('Close click')">Cancel</button>
+            </footer>
+        </form>
+    </ng-template>

@@ -1,0 +1,15 @@
+.reportclick{
+    left: 26px;
+    position: absolute;
+    top: 6px;
+}
+.editclick{
+    position: absolute;
+    top: 3px;
+    right: 19px;
+}
+.deleteclick{
+    position: absolute;
+    top: 3px;
+    right: 40px;
+}

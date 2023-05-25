@@ -1,0 +1,77 @@
+{
+    "data":
+    [  
+        {  
+            "data":{  
+                "name":"Applications",
+                "size":"200mb",
+                "type":"Folder"
+            }
+         
+        },
+        {  
+            "data":{  
+                "name":"Cloud",
+                "size":"20mb",
+                "type":"Folder"
+            }
+           
+        },
+        {  
+            "data": {  
+                "name":"Desktop",
+                "size":"150kb",
+                "type":"Folder"
+            }
+           
+        },
+        {  
+            "data":{  
+                "name":"Documents",
+                "size":"75kb",
+                "type":"Folder"
+            }
+           
+        },
+        {  
+            "data": {  
+                "name":"Downloads",
+                "size":"25mb",
+                "type":"Folder"
+            }
+         
+        },
+        {  
+            "data": {  
+                "name":"Main",
+                "size":"50mb",
+                "type":"Folder"
+            }
+           
+        },
+        {  
+            "data":{  
+                "name":"Other",
+                "size":"5mb",
+                "type":"Folder"
+            }
+           
+        },
+        {  
+            "data":{  
+                "name":"Pictures",
+                "size":"150kb",
+                "type":"Folder"
+            }
+          
+        },
+        {  
+            "data":{  
+                "name":"Videos",
+                "size":"1500mb",
+                "type":"Folder"
+            }
+            
+        }
+    ]
+}

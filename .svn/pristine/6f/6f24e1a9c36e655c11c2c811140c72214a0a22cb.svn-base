@@ -1,0 +1,38 @@
+
+<h3>Dynamic Columns</h3>
+<p-table [columns]="cols" [value]="cars">
+    <ng-template pTemplate="header" let-columns>
+        <tr>
+            <th *ngFor="let col of columns">
+                {{col.header}}
+            </th>
+        </tr>
+    </ng-template>
+   <ng-template pTemplate="body" let-rowData let-columns="columns">
+        <tr  *ngIf="rowData.type.startsWith('footer')" style="background-color: red;">
+           
+            
+            <td *ngFor="let col of columns">
+                    {{rowData[col.field]}}
+            </td>
+        </tr>
+        <tr  *ngIf="rowData.type == 'body'">
+           
+    
+            <td *ngFor="let col of columns">
+                    {{rowData[col.field]}}
+            </td>
+        </tr>
+    
+    </ng-template>
+    <!-- <ng-template let-col let-row="rowData" pTemplate="editor">
+
+    <tr>
+           
+    
+        <td>
+            {{row[col.field]}}
+        </td>
+    </tr>
+    </ng-template>  -->
+</p-table>

@@ -1,0 +1,447 @@
+<div *ngIf="formBuilder && !report" class="padding20 white-bg">
+  <div class="Buildertitle">{{formDetails.ModuleName}}</div><br>
+  <p-tabView (onChange)="onTabChange($event)">
+    <p-tabPanel header="FormBuilder">
+      <div class="row main">
+        <div class="col-lg-2">
+          
+          <section ngxDroppable class="root-container menuwithscroll" [model]="sourceBuilderTools" [copy]="true">
+            <div *ngFor="let item of sourceBuilderTools" ngxDraggable [model]="item" [moves]="true"
+              (drag)="builderDrag($event)" [dropZones]="['builder-target']" class="">
+<div *ngIf="item.fieldstyle=='Secbgcolor'" class="Secbgcustomization">
+              <i [ngClass]="item.icon" class="fa pull-left"></i>
+              <h6 >{{ item.fieldName }}-{{item.groupName}}</h6>
+</div>
+<div *ngIf="item.fieldstyle=='Thirdbgcolor'" class="Thirdbgcustomization">
+  <i [ngClass]="item.icon" class="fa pull-left"></i>
+  <h6 >{{ item.fieldName }}</h6>
+</div>
+<div *ngIf="item.fieldstyle=='Primarybgcolor'" class="Primbgcustomization">
+              <i [ngClass]="item.icon" class="fa pull-left"></i>
+              <h6 >{{ item.fieldName }}</h6>
+</div>
+            </div>
+          </section>
+        </div>
+        <div class="col-lg-10 contentsection contentwithscroll">
+          <div class="row" style="margin-top: 1%;">
+            <div class="col-lg-7"></div>
+            <div class="col-lg-2">
+              <button class="btn commonbutton pull-right" (click)="initResponse()">Back</button><br>
+            </div>
+            <div class="col-lg-1">
+              <button class="btn commonbutton" (click)="SaveJson()">Save</button><br>
+            </div>
+            <div class="col-lg-2">
+              <button class="btn commonbutton" (click)="OpenRuleEngine()">Rule Engine</button><br>
+            </div>
+          </div>
+          <br>
+
+
+          <div id="content" class="builder-target col-lg-12">
+            <h4>FormBuilder</h4>
+            <section ngxDroppable dropZone="builder-target" class="drop-container" [model]="targetBuilderTools"
+              [removeOnSpill]="false">
+              <div *ngFor="let item of targetBuilderTools;let i= index;" ngxDraggable [model]="item">
+                <div *ngIf="item">
+                  <div [ngSwitch]="item.fieldType">
+                    <div class="row">
+
+                      <div *ngIf="item.fieldName=='Div2'" class="col-lg-5 column5width">
+                        <label>{{item.fieldName}}</label>
+                        <section ngxDroppable dropZone="builder-target" class="drop-container" [model]="item.children"
+                          [removeOnSpill]="false" (remove)="builderDrag($event)">
+                          <div *ngFor="let item1 of item.children" ngxDraggable [model]="item1">
+
+                            <app-dynamic-form [item]="item" [item1]="item1" (EditItem)="OpenModal($event)"
+                              (DeleteItem)="removeField($event)" (CalculateItem)="OpenCalculator($event)" (TriggerModal)="OpenTriggerModal($event)" (RuleEngine)="OpenRuleEngine($event)"></app-dynamic-form>
+                          </div>
+                        </section>
+                      </div>
+
+
+                      <div *ngIf="item.fieldName=='Div2'" class="col-lg-5 column5width">
+                        <label>{{item.fieldName}}</label>
+                        <section ngxDroppable dropZone="builder-target" class="drop-container" [model]="item.children1"
+                          [removeOnSpill]="false" (remove)="builderDrag($event)">
+                          <div *ngFor="let item1 of item.children1" ngxDraggable [model]="item1">
+
+                            <app-dynamic-form [item]="item" [item1]="item1" (EditItem)="OpenModal($event)"
+                              (DeleteItem)="removeField($event)" (CalculateItem)="OpenCalculator($event)" (TriggerModal)="OpenTriggerModal($event)" (RuleEngine)="OpenRuleEngine($event)"></app-dynamic-form>
+                          </div>
+                        </section>
+                      </div>
+
+                      <div *ngIf="item.fieldName=='Div2'" class="col-lg-1 col-6">
+
+                        <i (click)="removeJson(targetBuilderTools,i)" class="fa fa-trash deleteicon "></i>
+                        <i (click)="OpenModal(item)" class="fa fa-pencil-square-o  align" aria-hidden="true"></i>
+                        <i (click)="OpenCalculator(item)" class="fa fa-calculator  align" aria-hidden="true"></i>
+                        <i (click)="OpenTriggerModal(item)" class="fa fa-share-alt  align" aria-hidden="true"></i>
+                        <i (click)="OpenRuleEngine(item)" class="fa fa-share-alt  align" aria-hidden="true"></i>
+                      </div>
+
+                    </div>
+
+                    <div class="row">
+
+                      <div *ngIf="item.fieldName=='Div3'" class="col-lg-3 column3width">
+                        <label>{{item.fieldName}}</label>
+                        <section ngxDroppable dropZone="builder-target" class="drop-container" [model]="item.children"
+                          [removeOnSpill]="false" (remove)="builderDrag($event)">
+                          <div *ngFor="let item2 of item.children" ngxDraggable [model]="item2">
+
+                            <app-dynamic-form [item]="item" [item1]="item2" (EditItem)="OpenModal($event)"
+                              (DeleteItem)="removeField($event)" (CalculateItem)="OpenCalculator($event)" (TriggerModal)="OpenTriggerModal($event)" (RuleEngine)="OpenRuleEngine($event)"></app-dynamic-form>
+                          </div>
+                        </section>
+                      </div>
+
+
+                      <div *ngIf="item.fieldName=='Div3'" class="col-lg-3 column3width">
+                        <label>{{item.fieldName}}</label>
+                        <section ngxDroppable dropZone="builder-target" class="drop-container" [model]="item.children1"
+                          [removeOnSpill]="false" (remove)="builderDrag($event)">
+                          <div *ngFor="let item2 of item.children1" ngxDraggable [model]="item2">
+
+                            <app-dynamic-form [item]="item" [item1]="item2" (EditItem)="OpenModal($event)"
+                              (DeleteItem)="removeField($event)" (CalculateItem)="OpenCalculator($event)" (TriggerModal)="OpenTriggerModal($event)" (RuleEngine)="OpenRuleEngine($event)"></app-dynamic-form>
+                          </div>
+                        </section>
+                      </div>
+
+                      <div *ngIf="item.fieldName=='Div3'" class="col-lg-3 column3width">
+                        <label>{{item.fieldName}}</label>
+                        <section ngxDroppable dropZone="builder-target" class="drop-container" [model]="item.children2"
+                          [removeOnSpill]="false" (remove)="builderDrag($event)">
+                          <div *ngFor="let item2 of item.children2" ngxDraggable [model]="item2">
+
+                            <app-dynamic-form [item]="item" [item1]="item2" (EditItem)="OpenModal($event)"
+                              (DeleteItem)="removeField($event)" (CalculateItem)="OpenCalculator($event)" (TriggerModal)="OpenTriggerModal($event)" (RuleEngine)="OpenRuleEngine($event)"></app-dynamic-form>
+                          </div>
+                        </section>
+                      </div>
+
+                      <div *ngIf="item.fieldName=='Div3'" class="col-lg-1 col-6">
+
+                        <i (click)="removeJson(targetBuilderTools,i)" class="fa fa-trash deleteicon "></i>
+                        <i (click)="OpenModal(item)" class="fa fa-pencil-square-o  align" aria-hidden="true"></i>
+                        <i (click)="OpenCalculator(item)" class="fa fa-calculator  align" aria-hidden="true"></i>
+                        <i (click)="OpenTriggerModal(item)" class="fa fa-share-alt  align" aria-hidden="true"></i>
+                        <i (click)="OpenRuleEngine(item)" class="fa fa-share-alt  align" aria-hidden="true"></i>
+                      </div>
+
+                    </div>
+
+                    <div class="row">
+
+                      <div *ngIf="item.fieldName=='Div4'" class="col-sm-2 column2width">
+                        <label>{{item.fieldName}}</label>
+                        <section ngxDroppable dropZone="builder-target" class="drop-container" [model]="item.children"
+                          [removeOnSpill]="false" (remove)="builderDrag($event)">
+                          <div *ngFor="let item3 of item.children" ngxDraggable [model]="item3">
+
+                            <app-dynamic-form [item]="item" [item1]="item3" (EditItem)="OpenModal($event)"
+                              (DeleteItem)="removeField($event)" (CalculateItem)="OpenCalculator($event)" (TriggerModal)="OpenTriggerModal($event)" (RuleEngine)="OpenRuleEngine($event)"></app-dynamic-form>
+                          </div>
+                        </section>
+                      </div>
+
+
+                      <div *ngIf="item.fieldName=='Div4'" class="col-sm-2 column2width">
+                        <label>{{item.fieldName}}</label>
+                        <section ngxDroppable dropZone="builder-target" class="drop-container" [model]="item.children1"
+                          [removeOnSpill]="false" (remove)="builderDrag($event)">
+                          <div *ngFor="let item3 of item.children1" ngxDraggable [model]="item3">
+
+                            <app-dynamic-form [item]="item" [item1]="item3" (EditItem)="OpenModal($event)"
+                              (DeleteItem)="removeField($event)" (CalculateItem)="OpenCalculator($event)" (TriggerModal)="OpenTriggerModal($event)" (RuleEngine)="OpenRuleEngine($event)"></app-dynamic-form>
+                          </div>
+                        </section>
+                      </div>
+
+                      <div *ngIf="item.fieldName=='Div4'" class="col-sm-2 column2width">
+                        <label>{{item.fieldName}}</label>
+                        <section ngxDroppable dropZone="builder-target" class="drop-container" [model]="item.children2"
+                          [removeOnSpill]="false" (remove)="builderDrag($event)">
+                          <div *ngFor="let item3 of item.children2" ngxDraggable [model]="item3">
+
+                            <app-dynamic-form [item]="item" [item1]="item3" (EditItem)="OpenModal($event)"
+                              (DeleteItem)="removeField($event)" (CalculateItem)="OpenCalculator($event)" (TriggerModal)="OpenTriggerModal($event)" (RuleEngine)="OpenRuleEngine($event)"></app-dynamic-form>
+                          </div>
+                        </section>
+                      </div>
+
+                      <div *ngIf="item.fieldName=='Div4'" class="col-sm-2 column2width">
+                        <label>{{item.fieldName}}</label>
+                        <section ngxDroppable dropZone="builder-target" class="drop-container" [model]="item.children3"
+                          [removeOnSpill]="false" (remove)="builderDrag($event)">
+                          <div *ngFor="let item3 of item.children3" ngxDraggable [model]="item3">
+
+                            <app-dynamic-form [item]="item" [item1]="item3" (EditItem)="OpenModal($event)"
+                              (DeleteItem)="removeField($event)" (CalculateItem)="OpenCalculator($event)" (TriggerModal)="OpenTriggerModal($event)" (RuleEngine)="OpenRuleEngine($event)"></app-dynamic-form>
+                          </div>
+                        </section>
+                      </div>
+                      
+                      <div *ngIf="item.fieldName=='Div4'" class="col-lg-1 col-6">
+
+                        <i (click)="removeJson(targetBuilderTools,i)" class="fa fa-trash deleteicon "></i>
+                        <i (click)="OpenModal(item)" class="fa fa-pencil-square-o  align" aria-hidden="true"></i>
+                        <i (click)="OpenCalculator(item)" class="fa fa-calculator  align" aria-hidden="true"></i>
+                        <i (click)="OpenTriggerModal(item)" class="fa fa-share-alt  align" aria-hidden="true"></i>
+                        <i (click)="OpenRuleEngine(item)" class="fa fa-share-alt  align" aria-hidden="true"></i>
+                      </div>
+
+                    </div>
+
+                    <div class="row">
+
+                      <div *ngIf="item.fieldName=='Div5'" class="col-sm-2 column6width">
+                        <label>{{item.fieldName}}</label>
+                        <section ngxDroppable dropZone="builder-target" class="drop-container" [model]="item.children"
+                          [removeOnSpill]="false" (remove)="builderDrag($event)">
+                          <div *ngFor="let item3 of item.children" ngxDraggable [model]="item3">
+
+                            <app-dynamic-form [item]="item" [item1]="item3" (EditItem)="OpenModal($event)"
+                              (DeleteItem)="removeField($event)" (CalculateItem)="OpenCalculator($event)" (TriggerModal)="OpenTriggerModal($event)" (RuleEngine)="OpenRuleEngine($event)"></app-dynamic-form>
+                          </div>
+                        </section>
+                      </div>
+
+
+                      <div *ngIf="item.fieldName=='Div5'" class="col-sm-2 column6width">
+                        <label>{{item.fieldName}}</label>
+                        <section ngxDroppable dropZone="builder-target" class="drop-container" [model]="item.children1"
+                          [removeOnSpill]="false" (remove)="builderDrag($event)">
+                          <div *ngFor="let item3 of item.children1" ngxDraggable [model]="item3">
+
+                            <app-dynamic-form [item]="item" [item1]="item3" (EditItem)="OpenModal($event)"
+                              (DeleteItem)="removeField($event)" (CalculateItem)="OpenCalculator($event)" (TriggerModal)="OpenTriggerModal($event)" (RuleEngine)="OpenRuleEngine($event)" ></app-dynamic-form>
+                          </div>
+                        </section>
+                      </div>
+
+                      <div *ngIf="item.fieldName=='Div5'" class="col-sm-2 column6width">
+                        <label>{{item.fieldName}}</label>
+                        <section ngxDroppable dropZone="builder-target" class="drop-container" [model]="item.children2"
+                          [removeOnSpill]="false" (remove)="builderDrag($event)">
+                          <div *ngFor="let item3 of item.children2" ngxDraggable [model]="item3">
+
+                            <app-dynamic-form [item]="item" [item1]="item3" (EditItem)="OpenModal($event)"
+                              (DeleteItem)="removeField($event)" (CalculateItem)="OpenCalculator($event)" (TriggerModal)="OpenTriggerModal($event)" (RuleEngine)="OpenRuleEngine($event)"></app-dynamic-form>
+                          </div>
+                        </section>
+                      </div>
+
+                      <div *ngIf="item.fieldName=='Div5'" class="col-sm-2 column6width">
+                        <label>{{item.fieldName}}</label>
+                        <section ngxDroppable dropZone="builder-target" class="drop-container" [model]="item.children3"
+                          [removeOnSpill]="false" (remove)="builderDrag($event)">
+                          <div *ngFor="let item3 of item.children3" ngxDraggable [model]="item3">
+
+                            <app-dynamic-form [item]="item" [item1]="item3" (EditItem)="OpenModal($event)"
+                              (DeleteItem)="removeField($event)" (CalculateItem)="OpenCalculator($event)" (TriggerModal)="OpenTriggerModal($event)" (RuleEngine)="OpenRuleEngine($event)"></app-dynamic-form>
+                          </div>
+                        </section>
+                      </div>
+
+                      <div *ngIf="item.fieldName=='Div5'" class="col-sm-2 column6width">
+                        <label>{{item.fieldName}}</label>
+                        <section ngxDroppable dropZone="builder-target" class="drop-container" [model]="item.children4"
+                          [removeOnSpill]="false" (remove)="builderDrag($event)">
+                          <div *ngFor="let item3 of item.children4" ngxDraggable [model]="item3">
+
+                            <app-dynamic-form [item]="item" [item1]="item3" (EditItem)="OpenModal($event)"
+                              (DeleteItem)="removeField($event)" (CalculateItem)="OpenCalculator($event)" (TriggerModal)="OpenTriggerModal($event)" (RuleEngine)="OpenRuleEngine($event)"></app-dynamic-form>
+                          </div>
+                        </section>
+                      </div>
+
+                      <div class="col"></div>
+                      
+                      <div *ngIf="item.fieldName=='Div5'" class="col-lg-1 col-6">
+
+                        <i (click)="removeJson(targetBuilderTools,i)" class="fa fa-trash deleteicon "></i>
+                        <i (click)="OpenModal(item)" class="fa fa-pencil-square-o  align" aria-hidden="true"></i>
+                        <i (click)="OpenCalculator(item)" class="fa fa-calculator  align" aria-hidden="true"></i>
+                        <i (click)="OpenTriggerModal(item)" class="fa fa-share-alt  align" aria-hidden="true"></i>
+                        <i (click)="OpenRuleEngine(item)" class="fa fa-share-alt  align" aria-hidden="true"></i>
+                      </div>
+
+                    </div>
+
+
+                    <div *ngIf="item.fieldType!='divSection'">
+
+                      <app-dynamic-form [item]="item" [item1]="item" (EditItem)="OpenModal($event)"
+                        (DeleteItem)="removeField($event)" (CalculateItem)="OpenCalculator($event)" (TriggerModal)="OpenTriggerModal($event)" (RuleEngine)="OpenRuleEngine($event)"></app-dynamic-form>
+                    </div>
+                  </div>
+                 </div>
+              </div>
+            </section>
+            <h4>Filter View</h4>
+            <section ngxDroppable dropZone="builder-target" class="drop-container" [model]="TabletargetBuilderTools"
+            [removeOnSpill]="false">
+            <div *ngFor="let item of TabletargetBuilderTools;let i= index;" ngxDraggable [model]="titem">
+              <div *ngIf="item">
+                <div [ngSwitch]="item.fieldType">
+                  <div class="row">
+
+                    <div *ngIf="item.fieldName=='Div4'" class="col-sm-2 column2width">
+                      <label>{{item.fieldName}}</label>
+                      <section ngxDroppable dropZone="builder-target" class="drop-container" [model]="item.children"
+                        [removeOnSpill]="false" (remove)="builderDrag($event)">
+                        <div *ngFor="let item3 of item.children" ngxDraggable [model]="item3">
+
+                          <app-table-filter [item]="item" [item1]="item3" (EditFilterItem)="OpenModalFilter($event)"
+                            (DeleteFilterItem)="removeFieldFilter($event)"></app-table-filter>
+                        </div>
+                      </section>
+                    </div>
+
+
+                    <div *ngIf="item.fieldName=='Div4'" class="col-sm-2 column2width">
+                      <label>{{item.fieldName}}</label>
+                      <section ngxDroppable dropZone="builder-target" class="drop-container" [model]="item.children1"
+                        [removeOnSpill]="false" (remove)="builderDrag($event)">
+                        <div *ngFor="let item3 of item.children1" ngxDraggable [model]="item3">
+
+                          <app-table-filter [item]="item" [item1]="item3" (EditFilterItem)="OpenModalFilter($event)"
+                            (DeleteFilterItem)="removeFieldFilter($event)"></app-table-filter>
+                        </div>
+                      </section>
+                    </div>
+
+                    <div *ngIf="item.fieldName=='Div4'" class="col-sm-2 column2width">
+                      <label>{{item.fieldName}}</label>
+                      <section ngxDroppable dropZone="builder-target" class="drop-container" [model]="item.children2"
+                        [removeOnSpill]="false" (remove)="builderDrag($event)">
+                        <div *ngFor="let item3 of item.children2" ngxDraggable [model]="item3">
+
+                          <app-table-filter [item]="item" [item1]="item3" (EditFilterItem)="OpenModalFilter($event)"
+                            (DeleteFilterItem)="removeFieldFilter($event)"></app-table-filter>
+                        </div>
+                      </section>
+                    </div>
+
+                    <div *ngIf="item.fieldName=='Div4'" class="col-sm-2 column2width">
+                      <label>{{item.fieldName}}</label>
+                      <section ngxDroppable dropZone="builder-target" class="drop-container" [model]="item.children3"
+                        [removeOnSpill]="false" (remove)="builderDrag($event)">
+                        <div *ngFor="let item3 of item.children3" ngxDraggable [model]="item3">
+
+                          <app-table-filter [item]="item" [item1]="item3" (EditFilterItem)="OpenModalFilter($event)"
+                            (DeleteFilterItem)="removeFieldFilter($event)"></app-table-filter>
+                        </div>
+                      </section>
+                    </div>
+
+
+
+                    <!-- <div *ngIf="item.fieldName=='Div4'" class="col-lg-1 col-6">
+                           
+                                      <i (click)="removeJson(TabletargetBuilderTools,i)" class="fa fa-trash deleteicon "></i>
+                                      <i (click)="OpenModal(item)" class="fa fa-pencil-square-o  align" aria-hidden="true"></i>
+                                      </div> -->
+
+                  </div>
+
+                  <div class="row">
+
+                    <div *ngIf="item.fieldName=='Div5'" class="col-sm-2 column5width">
+                      <label>{{item.fieldName}}</label>
+                      <section ngxDroppable dropZone="builder-target" class="drop-container" [model]="item.children"
+                        [removeOnSpill]="false" (remove)="builderDrag($event)">
+                        <div *ngFor="let item3 of item.children" ngxDraggable [model]="item3">
+
+                          <app-table-filter [item]="item" [item1]="item3" (EditFilterItem)="OpenModalFilter($event)"
+                            (DeleteFilterItem)="removeFieldFilter($event)"></app-table-filter>
+                        </div>
+                      </section>
+                    </div>
+
+
+                    <div *ngIf="item.fieldName=='Div5'" class="col-sm-2 column5width">
+                      <label>{{item.fieldName}}</label>
+                      <section ngxDroppable dropZone="builder-target" class="drop-container" [model]="item.children1"
+                        [removeOnSpill]="false" (remove)="builderDrag($event)">
+                        <div *ngFor="let item3 of item.children1" ngxDraggable [model]="item3">
+
+                          <app-table-filter [item]="item" [item1]="item3" (EditFilterItem)="OpenModalFilter($event)"
+                            (DeleteFilterItem)="removeFieldFilter($event)"></app-table-filter>
+                        </div>
+                      </section>
+                    </div>
+
+                    <div *ngIf="item.fieldName=='Div5'" class="col-sm-2 column5width">
+                      <label>{{item.fieldName}}</label>
+                      <section ngxDroppable dropZone="builder-target" class="drop-container" [model]="item.children2"
+                        [removeOnSpill]="false" (remove)="builderDrag($event)">
+                        <div *ngFor="let item3 of item.children2" ngxDraggable [model]="item3">
+
+                          <app-table-filter [item]="item" [item1]="item3" (EditFilterItem)="OpenModalFilter($event)"
+                            (DeleteFilterItem)="removeFieldFilter($event)"></app-table-filter>
+                        </div>
+                      </section>
+                    </div>
+
+                    <div *ngIf="item.fieldName=='Div5'" class="col-sm-2 column5width">
+                      <label>{{item.fieldName}}</label>
+                      <section ngxDroppable dropZone="builder-target" class="drop-container" [model]="item.children3"
+                        [removeOnSpill]="false" (remove)="builderDrag($event)">
+                        <div *ngFor="let item3 of item.children3" ngxDraggable [model]="item3">
+
+                          <app-table-filter [item]="item" [item1]="item3" (EditFilterItem)="OpenModalFilter($event)"
+                            (DeleteFilterItem)="removeFieldFilter($event)"></app-table-filter>
+                        </div>
+                      </section>
+                    </div>
+
+                    <div *ngIf="item.fieldName=='Div5'" class="col-sm-2 column5width">
+                      <label>{{item.fieldName}}</label>
+                      <section ngxDroppable dropZone="builder-target" class="drop-container" [model]="item.children4"
+                        [removeOnSpill]="false" (remove)="builderDrag($event)">
+                        <div *ngFor="let item3 of item.children4" ngxDraggable [model]="item3">
+
+                          <app-table-filter [item]="item" [item1]="item3" (EditFilterItem)="OpenModalFilter($event)"
+                            (DeleteFilterItem)="removeFieldFilter($event)"></app-table-filter>
+                        </div>
+                      </section>
+                    </div>
+
+
+
+                  
+
+                  </div>
+                </div>
+
+
+
+
+              </div>
+            </div>
+          </section>
+
+          </div>
+
+        </div>
+        <div>
+  
+        </div>
+      </div>
+    </p-tabPanel>
+  <p-tabPanel header="UI Builder" >
+
+<app-report-builder [items]="refcollist" [tablejoin]="Jointable" [columnjoin]="joinColumn" [isshow]="isshow" ></app-report-builder>
+        </p-tabPanel> 
+      
+
+   
+   
+  </p-tabView>
+
+</div>

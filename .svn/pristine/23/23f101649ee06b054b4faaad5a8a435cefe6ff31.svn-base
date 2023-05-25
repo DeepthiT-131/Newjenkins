@@ -1,0 +1,172 @@
+<div class="whitebg pdz">
+    <div class="col-sm-12 pdz">
+        <div class="category-header">
+            <div class="row">
+                <div class="col-sm-10 col-6">
+                    <h5 class="cateogory-title">Report Details</h5>
+                </div>
+                <div class="col-sm-2 col-6 text-left pdt">
+                    <button class="btn commonbutton" type="button" (click)="showModal(content)">
+                        Create Report <i class="fa fa-plus-circle"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="box-shadow" *ngIf="getFormDetails?.length != 0">
+    <div class="whitebground"> 
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-3 col-12 mt-3 posi" *ngFor="let item of getFormDetails">
+                    <div class="cat-padding">
+                            <span (click)="onredirect(item.FormCode,item.FormDisplayName)">
+                                    <i class="fa fa-pencil awesome-color">{{item.FormDisplayName}}</i>
+                                </span>
+                   </div>
+                  
+                    <div class="actionsReport">
+                        <span (click)="onredirecttoreportbuilder(item.FormCode,item.FormDisplayName)" class="reportclick">
+                            <i class="fa fa-list-alt awesome-color" title="ReportBuilder"></i>
+                        </span>
+                        <span (click)="onedit(item.FormCode,content)" class="editclick">
+                            <i class="fa fa-pencil awesome-color" title="Edit"></i>
+                        </span>
+                          <span (click)="Deleteformdetails(item.FormID,content1)" class="deleteclick">
+                            <i class="fa fa-times-circle-o blue awesome-color" title="Delete"></i>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    </div>
+    <ng-template #content let-modal>
+<form [formGroup]="FormDetailsForm" (ngSubmit)="onSubmit(FormDetailsForm.value)" autocomplete="off">
+    <div class="modal-header popuphead">
+          <h4 class="modal-title popuptitle">Add Report Details
+          </h4>
+          <button type="button" class="close pull-right" aria-label="Close" (click)="modal.dismiss('Cross click')">
+              <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+        
+          <div class="container">
+            <div class="top-main">
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-sm-6 col-12">
+                            <label class="m-0 font-weight-normal">Report Name</label>
+                            <input formControlName="FormName" type="text" class="form-control cshadow" [ngClass]="{ 'is-invalid': submitted && FormDetailsData.FormName.errors }">
+                            <div *ngIf="submitted && FormDetailsData.FormName.errors" class="invalid-feedback">
+                                <div *ngIf="FormDetailsData.FormName.errors.required">Report Name is required</div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-12">
+                            <label class="m-0 font-weight-normal">Report Display Name</label>
+                            <input formControlName="FormDisplay" type="text" class="form-control cshadow" [ngClass]="{ 'is-invalid': submitted && FormDetailsData.FormDisplay.errors }">
+                            <div *ngIf="submitted && FormDetailsData.FormDisplay.errors" class="invalid-feedback">
+                                <div *ngIf="FormDetailsData.FormDisplay.errors.required">Report Display Name is required</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-sm-6 col-12">
+                            <label class="m-0 font-weight-normal">Report Description</label>
+                            <input formControlName="FormDescription" type="text" class="form-control cshadow" [ngClass]="{ 'is-invalid': submitted && FormDetailsData.FormDescription.errors }">
+                            <div *ngIf="submitted && FormDetailsData.FormDescription.errors" class="invalid-feedback">
+                                <div *ngIf="FormDetailsData.FormDescription.errors.required">Report Description is required</div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-12">
+                                <label class="m-0 font-weight-normal">SOF Number</label>
+                                <input formControlName="SOFNumber" type="text" class="form-control cshadow" [ngClass]="{ 'is-invalid': submitted && FormDetailsData.SOFNumber.errors }">
+                                <div *ngIf="submitted && FormDetailsData.SOFNumber.errors" class="invalid-feedback">
+                                    <div *ngIf="FormDetailsData.SOFNumber.errors.required">SOF Number is required</div>
+                                </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                        <div class="row">
+                            <div class="col-sm-6 col-12">
+                                <label class="m-0 font-weight-normal">Designed By</label>
+                                <input formControlName="DesignedBy" type="text" class="form-control cshadow" [ngClass]="{ 'is-invalid': submitted && FormDetailsData.DesignedBy.errors }">
+                                <div *ngIf="submitted && FormDetailsData.DesignedBy.errors" class="invalid-feedback">
+                                    <div *ngIf="FormDetailsData.DesignedBy.errors.required">Designed By is required</div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-12">
+                                
+                                    <label class="m-0 font-weight-normal">Designed On</label>
+                                    <p-calendar class="form-control cshadow" formControlName="DesignedOn"
+                                    [monthNavigator]="true" [yearNavigator]="true" yearRange="2000:2030" [minDate]="MinDate"
+                                    [maxDate]="MaxDate" [touchUI]="false" dateFormat="yy-mm-dd">
+                                  </p-calendar>
+                            </div>
+                            </div>
+                        </div>
+                   
+
+                    <div class="form-group">
+                            <div class="row">
+                                <div class="col-sm-6 col-12">
+                                    <label class="m-0 font-weight-normal">Sub Category</label>
+                                    <select class="form-control cshadow" formControlName="SubCategory" [ngClass]="{ 'is-invalid': submitted && FormDetailsData.SubCategory.errors }" >
+                                        <option *ngFor="let item of subcategorydetails" [ngValue]="item.SubCode">{{item.SubCategoryName}}</option>
+                                    </select>
+                                    <div *ngIf="submitted && FormDetailsData.SubCategory.errors" class="invalid-feedback">
+                                        <div *ngIf="FormDetailsData.SubCategory.errors.required">Sub Category  is required</div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 col-12">
+                                    <label class="m-0 font-weight-normal">Display Order</label>
+                                    <input class="form-control cshadow" formControlName="displayorder" type="number">
+                                  
+                                </div>
+                            </div>
+                        </div>
+
+                        
+                         </div>
+  
+          </div>
+        </div>
+        <footer class="modal-footer pop-btn">
+            <button class="btn commonbutton" >Submit</button>
+            <button type="reset" class="btn commonbutton" (click)="modal.close('Close click')">Cancel</button>
+       </footer>
+   </form>
+</ng-template> 
+<ng-template #content1 let-modal>
+    <div class="modal-header popuphead">
+        <h4 class="modal-title popuptitle">Delete Record
+        </h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+          </button>
+      </div>
+          <div class="modal-body">                   
+            <div class="container form-group ">
+              <div class="row">
+                <div class="col">
+                  <span>Are you sure you want to Delete the record?</span>
+                </div>
+    
+              </div>
+            </div>
+            </div>
+
+          <footer class="modal-footer pop-btn">
+            <button type="button" class="btn commonbutton "(click)="DeleteTableDetails()" >OK</button>
+            <button type="button" class="btn commonbutton"  (click)="modal.close('Close click')">Cancel</button>
+       </footer>
+</ng-template>
+

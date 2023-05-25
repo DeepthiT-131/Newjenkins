@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>DataMask</title>
+  <base href="/">
+  <script src="assets/env.js"></script>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="stylesheet" type="text/css" href="assets/showcase/css/splash.css">
+  <link id="theme-css" rel="stylesheet" type="text/css" href="assets/components/themes/no-theme/theme.css">
+  <script async src="https://cdnjs.cloudflare.com/ajax/libs/autotrack/2.4.1/autotrack.js"></script>
+  <script src="https://kit.fontawesome.com/5c85a5f2dd.js" crossorigin="anonymous"></script>
+
+
+
+
+</head>
+<body>
+  <app-root></app-root>
+</body>
+</html>

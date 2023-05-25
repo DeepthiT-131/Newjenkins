@@ -1,0 +1,337 @@
+<div class="row">
+  <div class="card-body create">
+    <form *ngIf="reportform" [formGroup]="reportform" (ngSubmit)="CheckConditions()">
+      <div class="row">
+        <div *ngFor="let item of TabletargetBuilderTools" class="col-sm-2">
+          <div class="form-group" *ngIf="item.FilterType=='Single'">
+            <label>{{item.FieldName}}</label>
+            <select class="form-control headerfilter" formControlName="{{item.FilterColumn}}"
+              (change)="CascadeValueBind($event.target.value,item.FilterColumn,item);">
+              <!-- (change)="item.InputType != 'Normal' ? CascadeValueBind($event.target.value,item.FilterColumn,item) : false"> -->
+              <option value="">--All--</option>
+              <option *ngFor="let v of item.values" [value]="v.Value">{{v.Label}}</option>
+            </select>
+          </div>
+          <div class="form-group" *ngIf="item.RangeType=='Date'">
+            <label>{{item.FieldName}}</label>
+            <p-calendar class="form-control headerfilter" formControlName="{{item.FilterColumn}}"
+              [monthNavigator]="true" [yearNavigator]="true" yearRange="2000:2030" [minDate]="MinDate"
+              [maxDate]="MaxDate" dateFormat="yy-mm-dd" (onSelect)="ondatechange($event,item.FilterColumn,item)">
+            </p-calendar>
+          </div>
+          <div class="form-group" *ngIf="item.RangeType=='Time'">
+            <label>{{item.FieldName}}</label>
+            <p-calendar class="form-control headerfilter" formControlName="{{item.FilterColumn}}" [timeOnly]="true">
+            </p-calendar>
+          </div>
+        </div>
+        <div class="btn-top">
+          <label></label>
+          <input type="submit" value="Submit" class="btn commonbutton">
+          <button class="btn commonbutton addform" *ngIf="acessData.AddAccess==true" (click)="AddClick()">Add<i
+              _ngcontent-whs-c2="" class="fa fa-plus-circle"></i></button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<p-confirmDialog></p-confirmDialog>
+<div id="layout-content" class="tablelayout">
+  <p-table #dt [columns]="selectedColumns" [value]="cars" [first]="first" [paginator]="table.Pagination"
+    [responsive]="true" [rows]="10" scrollHeight="400px" sortMode="multiple" [scrollable]="table.Scrollable"
+    [resizableColumns]="table.Resizable" [reorderableColumns]="table.Reorder" class="reportview">
+    <ng-template pTemplate="caption">
+      <div class="row">
+        <div class="col-lg-3 col-sm-4">
+          <div *ngIf="table.ExportButton" class="ui-helper-clearfix" style="text-align: left">
+            <button type="button" class="exportbuttons" icon="pi pi-file-o" iconPos="left"
+              (click)="dt.exportCSV()"><span aria-hidden="true" class="ui-button-icon-left ui-clickable fa fa-files-o"
+                style="font-size: 16px; padding: 8px;"></span></button>
+
+            <button type="button" class="exportbuttons" icon="pi pi-file-pdf" iconPos="left" label="PDF"
+              (click)="exportPdf()"><span aria-hidden="true" class="ui-button-icon-left ui-clickable fa fa-file-pdf-o"
+                style="font-size: 16px; padding: 8px;"></span></button>
+          </div>
+        </div>
+        <div class="col-lg-3 col-sm-4">
+          <div *ngIf="table.MultiSelect" style="text-align:left">
+            <p-multiSelect [options]="filtercol" [(ngModel)]="selectedColumns" optionLabel="header"
+              selectedItemsLabel="{0} columns selected" [style]="{minWidth: '200px'}" defaultLabel="Choose Columns">
+            </p-multiSelect>
+          </div>
+        </div>
+        <div class="col-lg-6 col-sm-4">
+          <div *ngIf="table.Filter" style="text-align: right">
+            <span class="searchfilter">Search:</span>
+            <input type="text" pInputText size="20" placeholder=""
+              (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:auto;padding: 5px;">
+          </div>
+        </div>
+      </div>
+    </ng-template>
+    <ng-template pTemplate="header" class="tblheading" let-columns>
+      <tr>
+        <th *ngFor="let col of columns" [pSortableColumn]="col.field" pResizableColumn pReorderableColumn>
+          {{col.header}}
+          <p-sortIcon [field]="col.field"></p-sortIcon>
+        </th>
+        <th>Actions
+          <span><i (click)="BindHisoryData(0,history)"
+            class="fa fa-history bigfont iconcolor iconOnHead"></i></span>
+        </th> 
+        
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="colgroup" let-columns>
+      <colgroup>
+        <col *ngFor="let col of columns" style="width:100px">
+      </colgroup>
+    </ng-template>
+    <ng-template pTemplate="body" let-car let-columns="columns" let-index="rowIndex" class="wordwrap tablebgcolor">
+      <!-- <tr [pReorderableRow]="index" *ngIf="car.IsRow == '0'" class="footerstyle">
+
+                    <td *ngFor="let col of columns" class="ui-resizable-column" style="word-break: break-all;">
+                        <span class="ui-column-title">{{col.header}}</span> {{car[col.field]}}
+                    </td>
+                </tr> -->
+      <tr [pReorderableRow]="index">
+        <!-- <td *ngFor="let col of columns" class="ui-resizable-column" style="word-break: break-all;">
+                        <span class="ui-column-title">{{col.header}}</span> {{car[col.field]}}
+                    </td> -->
+        <td *ngFor="let col of columns" class="ui-resizable-column" style="word-break: break-all;">
+          <span *ngIf="car[col.field] == 'Click'"> <i (click)="OpenchildTable(col.field,car.ID,multichildtable)"
+              class="fa fa-eye bigfont iconcolor"></i></span>
+          <span *ngIf="car[col.field] != 'Click'">
+            <span class="ui-column-title">{{col.header}}</span>
+            {{car[col.field]}}
+          </span>
+        </td>
+        <td data-title="Actions">
+          <span class="ui-column-title">Actions</span>
+          <i *ngIf="acessData.EditAccess==true" (click)="editClick(car.ID)" class="fa fa-pencil bigfont iconcolor"></i>
+          <i *ngIf="acessData.DeleteAccess==true" (click)="confirm1(car.ID)"
+            class="fa fa-times-circle-o blue bigfont iconcolor " label="Confirm" style="padding-left: 8px;">
+          </i>
+          <i (click)="downloadClick(car.ID,download)" class="fa fafa fa-download bigfont iconcolor"
+            style="padding-left: 12px;"></i>
+          <!-- *ngIf="isfile==true" -->
+          <i (click)="historyClick(car.ID,history)" class="fa fa-history bigfont iconcolor"
+            style="padding-left: 8px;"></i>
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage" let-columns>
+      <tr>
+        <td [attr.colspan]="emptyrow">
+          No records found
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
+
+
+<ng-template #history let-modal>
+  <div class="modal-header popuphead">
+    <h4 class="modal-title popuptitle">{{modulename}}
+    </h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="container ">
+      <div class="col-sm-12">
+        <p-table #dt [columns]="selectedColumns1" [value]="cars1" [first]="first" [responsive]="true" [rows]="10"
+          sortMode="multiple" [scrollable]="table.Scrollable" scrollHeight="250px" [resizableColumns]="table.Resizable"
+          [reorderableColumns]="table.Reorder" class="reportview">
+          <ng-template pTemplate="caption">
+            <div class="row">
+              <div class="col-lg-3 col-sm-4">
+                <div *ngIf="table.ExportButton" class="ui-helper-clearfix" style="text-align: left">
+                  <button type="button" class="exportbuttons" icon="pi pi-file-o" iconPos="left"
+                    (click)="dt.exportCSV()"><span aria-hidden="true"
+                      class="ui-button-icon-left ui-clickable fa fa-files-o"
+                      style="font-size: 16px; padding: 8px;"></span></button>
+                  <button type="button" class="exportbuttons" icon="pi pi-file-pdf" iconPos="left" label="PDF"
+                    (click)="exportPdf()"><span aria-hidden="true"
+                      class="ui-button-icon-left ui-clickable fa fa-file-pdf-o"
+                      style="font-size: 16px; padding: 8px;"></span></button>
+                </div>
+              </div>
+              <div class="col-lg-3 col-sm-4">
+                <div *ngIf="table.Multiselect" style="text-align:left">
+                  <p-multiSelect [options]="colshistory" [(ngModel)]="selectedColumns1" optionLabel="header"
+                    selectedItemsLabel="{0} columns selected" [style]="{minWidth: '200px'}"
+                    defaultLabel="Choose Columns"></p-multiSelect>
+                </div>
+              </div>
+              <div class="col-lg-6 col-sm-4">
+                <div *ngIf="table.Filter" style="text-align: right">
+                  <span class="searchfilter">Search:</span>
+                  <input type="text" pInputText size="20" placeholder=""
+                    (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:auto;padding: 5px;">
+                </div>
+              </div>
+            </div>
+          </ng-template>
+          <!-- <ng-template pTemplate="colgroup" let-columns>
+                <colgroup>
+                    <col *ngFor="let col of columns" style="width:100px">
+                </colgroup>
+              </ng-template> -->
+          <ng-template pTemplate="header" class="tblheading" let-columns>
+            <tr>
+              <th *ngFor="let col of columns" [pSortableColumn]="col.field" pResizableColumn pReorderableColumn>
+                <span class="ui-column-title"> {{col.header}}</span>
+                <p-sortIcon [field]="col.field"></p-sortIcon>
+              </th>
+              <th>Actions</th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-car let-columns="columns" let-index="rowIndex"
+            class="wordwrap tablebgcolor">
+            <tr [pReorderableRow]="index">
+              <td *ngFor="let col of columns" class="ui-resizable-column" style="word-break: break-all;">
+                <span class="ui-column-title"> {{col.header}}</span> {{car[col.field]}}
+              </td>
+              <td data-title="Actions">
+                <span class="ui-column-title">Actions</span>
+                <!-- <td> -->
+                <i *ngIf="isfile==true" (click)="downloadHistClick(car,download)"
+                  class="fa fafa fa-download bigfont iconcolor" style="padding-left: 12px;"></i>
+
+              </td>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="emptymessage" let-columns>
+            <tr>
+              <td [attr.colspan]="emptyrow">
+                No records found
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </div>
+    </div>
+  </div>
+</ng-template>
+<ng-template #download let-modal modal-l>
+  <div class="modal-header popuphead">
+    <h4 class="modal-title popuptitle">{{modulename}}
+    </h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="container ">
+      <div class="col-sm-12">
+        <div class="row" style="padding-bottom: 10px;" *ngFor="let item of downloadDetails">
+
+          <label>{{item.FieldName}}</label>&nbsp;&nbsp;&nbsp;
+          <a class="btn btn-primary" style="cursor: pointer;"
+            (click)="DownLoadFiles(item.FieldName,item.FieldValues)">{{item.FieldValues | splitValue}}</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #multichildtable let-modal>
+  <div class="modal-header popuphead">
+    <h4 class="modal-title popuptitle">{{modulename}}
+    </h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="container ">
+      <div class="col-sm-12">
+        <p-table #dt [columns]="selectedColumns2" [value]="multichilddata" [first]="first" [responsive]="true"
+          [rows]="10" sortMode="multiple" [scrollable]="table.Scrollable" scrollHeight="250px"
+          [resizableColumns]="table.Resizable" [reorderableColumns]="table.Reorder">
+          <ng-template pTemplate="caption">
+            <div class="row">
+
+              <div class="col-lg-3 col-sm-4">
+
+                <div *ngIf="table.ExportButton" class="ui-helper-clearfix" style="text-align: left">
+                  <button type="button" class="exportbuttons" icon="pi pi-file-o" iconPos="left"
+                    (click)="dt.exportCSV()"><span aria-hidden="true"
+                      class="ui-button-icon-left ui-clickable fa fa-files-o"
+                      style="font-size: 16px; padding: 8px;"></span></button>
+
+                  <button type="button" class="exportbuttons" icon="pi pi-file-pdf" iconPos="left" label="PDF"
+                    (click)="exportPdf()"><span aria-hidden="true"
+                      class="ui-button-icon-left ui-clickable fa fa-file-pdf-o"
+                      style="font-size: 16px; padding: 8px;"></span></button>
+                </div>
+              </div>
+
+              <div class="col-lg-3 col-sm-4">
+                <div *ngIf="table.Multiselect" style="text-align:left">
+                  <p-multiSelect [options]="multichild" [(ngModel)]="selectedColumns2" optionLabel="header"
+                    selectedItemsLabel="{0} columns selected" [style]="{minWidth: '200px'}"
+                    defaultLabel="Choose Columns"></p-multiSelect>
+                </div>
+              </div>
+              <div class="col-lg-6 col-sm-4">
+                <div *ngIf="table.Filter" style="text-align: right">
+                  <span class="searchfilter">Search:</span>
+                  <input type="text" pInputText size="20" placeholder=""
+                    (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:auto;padding: 5px;">
+                </div>
+              </div>
+            </div>
+          </ng-template>
+          <!-- <ng-template pTemplate="colgroup" let-columns>
+          <colgroup>
+              <col *ngFor="let col of columns" style="width:100px">
+          </colgroup>
+        </ng-template> -->
+          <ng-template pTemplate="header" class="tblheading" let-columns>
+            <tr>
+
+              <th *ngFor="let col of columns" [pSortableColumn]="col.field" pResizableColumn pReorderableColumn>
+                <span class="ui-column-title"> {{col.header}}</span>
+                <p-sortIcon [field]="col.field"></p-sortIcon>
+              </th>
+
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-car let-columns="columns" let-index="rowIndex"
+            class="wordwrap tablebgcolor">
+            <tr [pReorderableRow]="index">
+
+              <td *ngFor="let col of columns" class="ui-resizable-column" style="word-break: break-all;">
+
+                <span class="ui-column-title"> {{col.header}}</span>
+                <span *ngIf="col.field != 'Download'"> {{car[col.field]}}</span>
+                <i *ngIf="col.field == 'Download'" (click)="downloadMultiClick(car,download)"
+                  class="fa fafa fa-download bigfont iconcolor" style="padding-left: 12px;"></i>
+              </td>
+              <!-- <td data-title="col.header == 'DownLoad'"> -->
+
+              <!-- <td> -->
+
+              <!--  -->
+              <!-- </td> -->
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="emptymessage" let-columns>
+            <tr>
+
+              <td [attr.colspan]="emptyrow">
+                No records found
+              </td>
+
+            </tr>
+          </ng-template>
+        </p-table>
+      </div>
+    </div>
+  </div>
+</ng-template>

@@ -1,0 +1,202 @@
+<div class="layout-wrapper">
+    <div id="layout-topbar">
+        <a href="#" class="menu-button" (click)="onMenuButtonClick($event)">
+            <i class="fa fa-bars"></i>
+        </a>
+        <!-- <button type="button" (click)="onMenuButtonClick($event)">click</button> -->
+        <a class="logo" [routerLink]="['/']">
+            <img [src]="theme.HeaderLogo">
+            <!-- <img alt="logo" src="assets/components/images/crider-logo.png" /> -->
+        </a>
+
+        <ul class="topbar-menu">
+            <div class="row">
+                <div class="col-lg-9 col-8">
+                    <!-- <div class="dropdown">
+                        <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">EN<br>
+                            <i class="fas fa-globe awesome-color" title="Language" aria-hidden="true"></i>
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                          <li class="dropdown-item" >English</li>
+                          <li class="dropdown-item">Hindi</li>
+                         
+                        </ul>
+                      </div> -->
+                    <li>
+                        <select class="form-control" [(ngModel)]="LanguageId"
+                        (change)="SelectLanguage($event.target.value)">
+                            <option value="1">English</option>
+                            <option *ngFor="let item of languagelist" [value]="item.LanguageID">{{item.LanguageName}}
+                            </option>
+                        </select>
+                    </li>
+                </div>
+                <div class="col-lg-2 col-3">
+                    
+                    <li class="topbar-menu-versions" style="padding-top: 9px;">
+                        <a [routerLink]="['/']"><i class="fa fa-power-off" aria-hidden="true"
+                                style="font-size: 24px; color: #FFF;"></i>
+                        </a>
+
+                    </li>
+                </div>
+            </div>
+
+            <!-- <li><a href="#" (click)="changeTheme($event, 'blue-red', false)"><span class="ui-text">Blue-Red</span></a></li> -->
+        </ul>
+    </div>
+    <div class="outerdiv">
+        <div *ngIf="theme.NavBar=='topwithbuttons'">
+            <div id="layout-content" class=" topbuttons" style="margin-left: 0px !important;">
+                <div class="navbuttonsmbl row" style="    padding-bottom: 7px;">
+                    <div class="spaceleft" *ngFor="let item of buttondata">
+
+                        <a [ngClass]="{'activemenu': selectedItem == item}"> <button (click)="changeURL(item)"
+                                class="btn btn-primary modal-confirm popupbtn fixedwidth"
+                                [ngClass]="{'activemenu': selectedItem == item}">{{item.ModuleName}} </button></a>
+
+                    </div>
+
+
+
+                </div>
+            </div>
+        </div>
+
+
+        <div *ngIf="theme.NavBar=='left'">
+            <!-- <div id="layout-sidebar" [ngClass]="{'active': menuActive}">
+                <div class="layout-menu MenupTop">
+                    <ul class="nobullet" style="display: initial;padding-left: 0;">
+
+                        <li *ngFor="let item of menudetails" style="color:white;font-size: 15px;"> <a
+                                [id]="item.ModuleName" #inputmenutitle
+                                [class.active-menuitem]="inputmenutitle.id == activeMenuId" tabindex="0"
+                                (keydown)="onKeydown($event, inputmenutitle.id)"
+                                (click)="toggle(inputmenutitle.id)"><span><i
+                                        class="fa fa-user white icon"></i></span>{{item.ModuleName | titlecase}}</a>
+
+                            <div [@animation]="(inputmenutitle.id == activeMenuId) ? 'visible' : 'hidden'"
+                                (@animation.start)="onAnimationStart($event)"
+                                (@animation.done)="onAnimationDone($event)">
+                                <ul class="nobullet" style="padding-left: 0px;">
+
+                                    <li *ngFor="let child of item.children" (click)="changeURL(child)"
+                                        [ngClass]="{'activemenu': selectedItem == child}"><a class="insidemenu"><span><i
+                                                    class="fa fa-user white icon"></i></span>{{child.ModuleName}}</a>
+                                    </li>
+
+
+                                </ul>
+                            </div>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>  -->
+
+            <div id="layout-sidebar" [ngClass]="{'active': menuActive}">
+                <div class="layout-menu MenupTop">
+                    <ul class="nobullet" style="display: initial; padding-left: 0;">
+
+                        <li *ngFor="let item of menudetails" style="color:white;font-size: 15px;"> 
+                            <a [id]="item.ModuleName" #inputmenutitle
+                                [class.active-menuitem]="inputmenutitle.id == activeMenuId" tabindex="0"
+                                (keydown)="onKeydown($event, inputmenutitle.id)"
+                                (click)="toggle(inputmenutitle.id)"><span><i
+                                        class="fa fa-user white icon"></i></span>{{item.ModuleName | titlecase}}</a>
+
+                            <div [@animation]="(inputmenutitle.id == activeMenuId) ? 'visible' : 'hidden'"
+                                (@animation.start)="onAnimationStart($event)"
+                                (@animation.done)="onAnimationDone($event)">
+                                <ul class="nobullet" style="padding-left: 0px;">
+
+                                    <li *ngFor="let child of item.children">
+                                        <a [id]="child.ModuleName" #inputmenutitle
+                                        [class.active-menuitem]="inputmenutitle.id == activeMenuIdchild" tabindex="0"
+                                        (keydown)="onKeydown($event, inputmenutitle.id)"
+                                        (click)="togglechild(inputmenutitle.id)" class="insidemenu"><span><i
+                                                    class="fa fa-folder white icon"></i></span>{{child.ModuleName}}</a>
+
+                                                    <div [@animation]="(inputmenutitle.id == activeMenuIdchild) ? 'visible' : 'hidden'"
+                                                    (@animation.start)="onAnimationStart($event)"
+                                                    (@animation.done)="onAnimationDone($event)">
+                                                    <ul class="nobullet" style="display: block !important; padding-left: 22px;">
+                                                        <li *ngFor="let child1 of child.children1" (click)="changeURL(child1)" 
+                                                        [ngClass]="{'activemenu': selectedItem == child1}">
+                                                        <a *ngIf="child1.IsChild=='0'" class="insidemenu"><span><i
+                                                                    class="fa fa-files-o white icon"></i></span>{{child1.ModuleName}}</a>
+
+                                                                    <a *ngIf="child1.IsChild=='1'" class="innerinsidemenu"><span ><i
+                                                                        class="fa fa-file white icon"></i></span>{{child1.ModuleName}}</a>
+
+                                                                </li>
+                                                    </ul>
+                                                    </div>
+                           
+                                    </li>
+
+
+                                </ul>
+                            </div>
+                            
+                        </li>
+
+                    </ul>
+                </div>
+            </div> 
+        </div>
+    </div>
+    <div *ngIf="theme.NavBar=='topwithbuttons'">
+        <div id="layout-sidebar" [ngClass]="{'active': menuActive}" style="display: none;">
+
+        </div>
+
+    </div>
+</div>
+
+<div class="layout-mask" *ngIf="menuActive">
+</div>
+
+<div *ngIf="theme.NavBar=='left'">
+    <ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="orangered" type="ball-atom">
+        <p style="font-size: 20px; color: white">Loading...</p>
+    </ngx-spinner>
+
+
+    <div id="layout-content">
+
+        <div>
+            <router-outlet></router-outlet>
+        </div>
+        <!-- <footer class="page-footer font-small blue" style="border-top: 1px solid black; position: absolute; bottom: 0; right: 0;
+left: 250px;">
+
+<div class="footer-copyright text-center py-3">© 2019 Copyright:
+     Powered By <a href="">Empulse Global</a>
+  </div>
+  
+</footer> -->
+
+
+    </div>
+</div>
+
+<div *ngIf="theme.NavBar=='topwithbuttons'">
+    <ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="orangered" type="ball-atom">
+        <p style="font-size: 20px; color: white">Loading...</p>
+    </ngx-spinner>
+    <div id="layout-content" style="margin-left: 0px !important;">
+        <div>
+            <router-outlet></router-outlet>
+        </div>
+        <!-- <footer class="page-footer font-small blue" style="border-top: 1px solid black; position: absolute; bottom: 0; right: 0;
+          left: 0;">
+              
+            <div class="footer-copyright text-center py-3">© 2019 Copyright:
+                   Powered By <a href="">Empulse Global</a>
+                </div>
+              
+          </footer> -->
+    </div>
+</div>

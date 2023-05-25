@@ -1,0 +1,122 @@
+
+
+body,
+html {
+  margin: 0;
+  padding: 0;
+  height: 100vh !important;
+  background: #fff !important;
+}
+
+.user_card {
+  margin-top: 70px;
+    margin-bottom: auto;
+    background: #fff;
+    padding: 18px;
+    border-radius: 10px;
+}
+.alert-danger {
+ 
+  font-size: 14px !important;
+  margin-bottom: 0px !important;
+  text-align: center;
+}
+
+.brand_logo_container {
+  position: absolute;
+  width: 108px;
+  height: 144px;
+  margin-left: 35%;
+  text-align: center;
+}
+
+.brand_logo {
+  height: 150px;
+  width: 119px;
+}
+
+
+.login_btn {
+  font-weight: bold;
+  
+  background: #1d1d85;
+  color: white;
+  
+}
+
+.login_btn:focus {
+  -webkit-box-shadow: none !important;
+          box-shadow: none !important;
+  outline: 0px !important;
+}
+
+.input-group-text {
+  background: #fff !important;
+  color: #000 !important;
+  border: 0 !important;
+  border-radius: 0.25rem 0 0 0.25rem !important;
+}
+
+.input_user,
+.input_pass:focus {
+  -webkit-box-shadow: none !important;
+          box-shadow: none !important;
+  outline: 0px !important;
+}
+
+.custom-checkbox .custom-control-input:checked ~ .custom-control-label::before {
+  background-color: #c0392b !important;
+}
+
+.loginheader {
+  width: 100%;
+  text-align: center;
+  top: 4%;
+  position: initial;
+}
+
+.logintext {
+  color: navy;
+  font-weight: bold;
+  font-size: 25px;
+  margin-bottom: 4%;
+}
+
+
+.invalid-feedback {
+  text-align: center !important;
+}
+.customlable {
+  color: #f5901f;
+  font-weight: bold;
+  font-size: 15px;
+}
+.body-sign {
+  display: table;
+  height: 94vh;
+  margin: 0 auto;
+  max-width: 425px;
+  padding: 0 15px;
+  width: 100%;
+}
+.body-sign .center-sign {
+  display: block;
+  
+  /* vertical-align: middle; */
+}
+.rightalign{
+  margin-right: 0px;
+}
+.leftalign{
+  margin-left: 0px;
+}
+
+@media only screen and (max-width: 767px){
+.body .ui-overlaypanel .ui-overlaypanel-content{
+  width: 316px;
+}
+}
+
+
+
+/*# sourceMappingURL=login.component.css.map */

@@ -1,0 +1,13 @@
+.awesome-color {
+    color: #ffdb15;
+    margin-right: 5px;
+    font-size: 15px !important;
+}
+.posi {
+    position: relative;
+}
+.actions {
+    position: absolute;
+    top: 5px;
+    right: 20px;
+}

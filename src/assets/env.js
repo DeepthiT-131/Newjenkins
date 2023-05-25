@@ -1,0 +1,13 @@
+(function (window) {
+    window.__env = window.__env || {};
+  
+    // API url
+    //window.__env.apiUrl = 'https://www.empulseit.com/FormBuilderAPI/api/';
+  //window.__env.apiUrl = 'https://www.empulseit.com/OnePathUDPAPI/api/';
+ //window.__env.apiUrl = 'http://localhost:55873/api/';
+  window.__env.apiUrl = 'http://10.1.1.16/QADemoAPI/api/';
+  
+    // Whether or not to enable debug mode
+    // Setting this to false will disable console output
+    window.__env.enableDebug = false;
+  }(this));

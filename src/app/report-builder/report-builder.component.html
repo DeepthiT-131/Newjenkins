@@ -1,0 +1,972 @@
+<p-tabView>
+
+  <p-tabPanel header="Table">
+    <!-- <div *ngIf="isSelected('report')"> -->
+    <div class="modal-header popuphead">
+      <h4 class="modal-title popuptitle" id="modal-basic-title">Report Builder</h4>
+    </div>
+
+    <div class="modal-body">
+      <div class="top-main">
+        <div class="form-group">
+          <div class="row main">
+            <div class="col-lg-3">
+              <div class=" form-group">
+                <div class="row" *ngIf="isVisible">
+                  <div class="col-lg-9">
+                    <p-multiSelect [options]="DBUpdated" [(ngModel)]="selectedDB" [panelStyle]="{minWidth:'10em'}"
+                      [filter]="true"></p-multiSelect>
+                  </div>
+
+                  <div class="col-lg-3">
+                    <button class="btn commonbutton" (click)="getTablefromDB()">Submit</button>
+                  </div>
+                </div>
+
+                <div class="row mt-2" *ngIf="isVisible">
+                  <div class="col-lg-9">
+                    <p-multiSelect [options]="DBUpdated" [(ngModel)]="selectedDB" [panelStyle]="{minWidth:'10em'}"
+                      [filter]="true"></p-multiSelect>
+                  </div>
+
+                  <div class="col-lg-3">
+                    <button class="btn commonbutton" (click)="getTablefromDB()">Submit</button>
+                  </div>
+                </div>
+
+                <div class="row mt-2" *ngIf="isVisible">
+                  <div class="col-lg-9">
+                    <p-multiSelect [options]="cars1" [(ngModel)]="selectedCars1" [panelStyle]="{minWidth:'10em'}"
+                      [filter]="true"></p-multiSelect>
+                  </div>
+                  <div class="col-lg-3">
+                    <button class="btn commonbutton" (click)="saveClick()">Submit</button>
+                  </div>
+                </div>
+              </div>
+              <div id="" [ngClass]="{'active': menuActive}">
+                <div class="layout-menu ">
+                  <ul class="drag-column">
+
+                    <li *ngFor="let item of refcollist" class="customization" style="color:white;font-size: 15px;">
+                      <a class="leftpanelmenu" [id]="item.fieldName" #inputmenutitle
+                        [class.active-menuitem]="inputmenutitle.id == activeMenuId" tabindex="0"
+                        (keydown)="onKeydown($event, inputmenutitle.id)" (click)="toggle(inputmenutitle.id)">
+                        {{item.fieldName | titlecase}}</a>
+
+                      <div [@animation]="(inputmenutitle.id == activeMenuId) ? 'visible' : 'hidden'"
+                        (@animation.start)="onAnimationStart($event)" (@animation.done)="onAnimationDone($event)">
+                        <ul class="nobullet menuwithscroll" style="padding-left: 0px;">
+
+                          <li *ngFor="let car of item.children" class="customizationchild"
+                            style="color:white;font-size: 15px;" [ngClass]="{'activemenu': selectedItem == child}"
+                            pDraggable="cars" (onDragStart)="dragStart($event,car)" (onDragEnd)="dragEnd($event)">
+                            <a class="insidemenu">{{car.displayName | titlecase}}</a></li>
+                        </ul>
+                      </div>
+                    </li>
+
+                  </ul>
+
+
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-9 ">
+              <div class="contentsection contentwithscroll">
+
+                <div class="row" style="margin-top: 1%;">
+                  <div class="col-lg-8"></div>
+
+                  <div class="col-lg-2" *ngIf="isVisible">
+                    <button *ngIf="isVisible" class="btn commonbutton pull-right" (click)="initResponse()">Back</button>
+                    <br>
+                  </div>
+                  <div class="col-lg-2">
+                    <button class="btn commonbutton" (click)="SaveJson()">Save</button>
+                    <br>
+                  </div>
+                </div>
+                <div class="col-lg-12" style="margin-top: 1%;">
+                  <div class="drop-container" pDroppable="cars" (onDrop)="drop($event)"
+                    [ngClass]="{'ui-highlight-car':draggedCar}">
+                    <p-table [value]="selectedCars" [reorderableColumns]="true" class="reporttbl" [scrollable]="true"
+                      [responsive]="true">
+                      <ng-template pTemplate="header">
+                        <tr>
+                          <th style="width: 20px !important;"></th>
+                          <th>Field Name</th>
+                          <th class="">DisplayID</th>
+                          <th class="">Display Name</th>
+                          <th class="">Filter</th>
+                          <th class="">Hide</th>
+                          <th class="">SOP</th>
+                          <th class="">Calculation</th>
+                          <th>Restricted Roles</th>
+                          <th class="">Action</th>
+
+                        </tr>
+                      </ng-template>
+                      <ng-template pTemplate="body" let-car let-columns="columns" let-index="rowIndex">
+                        <tr [pReorderableRow]="index">
+                          <td style="width: 20px !important;">
+                            <i class="pi pi-bars" style="display: flex;justify-content: center;"
+                              pReorderableRowHandle></i>
+                          </td>
+                          <td>{{car.fieldName}}</td>
+                          <td class="">{{index + 1}} </td>
+                          <td class=""><input type="text" [(ngModel)]="car.displayName" style="width:100%"> </td>
+                          <td class=""><input type="checkbox" [(ngModel)]="car.Filtertable"
+                              (change)="OnchangeFilter($event,car)">
+                            <i *ngIf="car.Filter" (click)="OnFilterPopup(car)" class="fa fa-search"
+                              aria-hidden="true"></i></td>
+
+                          <td class=""><input type="checkbox" [(ngModel)]="car.Hide"></td>
+                          <td class=""><input type="text" [(ngModel)]="car.SOP" style="width:100%"></td>
+
+                          <td class=""> <i (click)="OpenCalculator(car)" class="fa fa-calculator align"
+                              aria-hidden="true"></i></td>
+                          <td> <i (click)="RestrictedRolesPopup(car,restrictedroles)" class="fa fa-user-times"
+                              aria-hidden="true"></i>
+
+                          </td>
+                          <td class=""> <i (click)="removeJson(selectedCars,index)" class="fa fa-trash deleteicon"></i>
+                          </td>
+                        </tr>
+                      </ng-template>
+                    </p-table>
+                  </div>
+                </div>
+
+              </div>
+
+              <div class="row">
+                <div class="form-group col-lg-2">
+                  <label>Master Table</label>
+                </div>
+                <div class="form-group col-lg-2">
+                  <select class="form-control" [(ngModel)]="MasterTable">
+                    <option *ngFor="let item of Jointable" [value]="item.value">{{item.Label}}</option>
+                  </select>
+                </div>
+
+              </div>
+              <h6><b>Join Conditions</b></h6>
+              <div class="row">
+                <div class="form-group col-lg-2">
+                  <label>Join Table 1</label>
+                </div>
+                <div class="form-group col-lg-2">
+                  <label>Fisrt Column</label>
+                </div>
+                <!-- <div class="form-group col-lg-2">
+            <label>Join Table 2</label>
+          </div> -->
+                <div class="form-group col-lg-2">
+                  <label>Second Column</label>
+                </div>
+
+                <div class="form-group col-lg-2">
+                  <label>Action</label>
+                </div>
+              </div>
+
+              <div *ngFor="let j of JoinArray" class="inline-form-group">
+                <div class="row">
+
+                  <div class="form-group col-lg-2">
+
+                    <select class="form-control" [(ngModel)]="j.joinTable1">
+                      <option *ngFor="let item of Jointable" [value]="item.value">{{item.Label}}</option>
+                    </select>
+                  </div>
+                  <div class="form-group col-lg-2">
+
+                    <select class="form-control" [(ngModel)]="j.firstValue">
+                      <option *ngFor="let item of joinColumn" [value]="item.fieldId">{{item.displayName}}</option>
+                    </select>
+                  </div>
+                  <!-- <div class="form-group col-lg-2">
+    
+              <select class="form-control" [(ngModel)]="j.joinTable2">
+                <option *ngFor="let item of Jointable" [value]="item.value">{{item.Label}}</option>
+              </select>
+            </div> -->
+                  <div class="form-group col-lg-2">
+
+                    <select class="form-control" [(ngModel)]="j.SecondValue">
+                      <option *ngFor="let item of joinColumn" [value]="item.fieldId">{{item.displayName}}
+                      </option>
+                    </select>
+                  </div>
+
+                  <div class="form-group col-lg-2">
+                    <i class="fa fa-remove" (click)="selectedTables.splice(valueIndex,1)" aria-hidden="true"
+                      style="font-size: 19px;"></i>
+
+                  </div>
+                </div>
+
+              </div>
+              <div class="row">
+                <div class="form-group col-lg-8"></div>
+                <div class="form-group col-lg-4">
+
+                  <i class="fa fa-plus-circle" (click)="addRefJoin(JoinArray)" aria-hidden="true"
+                    style="font-size: 19px;"></i>
+
+
+                </div>
+              </div>
+              <h6>Where Conditions</h6>
+              <div class="row">
+                <div class="form-group col-lg-2">
+                  <label>column name</label>
+                </div>
+                <div class="form-group col-lg-2">
+                  <label>Operator</label>
+                </div>
+                <div class="form-group col-lg-2">
+                  <label>Value</label>
+                </div>
+                <div class="form-group col-lg-2">
+                  <label>Condition</label>
+                </div>
+                <div class="form-group col-lg-2">
+                  <label>Action</label>
+                </div>
+              </div>
+              <div *ngFor="let v of WhereCondition" class="inline-form-group">
+                <div class="row">
+
+                  <div class="form-group col-lg-2">
+
+                    <select class="form-control" [(ngModel)]="v.columnName"
+                      (change)="getAllColumnValues($event.target.value);">
+                      <option *ngFor="let item of joinColumn" [value]="item.fieldId">{{item.displayName}}</option>
+                    </select>
+                  </div>
+                  <div class="form-group col-lg-2">
+
+                    <select class="form-control" [(ngModel)]="v.colCondition">
+                      <option *ngFor="let item of reftablecondtnlist" [value]="item.Code">{{item.CodeName}}</option>
+                    </select>
+                  </div>
+                  <div class="form-group col-lg-2">
+
+                    <select class="form-control" [(ngModel)]="v.columnValue">
+                      <option *ngFor="let item of columnvaluelist" [value]="item.ColumnValues">{{item.ColumnValues}}
+                      </option>
+                    </select>
+                  </div>
+                  <div class="form-group col-lg-2">
+                    <select class="form-control" [(ngModel)]="v.columnOperator">
+                      <option *ngFor="let item of reftableOperatorList" [value]="item.Code">{{item.CodeName}}</option>
+                    </select>
+                  </div>
+                  <div class="form-group col-lg-2">
+                    <i class="fa fa-remove" (click)="SelectedItem.refCondition.splice(valueIndex,1)" aria-hidden="true"
+                      style="font-size: 19px;"></i>
+
+                  </div>
+                </div>
+
+              </div>
+              <div class="row">
+                <div class="form-group col-lg-8"></div>
+
+                <div class="form-group col-lg-2">
+                  <i class="fa fa-plus-circle" (click)="addRefCondition(WhereCondition)" aria-hidden="true"
+                    style="font-size: 19px;"></i>
+
+                </div>
+
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+      <pre>{{JoinArray | json}}</pre>
+      <pre>{{TabletargetBuilderTools | json}}</pre>
+      <pre>{{WhereCondition| json}}</pre>
+    </div>
+
+    <!----  Sub Add Modal Pop-up Start  ---->
+    <ng-template #filtercontent let-modal>
+
+
+
+      <div class="modal-header popuphead">
+        <h4 class="modal-title popuptitle">Filter Type
+        </h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="modal.dismiss('Cross click')">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!-- <h4 class="subheader">DownTime</h4> -->
+        <div class="container">
+          <div class="top-main">
+
+            <div class="row">
+              <div class="form-group col-lg-4">
+                <label class="m-0 font-weight-normal">Filter Type{{FilterType}}</label>
+              </div>
+              <div class="form-group col-lg-8">
+                <p-radioButton value="Single" label="Single" [(ngModel)]="FilterType"></p-radioButton>
+                <p-radioButton value="Range" label="Range" [(ngModel)]="FilterType"></p-radioButton>
+                <p-radioButton value="Multi" label="Multi" [(ngModel)]="FilterType"></p-radioButton>
+
+              </div>
+            </div>
+
+
+
+            <div class="row">
+              <div class="form-group col-lg-3">
+                <label class="m-0 font-weight-normal">Range Type</label>
+              </div>
+              <div class="form-group col-lg-9">
+                <select>
+
+                  <option value="Date">Date</option>
+                  <option value="Time">Time</option>
+                  <option value="Number">Number</option>
+                </select>
+              </div>
+            </div>
+
+
+
+
+
+          </div>
+
+        </div>
+      </div>
+      <footer class="modal-footer pop-btn">
+        <button class="btn commonbutton" [attr.disabled]="disabled?'':null">Submit</button>
+        <button type="reset" class="btn commonbutton" (click)="modal.close('Close click')">Cancel</button>
+      </footer>
+
+    </ng-template>
+
+    <ng-template #restrictedroles let-modal>
+      <div class="modal-header popuphead">
+        <h4 class="modal-title popuptitle">Restricted Roles
+        </h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="modal.dismiss('Cross click')">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!-- <h4 class="subheader">DownTime</h4> -->
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-3"></div>
+            <div class="col-lg-6">
+              <p-multiSelect [options]="roles"></p-multiSelect>
+            </div>
+            <div class="col-lg-3"></div>
+          </div>
+        </div>
+      </div>
+      <footer class="modal-footer pop-btn">
+        <button class="btn commonbutton" [attr.disabled]="disabled?'':null">Submit</button>
+        <button type="reset" class="btn commonbutton" (click)="modal.close('Close click')">Cancel</button>
+      </footer>
+
+    </ng-template>
+    <!-- </div> -->
+  </p-tabPanel>
+
+  <p-tabPanel header="Floz">
+    <!-- <div *ngIf="isSelected('calender')"> -->
+    <div class="modal-header popuphead">
+      <h4 class="modal-title popuptitle" id="modal-basic-title">Floz Builder</h4>
+    </div>
+    <div class="modal-body">
+      <div class="top-main">
+        <div class="form-group">
+          <div class="row main">
+            <div class="col-lg-3">
+              <div class=" form-group">
+                <div *ngIf="isVisible" class="row">
+                  <div class="col-lg-9">
+                    <p-multiSelect [options]="DBUpdated" [(ngModel)]="selectedDB" [panelStyle]="{minWidth:'10em'}"
+                      [filter]="true"></p-multiSelect>
+                  </div>
+
+                  <div class="col-lg-3">
+                    <button class="btn commonbutton" (click)="getTablefromDB()">Submit</button>
+                  </div>
+                </div>
+
+                <div *ngIf="isVisible" class="row mt-2">
+                  <div class="col-lg-9">
+                    <p-multiSelect [options]="cars1" [(ngModel)]="selectedCars1" [panelStyle]="{minWidth:'10em'}"
+                      [filter]="true"></p-multiSelect>
+                  </div>
+                  <div class="col-lg-3">
+                    <button class="btn commonbutton" (click)="saveClick()">Submit</button>
+                  </div>
+                </div>
+              </div>
+              <div id="" [ngClass]="{'active': menuActive}">
+                <div class="layout-menu ">
+                  <ul class="drag-column">
+
+                    <li *ngFor="let item of refcollist" class="customization" style="color:white;font-size: 15px;">
+                      <a class="leftpanelmenu" [id]="item.fieldName" #inputmenutitle
+                        [class.active-menuitem]="inputmenutitle.id == activeMenuId" tabindex="0"
+                        (keydown)="onKeydown($event, inputmenutitle.id)" (click)="toggle(inputmenutitle.id)">
+                        {{item.fieldName | titlecase}}</a>
+
+                      <div [@animation]="(inputmenutitle.id == activeMenuId) ? 'visible' : 'hidden'"
+                        (@animation.start)="onAnimationStart($event)" (@animation.done)="onAnimationDone($event)">
+                        <ul class="nobullet menuwithscroll" style="padding-left: 0px;">
+
+                          <li *ngFor="let car of item.children" class="customizationchild"
+                            style="color:white;font-size: 15px;" [ngClass]="{'activemenu': selectedItem == child}"
+                            pDraggable="cars" (onDragStart)="dragStart1($event,car)" (onDragEnd)="dragEnd1($event)">
+                            <a class="insidemenu">{{car.displayName | titlecase}}</a></li>
+                        </ul>
+                      </div>
+                    </li>
+
+                  </ul>
+
+
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-9 ">
+              <div class="contentsection contentwithscroll">
+
+                <div class="row" style="margin-top: 1%;">
+                  <div class="col-lg-8"></div>
+                  <div class="col-lg-2">
+                    <button *ngIf="isVisible" class="btn commonbutton pull-right" (click)="initResponse()">Back</button>
+                    <br>
+                  </div>
+                  <div class="col-lg-2">
+                    <button class="btn commonbutton" (click)="SaveJson()">Save</button>
+                    <br>
+                  </div>
+                </div>
+                <div class="col-lg-12" style="margin-top: 1%;">
+                  <div class="drop-container" pDroppable="cars" (onDrop)="drop1($event)"
+                    [ngClass]="{'ui-highlight-car':draggedKan}">
+                    <p-table [value]="selectedKanbana" [reorderableColumns]="true" class="reporttbl" [scrollable]="true"
+                      [responsive]="true">
+                      <ng-template pTemplate="header">
+                        <tr>
+                          <th style="width: 20px !important;"></th>
+                          <th>Field Name</th>
+                          <th class="">DisplayID</th>
+                          <th class="">Display Name</th>
+                          <th class="">Filter</th>
+                          <th>Floz Widget</th>
+                          <th class="">Hide</th>
+                          <th class="">SOP</th>
+                          <th class="">Calculation</th>
+                          <th class="">Restricted Roles</th>
+                          <th class="">Action</th>
+
+                        </tr>
+                      </ng-template>
+                      <ng-template pTemplate="body" let-car let-columns="columns" let-index="rowIndex">
+                        <tr [pReorderableRow]="index">
+                          <td style="width: 20px !important;">
+                            <i class="pi pi-bars" style="display: flex;justify-content: center;"
+                              pReorderableRowHandle></i>
+                          </td>
+                          <td>{{car.fieldName}}</td>
+                          <td class="">{{index + 1}} </td>
+                          <td class=""><input type="text" [(ngModel)]="car.displayName" style="width:100%"> </td>
+                          <td class=""><input type="checkbox" [(ngModel)]="car.Filterkanban"
+                              (change)="OnchangeFilter($event,car)">
+                            <i *ngIf="car.Filter" (click)="OnFilterPopup(car)" class="fa fa-search"
+                              aria-hidden="true"></i></td>
+                          <td>
+                            <!-- <input type="checkbox" [(ngModel)]="car.kanbana"/> -->
+                            <input type="radio" id="{{car.fieldName}}" [(ngModel)]="car.kanbana"
+                              [value]="car.fieldName" />
+
+                          </td>
+                          <td class=""><input type="checkbox" [(ngModel)]="car.Hide"></td>
+                          <td class=""><input type="text" [(ngModel)]="car.SOP" style="width:100%"></td>
+
+                          <td class=""> <i (click)="OpenCalculator(car)" class="fa fa-calculator align"
+                              aria-hidden="true"></i></td>
+                          <td> <i (click)="RestrictedRolesPopup(car,restrictedroles)" class="fa fa-user-times"
+                              aria-hidden="true"></i>
+
+                          </td>
+                          <td class=""> <i (click)="removeJson(selectedKanbana,index)"
+                              class="fa fa-trash deleteicon"></i>
+                          </td>
+                        </tr>
+                      </ng-template>
+                    </p-table>
+                  </div>
+                </div>
+
+              </div>
+
+              <div class="row">
+                <div class="form-group col-lg-2">
+                  <label>Master Table</label>
+                </div>
+                <div class="form-group col-lg-2">
+                  <select class="form-control" [(ngModel)]="MasterTableKanbana">
+                    <option *ngFor="let item of Jointable" [value]="item.value">{{item.Label}}</option>
+                  </select>
+                </div>
+
+              </div>
+              <h6><b>Join Conditions</b></h6>
+              <div class="row">
+                <div class="form-group col-lg-2">
+                  <label>Join Table 1</label>
+                </div>
+                <div class="form-group col-lg-2">
+                  <label>Fisrt Column</label>
+                </div>
+                <!-- <div class="form-group col-lg-2">
+          <label>Join Table 2</label>
+        </div> -->
+                <div class="form-group col-lg-2">
+                  <label>Second Column</label>
+                </div>
+
+                <div class="form-group col-lg-2">
+                  <label>Action</label>
+                </div>
+              </div>
+
+              <div *ngFor="let j of JoinArrayKanbana" class="inline-form-group">
+                <div class="row">
+
+                  <div class="form-group col-lg-2">
+
+                    <select class="form-control" [(ngModel)]="j.joinTable1">
+                      <option *ngFor="let item of Jointable" [value]="item.value">{{item.Label}}</option>
+                    </select>
+                  </div>
+                  <div class="form-group col-lg-2">
+
+                    <select class="form-control" [(ngModel)]="j.firstValue">
+                      <option *ngFor="let item of joinColumn" [value]="item.fieldId">{{item.displayName}}</option>
+                    </select>
+                  </div>
+                  <!-- <div class="form-group col-lg-2">
+  
+            <select class="form-control" [(ngModel)]="j.joinTable2">
+              <option *ngFor="let item of Jointable" [value]="item.value">{{item.Label}}</option>
+            </select>
+          </div> -->
+                  <div class="form-group col-lg-2">
+
+                    <select class="form-control" [(ngModel)]="j.SecondValue">
+                      <option *ngFor="let item of joinColumn" [value]="item.fieldId">{{item.displayName}}
+                      </option>
+                    </select>
+                  </div>
+
+                  <div class="form-group col-lg-2">
+                    <i class="fa fa-remove" (click)="selectedTables.splice(valueIndex,1)" aria-hidden="true"
+                      style="font-size: 19px;"></i>
+
+                  </div>
+                </div>
+
+              </div>
+              <div class="row">
+                <div class="form-group col-lg-8"></div>
+                <div class="form-group col-lg-4">
+
+                  <i class="fa fa-plus-circle" (click)="addRefJoin(JoinArrayKanbana)" aria-hidden="true"
+                    style="font-size: 19px;"></i>
+
+
+                </div>
+              </div>
+              <h6>Where Conditions</h6>
+              <div class="row">
+                <div class="form-group col-lg-2">
+                  <label>column name</label>
+                </div>
+                <div class="form-group col-lg-2">
+                  <label>Operator</label>
+                </div>
+                <div class="form-group col-lg-2">
+                  <label>Value</label>
+                </div>
+                <div class="form-group col-lg-2">
+                  <label>Condition</label>
+                </div>
+                <div class="form-group col-lg-2">
+                  <label>Action</label>
+                </div>
+              </div>
+              <div *ngFor="let v of WhereConditionKanbana" class="inline-form-group">
+                <div class="row">
+
+                  <div class="form-group col-lg-2">
+
+                    <select class="form-control" [(ngModel)]="v.columnName"
+                      (change)="getAllColumnValues($event.target.value);">
+                      <option *ngFor="let item of joinColumn" [value]="item.fieldId">{{item.displayName}}</option>
+                    </select>
+                  </div>
+                  <div class="form-group col-lg-2">
+
+                    <select class="form-control" [(ngModel)]="v.colCondition">
+                      <option *ngFor="let item of reftablecondtnlist" [value]="item.Code">{{item.CodeName}}</option>
+                    </select>
+                  </div>
+                  <div class="form-group col-lg-2">
+
+                    <select class="form-control" [(ngModel)]="v.columnValue">
+                      <option *ngFor="let item of columnvaluelist" [value]="item.ColumnValues">{{item.ColumnValues}}
+                      </option>
+                    </select>
+                  </div>
+                  <div class="form-group col-lg-2">
+                    <select class="form-control" [(ngModel)]="v.columnOperator">
+                      <option *ngFor="let item of reftableOperatorList" [value]="item.Code">{{item.CodeName}}</option>
+                    </select>
+                  </div>
+                  <div class="form-group col-lg-2">
+                    <i class="fa fa-remove" (click)="SelectedItem.refCondition.splice(valueIndex,1)" aria-hidden="true"
+                      style="font-size: 19px;"></i>
+
+                  </div>
+                </div>
+
+              </div>
+              <div class="row">
+                <div class="form-group col-lg-8"></div>
+
+                <div class="form-group col-lg-2">
+                  <i class="fa fa-plus-circle" (click)="addRefCondition(WhereConditionKanbana)" aria-hidden="true"
+                    style="font-size: 19px;"></i>
+
+                </div>
+
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+      <pre>{{JoinArrayKanbana | json}}</pre>
+      <pre>{{TabletargetBuilderTools | json}}</pre>
+      <pre>{{WhereConditionKanbana| json}}</pre>
+    </div>
+
+    <!----  Sub Add Modal Pop-up Start  ---->
+    <ng-template #filtercontent let-modal>
+
+
+
+      <div class="modal-header popuphead">
+        <h4 class="modal-title popuptitle">Filter Type
+        </h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="modal.dismiss('Cross click')">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!-- <h4 class="subheader">DownTime</h4> -->
+        <div class="container">
+          <div class="top-main">
+
+            <div class="row">
+              <div class="form-group col-lg-4">
+                <label class="m-0 font-weight-normal">Filter Type{{FilterType}}</label>
+              </div>
+              <div class="form-group col-lg-8">
+                <p-radioButton value="Single" label="Single" [(ngModel)]="FilterType"></p-radioButton>
+                <p-radioButton value="Range" label="Range" [(ngModel)]="FilterType"></p-radioButton>
+                <p-radioButton value="Multi" label="Multi" [(ngModel)]="FilterType"></p-radioButton>
+
+              </div>
+            </div>
+
+
+
+            <div class="row">
+              <div class="form-group col-lg-3">
+                <label class="m-0 font-weight-normal">Range Type</label>
+              </div>
+              <div class="form-group col-lg-9">
+                <select>
+
+                  <option value="Date">Date</option>
+                  <option value="Time">Time</option>
+                  <option value="Number">Number</option>
+                </select>
+              </div>
+            </div>
+
+
+
+
+
+          </div>
+
+        </div>
+      </div>
+      <footer class="modal-footer pop-btn">
+        <button class="btn commonbutton" [attr.disabled]="disabled?'':null">Submit</button>
+        <button type="reset" class="btn commonbutton" (click)="modal.close('Close click')">Cancel</button>
+      </footer>
+
+    </ng-template>
+
+
+    <ng-template #restrictedroles let-modal>
+      <div class="modal-header popuphead">
+        <h4 class="modal-title popuptitle">Restricted Roles
+        </h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="modal.dismiss('Cross click')">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!-- <h4 class="subheader">DownTime</h4> -->
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-3"></div>
+            <div class="col-lg-6">
+              <p-multiSelect [options]="roles"></p-multiSelect>
+            </div>
+            <div class="col-lg-3"></div>
+          </div>
+        </div>
+      </div>
+      <footer class="modal-footer pop-btn">
+        <button class="btn commonbutton" [attr.disabled]="disabled?'':null">Submit</button>
+        <button type="reset" class="btn commonbutton" (click)="modal.close('Close click')">Cancel</button>
+      </footer>
+
+    </ng-template>
+    <!-- </div> -->
+
+  </p-tabPanel>
+
+  <p-tabPanel header="Calender">
+
+    <!-- <div *ngIf="isSelected('kanbana')"> -->
+    <div class="modal-header popuphead">
+      <h4 class="modal-title popuptitle" id="modal-basic-title">Calender Builder</h4>
+    </div>
+    <div class="modal-body">
+      <div class="top-main">
+        <div class="form-group">
+          <div class="row main">
+            <div class="col-lg-3">
+              <div class=" form-group">
+                <div class="row" *ngIf="isVisible">
+                  <div class="col-lg-9">
+                    <p-multiSelect [options]="DBUpdated" [(ngModel)]="selectedDB" [panelStyle]="{minWidth:'10em'}"
+                      [filter]="true"></p-multiSelect>
+                  </div>
+
+                  <div class="col-lg-3">
+                    <button class="btn commonbutton" (click)="getTablefromDB()">Submit</button>
+                  </div>
+                </div>
+
+                <div class="row mt-2" *ngIf="isVisible">
+                  <div class="col-lg-9">
+                    <p-multiSelect [options]="cars1" [(ngModel)]="selectedCars1" [panelStyle]="{minWidth:'10em'}"
+                      [filter]="true"></p-multiSelect>
+                  </div>
+                  <div class="col-lg-3">
+                    <button class="btn commonbutton" (click)="saveClick()">Submit</button>
+                  </div>
+                </div>
+              </div>
+              <div id="" [ngClass]="{'active': menuActive}">
+                <div class="layout-menu ">
+                  <ul class="drag-column">
+
+                    <li *ngFor="let item of refcollist" class="customization" style="color:white;font-size: 15px;">
+                      <a class="leftpanelmenu" [id]="item.fieldName" #inputmenutitle
+                        [class.active-menuitem]="inputmenutitle.id == activeMenuId" tabindex="0"
+                        (keydown)="onKeydown($event, inputmenutitle.id)" (click)="toggle(inputmenutitle.id)">
+                        {{item.fieldName | titlecase}}</a>
+
+                      <div [@animation]="(inputmenutitle.id == activeMenuId) ? 'visible' : 'hidden'"
+                        (@animation.start)="onAnimationStart($event)" (@animation.done)="onAnimationDone($event)">
+                        <ul class="nobullet menuwithscroll" style="padding-left: 0px;">
+
+                          <li *ngFor="let car of item.children" class="customizationchild"
+                            style="color:white;font-size: 15px;" [ngClass]="{'activemenu': selectedItem == child}"
+                            pDraggable="cars" (onDragStart)="dragStart2($event,car)" (onDragEnd)="dragEnd2($event)">
+                            <a class="insidemenu">{{car.displayName | titlecase}}</a></li>
+                        </ul>
+                      </div>
+                    </li>
+
+                  </ul>
+
+
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-9 ">
+              <div class="contentsection contentwithscroll">
+                <form [formGroup]="CalenderForm" (ngSubmit)="onSubmit(CalenderForm.value)" autocomplete="off">
+                  <div class="row" style="margin-top: 1%;">
+                    <div class="col-lg-8"></div>
+                    <div class="col-lg-2">
+                      <button class="btn commonbutton pull-right" (click)="initResponse()">Back</button>
+                      <br>
+                    </div>
+                    <div class="col-lg-2">
+                      <button type="submit" class="btn commonbutton">Save</button>
+                      <br>
+                    </div>
+                  </div>
+                  <div class="col-lg-12" style="margin-top: 1%;">
+                    <!-- <div class="drop-container" pDroppable="cars" (onDrop)="drop2($event)"
+                      [ngClass]="{'ui-highlight-car':draggedCal}">
+                      <label class="m-0 font-weight-normal">Event Name</label>
+                      <div class="row" *ngFor="let car of selectedCalendar">
+
+                        <label>{{car.fieldId}}</label>
+                      </div>
+                    </div> -->
+
+                    <div class="drop-container" pDroppable="cars" (onDrop)="drop2($event)"
+                      [ngClass]="{'ui-highlight-car':draggedCal}">
+                      <p-table [value]="selectedCalendar" [reorderableColumns]="true" class="reporttbl"
+                        [scrollable]="true" [responsive]="true">
+                        <ng-template pTemplate="header">
+                          <tr>
+                            <th style="width: 20px !important;"></th>
+                            <th>Field Name</th>
+                            <th class="">DisplayID</th>
+
+                            <th class="">Action</th>
+
+                          </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-car let-columns="columns" let-index="rowIndex">
+                          <tr [pReorderableRow]="index">
+                            <td style="width: 20px !important;">
+                              <i class="pi pi-bars" style="display: flex;justify-content: center;"
+                                pReorderableRowHandle></i>
+                            </td>
+                            <td>{{car.fieldId}}</td>
+                            <td class="">{{index + 1}} </td>
+                            <td class=""> <i (click)="removeJson(selectedCalendar,index)"
+                                class="fa fa-trash deleteicon"></i>
+                            </td>
+                          </tr>
+                        </ng-template>
+                      </p-table>
+                    </div>
+                  </div>
+
+                  <div class="col-lg-12" style="margin-top: 1%;">
+                    <div class="form-group">
+                      <div class="row">
+
+                        <div class="col-sm-6 col-12">
+                          <label class="m-0 font-weight-normal">URL</label>
+                          <select class="form-control cshadow" formControlName="URL"
+                            [ngClass]="{ 'is-invalid': submitted && calender.URL.errors }">
+                            <option *ngFor="let item of joinColumn" [value]="item.fieldId">{{item.displayName}}</option>
+                          </select>
+                          <div *ngIf="submitted && calender.URL.errors" class="invalid-feedback">
+                            <div *ngIf="calender.URL.errors.required">URL Name is required</div>
+                          </div>
+
+                        </div>
+
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <div class="row">
+                        <div class="col-sm-6 col-12">
+                          <label class="m-0 font-weight-normal">Start Date</label>
+                          <select class="form-control cshadow" formControlName="Startdate"
+                            [ngClass]="{ 'is-invalid': submitted && calender.Startdate.errors }">
+                            <option *ngFor="let item of joinColumn" [value]="item.fieldId">{{item.displayName}}</option>
+                          </select>
+
+                          <div *ngIf="submitted && calender.Startdate.errors" class="invalid-feedback">
+                            <div *ngIf="calender.Startdate.errors.required">Startdate Name is required</div>
+                          </div>
+
+                        </div>
+                        <div class="col-sm-6 col-12">
+                          <label class="m-0 font-weight-normal">Start Time</label>
+                          <select class="form-control cshadow" formControlName="Starttime"
+                            [ngClass]="{ 'is-invalid': submitted && calender.Starttime.errors }">
+                            <option *ngFor="let item of joinColumn" [value]="item.fieldId">{{item.displayName}}</option>
+                          </select>
+
+                          <div *ngIf="submitted && calender.Starttime.errors" class="invalid-feedback">
+                            <div *ngIf="calender.Starttime.errors.required">Starttime Name is required</div>
+                          </div>
+
+                        </div>
+
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <div class="row">
+                        <div class="col-sm-6 col-12">
+                          <label class="m-0 font-weight-normal">End Date</label>
+                          <select class="form-control cshadow" formControlName="Enddate"
+                            [ngClass]="{ 'is-invalid': submitted && calender.Enddate.errors }">
+                            <option *ngFor="let item of joinColumn" [value]="item.fieldId">{{item.displayName}}</option>
+                          </select>
+
+                          <div *ngIf="submitted && calender.Enddate.errors" class="invalid-feedback">
+                            <div *ngIf="calender.Enddate.errors.required">Enddate Name is required</div>
+                          </div>
+
+                        </div>
+                        <div class="col-sm-6 col-12">
+                          <label class="m-0 font-weight-normal">End Time</label>
+                          <select class="form-control cshadow" formControlName="Endtime"
+                            [ngClass]="{ 'is-invalid': submitted && calender.Endtime.errors }">
+                            <option *ngFor="let item of joinColumn" [value]="item.fieldId">{{item.displayName}}</option>
+                          </select>
+
+                          <div *ngIf="submitted && calender.Endtime.errors" class="invalid-feedback">
+                            <div *ngIf="calender.Endtime.errors.required">Endtime Name is required</div>
+                          </div>
+
+                        </div>
+
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+  </p-tabPanel>
+</p-tabView>
+<pre>{{JoinArray | json}}</pre>
+<pre>{{TabletargetBuilderTools | json}}</pre>
+<pre>{{WhereCondition| json}}</pre>

@@ -1,0 +1,76 @@
+
+              <div *ngIf="getconfigdetails?.length != 0">
+
+            <div class="bg_image"  [ngStyle]="{'background-image':'url('+getconfigdetails?.BannerImage+')'}" [style.backgroundColor]="getconfigdetails?.bgColor"> 
+        
+                    <form [formGroup]="loginForm" (ngSubmit)="onLogin();" >
+                 <div class="body-sign"  [ngClass]="{'centeralign': getconfigdetails?.Alignment=='center',
+                 'leftalign': getconfigdetails?.Alignment=='left','rightalign':getconfigdetails?.Alignment=='right'}">
+               
+                    <div class="center-sign">
+                    
+                 <div class="container">
+              <div class="user_card" [style.backgroundColor]="getconfigdetails?.LoginFormBackgroundcolor">
+                                    
+                                         <div class="loginheader">
+                                            <img [src]="getconfigdetails?.Logo" width="50%">
+                                          </div>
+                                         <div class="">
+                                            
+                                          
+                                                   <label class="customlable" [style.color]="getconfigdetails?.TextColor" >
+                                                       User Name</label>
+                                                 <div class="input-group mb-3">
+                                                        <input formControlName="username"  type="text" placeholder="Username"  class="form-control input-lg inputbox_login" 
+                                                        value="Username" [ngClass]="{ 'is-invalid': submitted && formData.username.errors }"/>
+                                                       <div *ngIf="submitted && formData.username.errors" class="invalid-feedback">
+                                                         <div *ngIf="formData.username.errors.required">Username is required</div>
+                                                         </div>
+                                                 
+                                                           
+                                                 </div>
+                                                 <label class="customlable" [style.color]="getconfigdetails?.TextColor" >Password</label>
+                                                 <div class="input-group">
+
+                                                        <input formControlName="password" [type]="password_type"  placeholder="Password" class="form-control input-lg inputbox_login" value="Password" [ngClass]="{ 'is-invalid': submitted && formData.password.errors }"/>
+             
+                                                       
+                                                    
+                                                       <div *ngIf="submitted && formData.password.errors" class="invalid-feedback">
+                                                           <div *ngIf="formData.password.errors.required">Password is required</div>
+                                                           </div>
+                                                  <!-- <input type="password"    [(ngModel)]="txtpassword" name="" class="form-control input_pass" value="" placeholder="password" value="Password" [required]="true"/> -->
+                                                 </div> <span class="fa fa-eye field-icon" (click)="togglePasswordMode()"></span>
+                                               
+                                         <div style="text-align: center;">
+                                             <button   class="btn login_btn mt-4" [style.background]="getconfigdetails?.ButtonColor" [style.color]="getconfigdetails?.ButtonTextColor"   >Login</button>
+                                            
+                                         </div>
+                                         <div class="mt-4">
+                                          
+                                             <div class="d-flex justify-content-center links" style=" margin-bottom: 10%;">
+                                                 <a [style.color]="getconfigdetails?.TextColor" href="#">Forgot your password?</a>
+                                             </div>
+                                         </div>
+                                         <div *ngIf="error" class="alert alert-danger">The username or password is invalid</div>
+                                    
+                                 </div>
+              </div>
+                          
+               </div>
+             </div>
+          </div>
+                    </form>
+    
+        </div>
+           </div>
+
+
+           
+    
+    
+    
+    
+    
+    
+     

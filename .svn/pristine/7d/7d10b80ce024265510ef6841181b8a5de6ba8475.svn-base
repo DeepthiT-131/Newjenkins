@@ -1,0 +1,103 @@
+label{
+    margin-top: .5rem;
+    margin-left: 5px;
+    /* font-size: 18px; */
+    }
+    .border{
+        border:1px solid gray !important;
+    }
+    .main{
+        padding-left: 1%;
+        padding-right: 1%;
+    }
+    .drop-container {
+        min-height:2em;
+        border: 2px dotted #1d1d85;
+        padding:1em;
+        margin-bottom: 2%;
+        padding-right: 20px;
+        padding-left: 20px;
+      }
+    
+      .align{
+          padding-left: 17px;
+      }
+    
+    
+    
+    
+    .fa.pull-left{
+        padding-right: 9px;    
+    }
+    .contentsection{
+        border:2px solid #1d1d85;
+        border-radius: 8px;
+      
+    }
+    
+    .contentwithscroll{
+        overflow-y: scroll;
+        height: 550px;
+    }
+    ::-webkit-scrollbar
+    {
+      width: 12px;  /* for vertical scrollbars */
+      border-radius: 10px;
+    }
+    
+    ::-webkit-scrollbar-track
+    {
+      background: rgba(0, 0, 0, 0.1);
+      border-radius: 10px;
+    }
+    
+    ::-webkit-scrollbar-thumb
+    {
+        border-radius: 10px;
+      background: rgba(0, 0, 0, 0.4);
+    }
+    .images{
+        margin-right: 40px;
+    }
+    .leftpanelmenu{
+        color:white;
+        position: relative;
+        width: 100%;
+        display: inline-block;
+    }
+    .layout-menu > ul > li a:after {
+        font-family: FontAwesome;
+        font-weight: 600;
+        content: "\f105";
+        font-style: normal;
+        display: inline-block;
+        font-variant: normal;
+        text-rendering: auto;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        text-align: center;
+        background: 0 0;
+        position: absolute;
+        right: 15px;
+        font-size: 20px;
+      }
+      .layout-menu > ul > li a.insidemenu:after {
+          content: "";
+      }
+      .layout-menu > ul > li a.active-menuitem:after {
+        transform: rotate(90deg);
+        right: 15px;
+      }
+      .layout-menu > ul{
+        margin-top: 0px;
+        margin-bottom: 0px;
+        padding-left: 0px;
+      }
+    
+    
+    
+    
+    
+    
+    
+    

@@ -1,0 +1,16 @@
+@media (min-width: 1200px){
+    .modal-xl {
+        max-width: 1382px !important;
+    }
+}
+.ql-toolbar.ql-snow{
+    border: 1px solid black !important;
+}
+.borderrow{
+    border-top: 1px solid;
+    padding-bottom: 15px;
+}
+.maindiv{
+    background: #f1f1f1;
+    border-radius: 10px;
+}

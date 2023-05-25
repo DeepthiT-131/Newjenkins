@@ -1,0 +1,182 @@
+[
+    {
+      "displayID": "0",
+      "fieldName": "Div2",
+      "children": [] ,
+      "children1": [],
+      "fieldType": "divSection",
+      "icon": "far fa-square",
+      "labeltype": false,
+      "className": "col-sm-6",
+      "dbview": false,
+      "tableView": false,
+      "formView": false,
+
+      "multiple": false,
+      "groupName": "",
+      "restrictedRoles": [],
+      "relationField": [],
+      "visible": false,
+      "columnID": "",
+      "fieldstyle": "Secbgcolor"
+
+
+    },
+    {
+      "displayID": "0",
+      "fieldName": "Div3",
+      "children": [] ,
+      "children1": [] ,
+      "children2": [] ,
+      "fieldType": "divSection",
+      "icon": "far fa-square",
+      "labeltype": false,
+      "className": "col-sm-4",
+      "dbview": false,
+      "tableView": false,
+      "formView": false,
+
+      "multiple": false,
+      "groupName": "",
+      "restrictedRoles": [],
+      "relationField": [],
+      "visible": false,
+      "columnID": "",
+      "fieldstyle": "Secbgcolor"
+    },
+
+    {
+      "displayID": "0",
+      "fieldName": "Div4",
+      "children": [] ,
+      "children1": [] ,
+      "children2": [] ,
+      "children3": [] ,
+      "fieldType": "divSection",
+      "icon": "far fa-square",
+      "labeltype": false,
+      "className": "col-sm-3",
+      "dbview": false,
+      "tableView": false,
+      "formView": false,
+
+      "multiple": false,
+      "groupName": "",
+      "restrictedRoles": [],
+      "relationField": [],
+      "visible": false,
+      "columnID": "",
+      "fieldstyle": "Secbgcolor"
+    },
+
+    {
+      "displayID": "0",
+      "fieldName": "Div5",
+      "children": [] ,
+      "children1": [] ,
+      "children2": [] ,
+      "children3": [] ,
+      "children4": [] ,
+      "fieldType": "divSection",
+      "icon": "far fa-square",
+      "labeltype": false,
+      "className": "col-sm-2",
+      "dbview": false,
+      "tableView": false,
+      "formView": false,
+      "multiple": false,
+      "groupName": "",
+      "restrictedRoles": [],
+      "visible": false,
+      "columnID": "",
+      "fieldstyle": "Secbgcolor"
+    },
+    {
+      "displayID": "0",
+      "fieldType": "hrLine",
+      "fieldId": "",
+      "icon": "fa fa-bars",
+      "fieldName": "Line",
+      "border-top": "1px solid gray !important;",
+      "className": "",
+      "required": false,
+      "tableView": false,
+      "dbview": false,
+      "formView": false,
+
+      "sop": "",
+      "restrictedRoles": [],
+      "relationField": [],
+      "labelTop": false,
+      "visible": true,
+      "columnID": "",
+      "fieldstyle": "Thirdbgcolor"
+    },
+   
+    {
+      "displayID": "0",
+      "fieldType": "Editor",
+      "fieldId": "",
+      "icon": "fa-pencil-square-o",
+      "fieldName": "Text Editor",
+      "description": "",
+      "placeholder": "",
+      "defaultValue": "",
+      "dataType": "nvarchar(MAX)",
+      "Language": [{
+        "LanguageID": "",
+        "LanguageText": "",
+        "Placeholder": ""
+      }],
+
+      "className": "",
+      "editable": false,
+      "required": false,
+      "tableView": false,
+
+      "formView": false,
+      "dbview": false,
+      "sop": "",
+      "restrictedRoles": [],
+      "relationField": [],
+      "labelTop": true,
+      "visible": false,
+      "columnID": "",
+      "fieldstyle": "Thirdbgcolor"
+    },
+    {
+
+      "fieldType": "button",
+      "fieldId": "",
+      "icon": "fa-paper-plane",
+      "fieldName": "Submit",
+      "description": "Submit",
+      "placeholder": "Submit",
+      "defaultValue": "",
+      "dataType": "nvarchar(50)",
+      "Language": [{
+        "LanguageID": "",
+        "LanguageText": "",
+        "Placeholder": ""
+      }],
+
+      "className": "",
+      "tableView": false,
+      "dbview": false,
+      "dbIndex": false,
+
+      "sop": "",
+      "restrictedRoles": [],
+      "relationField": [],
+      "Alignment": "",
+      "labelTop": true,
+      "disableOnInvalid": true,
+      "ActionType": "submit",
+      "visible": false,
+      "Email": false,
+      "SMS": false,
+      "Whatsapp": false,
+      "columnID": "",
+      "fieldstyle": "Thirdbgcolor"
+    }
+]
